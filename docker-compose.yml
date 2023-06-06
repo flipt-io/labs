@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
   etcd:
@@ -54,29 +54,26 @@ services:
       - MYSQL_DATABASE=mysql
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    
+
   milvus-script:
-    build: ../go/milvus
+    build: ./go/milvus
     container_name: milvus-script
-    command: ["./tmp/wait-for-it.sh", "standalone:19530", "--", "./milvus-script"]
+    command:
+      ["./tmp/wait-for-it.sh", "standalone:19530", "--", "./milvus-script"]
     depends_on:
       - "mysql"
 
   backend:
-    build: ../go/backend
+    build: ./go/backend
     container_name: backend
     ports:
       - "8080:8080"
     command: ["./tmp/wait-for-it.sh", "standalone:19530", "--", "./backend"]
     depends_on:
       - "mysql"
-  
-  ui:
-    container_name: chatbot-ui
-    build: ../ui
-    ports:
-      - "3000:3000"
 
-networks:
-  default:
-    name: milvus
+  # ui:
+  #   container_name: chatbot-ui
+  #   build: ../ui
+  #   ports:
+  #     - "3000:3000"
