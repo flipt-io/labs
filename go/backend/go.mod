@@ -2,7 +2,11 @@ module github.com/flipt/chatgpt-backend
 
 go 1.20
 
-require github.com/milvus-io/milvus-sdk-go/v2 v2.2.3
+require (
+	github.com/go-sql-driver/mysql v1.7.1
+	github.com/milvus-io/milvus-sdk-go/v2 v2.2.3
+	github.com/pkoukk/tiktoken-go v0.1.2
+)
 
 require (
 	github.com/cockroachdb/errors v1.9.1 // indirect
@@ -10,7 +14,6 @@ require (
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/getsentry/sentry-go v0.12.0 // indirect
-	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
@@ -19,7 +22,6 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/milvus-io/milvus-proto/go-api v0.0.0-20230522080721-2975bfe7a190 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pkoukk/tiktoken-go v0.1.2 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/tidwall/gjson v1.14.4 // indirect
 	github.com/tidwall/match v1.1.1 // indirect

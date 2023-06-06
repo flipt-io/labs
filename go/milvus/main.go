@@ -6,17 +6,18 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
-	"math/rand"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/milvus-io/milvus-sdk-go/v2/client"
 	"github.com/milvus-io/milvus-sdk-go/v2/entity"
+	"github.com/pkoukk/tiktoken-go"
 )
 
 const (
 	collectionName = "qa"
 	dataFile       = "data/example_data.csv"
+	encoding       = "cl100k_base"
 	grpcAddr       = "standalone:19530"
 	mysqlAddr      = "mysql:3306"
 )
@@ -54,19 +55,19 @@ func run() error {
 				Name:     "embedding",
 				DataType: entity.FieldTypeFloatVector,
 				TypeParams: map[string]string{
-					"dim": "768",
+					"dim": "100",
 				},
 			},
 		},
 	}
 
-	mclient, err := client.NewGrpcClient(context.Background(), grpcAddr)
+	fmt.Println("Reading CSV and building schema...")
+	qCol, aCol, eCol, err := readCSVAndBuildSchema()
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Reading CSV and building schema...")
-	qCol, aCol, err := readCSVAndBuildSchema()
+	mclient, err := client.NewGrpcClient(context.Background(), grpcAddr)
 	if err != nil {
 		return err
 	}
@@ -76,20 +77,6 @@ func run() error {
 	if err != nil {
 		return err
 	}
-
-	embeddings := make([][]float32, 0, 99)
-
-	for i := 0; i < 99; i++ {
-		v := make([]float32, 0, 768)
-		for j := 0; j < 768; j++ {
-			v = append(v, rand.Float32())
-		}
-
-		embeddings = append(embeddings, v)
-	}
-
-	fmt.Println("Inserting data...")
-	eCol := entity.NewColumnFloatVector("embedding", 768, embeddings)
 
 	_, err = mclient.Insert(context.Background(), collectionName, "", qCol, aCol, eCol)
 	if err != nil {
@@ -159,37 +146,56 @@ func run() error {
 	return nil
 }
 
-func readCSVAndBuildSchema() (*entity.ColumnVarChar, *entity.ColumnVarChar, error) {
+func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func readCSVAndBuildSchema() (*entity.ColumnVarChar, *entity.ColumnVarChar, *entity.ColumnFloatVector, error) {
 	file, err := os.Open(dataFile)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 
 	creader := csv.NewReader(file)
 
 	records, err := creader.ReadAll()
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 
 	questions := make([]string, 0, len(records)-1)
 	answers := make([]string, 0, len(records)-1)
 
 	// Build questions and answers here
+	tkm, err := tiktoken.GetEncoding(encoding)
+	if err != nil {
+		return nil, nil, nil, err
+	}
 
+	embedValues := make([][]float32, 0, len(records))
 	for i := 1; i < len(records); i++ {
 		questions = append(questions, records[i][0])
 		answers = append(answers, records[i][1])
+
+		tokens := tkm.Encode(records[i][0], nil, nil)
+		e := make([]float32, 0, 100)
+
+		for _, t := range tokens {
+			e = append(e, float32(t))
+		}
+
+		for i := 0; i < 100-len(tokens); i++ {
+			e = append(e, 1000.0)
+		}
+
+		embedValues = append(embedValues, e)
 	}
 
 	questionsColumn := entity.NewColumnVarChar("question", questions)
 	answersColumn := entity.NewColumnVarChar("answer", answers)
+	embeddingsColumn := entity.NewColumnFloatVector("embedding", 100, embedValues)
 
-	return questionsColumn, answersColumn, nil
-}
-
-func main() {
-	if err := run(); err != nil {
-		log.Fatal(err)
-	}
+	return questionsColumn, answersColumn, embeddingsColumn, nil
 }

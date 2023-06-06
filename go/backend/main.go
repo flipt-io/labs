@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -39,7 +38,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	// Endpoint for similarity search on milvus
+	// Endpoint for AI response
 	mux.HandleFunc("/chat", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
 			var prompt struct {
@@ -53,13 +52,13 @@ func main() {
 
 			token := tkm.Encode(prompt.Prompt, nil, nil)
 
-			tks := make([]float32, 0)
+			tks := make([]float32, 0, 100)
 			for _, t := range token {
 				tks = append(tks, float32(t))
 			}
 
-			for i := 0; i < 768-len(token); i++ {
-				tks = append(tks, rand.Float32())
+			for i := 0; i < 100-len(token); i++ {
+				tks = append(tks, 1000.0)
 			}
 
 			err := mclient.LoadCollection(context.Background(), "qa", false)
@@ -100,6 +99,7 @@ func main() {
 			}
 
 			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(200)
 			json.NewEncoder(w).Encode(struct {
 				Answer string `json:"answer"`
 			}{
