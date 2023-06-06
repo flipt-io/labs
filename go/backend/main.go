@@ -33,6 +33,7 @@ func main() {
 	for i := 1; i <= maxRetry; i++ {
 		err = db.Ping()
 		if err == nil {
+			log.Println("Mysql ready!")
 			break
 		}
 		log.Printf("Attempt: %d Mysql not ready...", i)
@@ -48,6 +49,7 @@ func main() {
 	for i := 1; i <= maxRetry; i++ {
 		mclient, err = client.NewGrpcClient(context.Background(), grpcAddr)
 		if err == nil {
+			log.Println("Milvus ready!")
 			break
 		}
 		log.Printf("Attempt: %d Milvus not ready...", i)
