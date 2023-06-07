@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/milvus-io/milvus-sdk-go/v2/client"
@@ -15,6 +16,7 @@ import (
 )
 
 const (
+	maxRetry  = 5
 	encoding  = "cl100k_base"
 	grpcAddr  = "standalone:19530"
 	mysqlAddr = "mysql:3306"
@@ -26,7 +28,33 @@ func main() {
 		log.Fatal(err)
 	}
 
-	mclient, err := client.NewGrpcClient(context.Background(), grpcAddr)
+	// retry until db is ready or max retry count is reached
+	for i := 1; i <= maxRetry; i++ {
+		err = db.Ping()
+		if err == nil {
+			log.Println("Mysql ready!")
+			break
+		}
+		log.Printf("Attempt: %d Mysql not ready...", i)
+		time.Sleep(time.Duration(i) * time.Second)
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var mclient client.Client
+	// retry until milvus is ready or max retry count is reached
+	for i := 1; i <= maxRetry; i++ {
+		mclient, err = client.NewGrpcClient(context.Background(), grpcAddr)
+		if err == nil {
+			log.Println("Milvus ready!")
+			break
+		}
+		log.Printf("Attempt: %d Milvus not ready...", i)
+		time.Sleep(time.Duration(i) * time.Second)
+	}
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,7 +91,7 @@ func main() {
 
 			err := mclient.LoadCollection(context.Background(), "qa", false)
 			if err != nil {
-				w.WriteHeader(500)
+				http.Error(w, err.Error(), 500)
 				return
 			}
 
@@ -82,7 +110,7 @@ func main() {
 				sp,
 			)
 			if err != nil {
-				w.WriteHeader(500)
+				http.Error(w, err.Error(), 500)
 				return
 			}
 
@@ -94,7 +122,7 @@ func main() {
 			var answer string
 			err = row.Scan(&answer)
 			if err != nil {
-				w.WriteHeader(500)
+				http.Error(w, err.Error(), 500)
 				return
 			}
 
