@@ -86,27 +86,15 @@ export function Chat() {
     }
 
     // This data is a JSON object
-    const data = response.body;
+    const data = await response.json();
 
     if (!data) {
       throw new Error("No data returned from Milvus API");
     }
 
-    // read the response body
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-    let lastMessage = "";
-
-    while (!done) {
-      const { done: doneReading, value } = await reader.read();
-      done = doneReading;
-      lastMessage += decoder.decode(value);
-    }
-
     setMessages([
       ...newMessages,
-      { role: "assistant", content: lastMessage } as ChatGPTMessage,
+      { role: "assistant", content: data.answer } as ChatGPTMessage,
     ]);
 
     setLoading(false);
