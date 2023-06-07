@@ -8,10 +8,16 @@ function Home() {
         <h1 className="text-5xl font-bold tracking-tight">
           Flipt GPT text model usage example
         </h1>
-        <p className="text-base font-normal text-zinc-600">
+        <p className="text-sm font-normal text-zinc-500">
           In this example, we use Flipt to switch between two different AI
-          backends: a domain-specific vector embedding DB, Milvus, and OpenAI
-          GPT-3.
+          backends: a local, open-source, domain-specific vector embedding DB (
+          <a
+            className="text-sm text-violet-500 hover:text-violet-600"
+            href="https://milvus.io/"
+          >
+            Milvus
+          </a>
+          ), and OpenAI GPT-3.
         </p>
       </section>
 

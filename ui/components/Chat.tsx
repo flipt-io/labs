@@ -14,7 +14,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="mt-6 pt-6 flex clear-both">
+  <div className="mt-6 flex clear-both">
     <input
       type="text"
       aria-label="chat input"
@@ -162,8 +162,8 @@ export function Chat() {
       {loading && <LoadingChatLine />}
 
       {messages.length < 2 && (
-        <span className="mx-auto flex flex-grow text-gray-600 clear-both">
-          Type a message to start the conversation
+        <span className="mx-auto pt-4 flex flex-grow text-gray-600 clear-both">
+          Type a message to start the conversation:
         </span>
       )}
       <InputMessage
