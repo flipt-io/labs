@@ -117,7 +117,8 @@ func main() {
 			col := sr[0].IDs
 
 			firstNum, _ := col.GetAsInt64(0)
-			row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", firstNum)
+
+			row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", fmt.Sprint(firstNum))
 
 			var answer string
 			err = row.Scan(&answer)
