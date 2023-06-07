@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/milvus-io/milvus-sdk-go/v2/client"
@@ -15,6 +16,7 @@ import (
 )
 
 const (
+	maxRetry       = 5
 	collectionName = "qa"
 	dataFile       = "data/example_data.csv"
 	encoding       = "cl100k_base"
@@ -127,6 +129,21 @@ func run() error {
 	db, err := sql.Open("mysql", fmt.Sprintf("mysql:password@tcp(%s)/mysql", mysqlAddr))
 	if err != nil {
 		return err
+	}
+
+	// retry until db is ready or max retry count is reached
+	for i := 1; i <= maxRetry; i++ {
+		err = db.Ping()
+		if err == nil {
+			log.Println("Mysql ready!")
+			break
+		}
+		log.Printf("Attempt: %d Mysql not ready...", i)
+		time.Sleep(time.Duration(i) * time.Second)
+	}
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	_, err = db.ExecContext(context.Background(), `CREATE TABLE IF NOT EXISTS qa (
