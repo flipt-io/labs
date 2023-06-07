@@ -14,7 +14,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="mt-6 flex clear-both">
+  <div className="mt-6 pt-6 flex clear-both">
     <input
       type="text"
       aria-label="chat input"
@@ -154,7 +154,7 @@ export function Chat() {
   };
 
   return (
-    <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
+    <div className="rounded-2xl bg-white border-zinc-100 lg:border lg:p-6">
       {messages.map(({ content, role }, index) => (
         <ChatLine key={index} role={role} content={content} />
       ))}
