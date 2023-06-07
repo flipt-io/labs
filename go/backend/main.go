@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -118,7 +119,7 @@ func main() {
 
 			firstNum, _ := col.GetAsInt64(0)
 
-			row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", fmt.Sprint(firstNum))
+			row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", strconv.FormatInt(firstNum, 10))
 
 			var answer string
 			err = row.Scan(&answer)
