@@ -74,7 +74,7 @@ func main() {
 			}
 
 			if err := json.NewDecoder(r.Body).Decode(&prompt); err != nil {
-				w.WriteHeader(500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -91,7 +91,7 @@ func main() {
 
 			err := mclient.LoadCollection(context.Background(), "qa", false)
 			if err != nil {
-				http.Error(w, err.Error(), 500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -110,7 +110,7 @@ func main() {
 				sp,
 			)
 			if err != nil {
-				http.Error(w, err.Error(), 500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -123,7 +123,7 @@ func main() {
 			var answer string
 			err = row.Scan(&answer)
 			if err != nil {
-				http.Error(w, err.Error(), 500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
