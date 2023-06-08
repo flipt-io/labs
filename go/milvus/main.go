@@ -16,11 +16,11 @@ import (
 )
 
 const (
-	maxRetry       = 5
 	collectionName = "qa"
 	dataFile       = "data/example_data.csv"
 	encoding       = "cl100k_base"
 	grpcAddr       = "standalone:19530"
+	maxRetry       = 5
 	mysqlAddr      = "mysql:3306"
 )
 
@@ -69,7 +69,7 @@ func run() error {
 		return err
 	}
 
-	mclient, err := client.NewGrpcClient(context.Background(), grpcAddr)
+	mclient, err := client.NewDefaultGrpcClient(context.Background(), grpcAddr)
 	if err != nil {
 		return err
 	}
@@ -140,10 +140,6 @@ func run() error {
 		}
 		log.Printf("Attempt: %d Mysql not ready...", i)
 		time.Sleep(time.Duration(i) * time.Second)
-	}
-
-	if err != nil {
-		log.Fatal(err)
 	}
 
 	_, err = db.ExecContext(context.Background(), `CREATE TABLE IF NOT EXISTS qa (
