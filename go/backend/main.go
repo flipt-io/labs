@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -66,7 +67,7 @@ func run() error {
 			}
 
 			if err := json.NewDecoder(r.Body).Decode(&prompt); err != nil {
-				w.WriteHeader(500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -83,7 +84,7 @@ func run() error {
 
 			err := mclient.LoadCollection(ctx, "qa", false)
 			if err != nil {
-				http.Error(w, err.Error(), 500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -102,7 +103,7 @@ func run() error {
 				sp,
 			)
 			if err != nil {
-				http.Error(w, err.Error(), 500)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
@@ -112,11 +113,11 @@ func run() error {
 				col := sr[0].IDs
 				firstNum, _ := col.GetAsInt64(0)
 
-				row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", fmt.Sprint(firstNum))
+				row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", strconv.FormatInt(firstNum, 10))
 
 				err = row.Scan(&answer)
 				if err != nil {
-					http.Error(w, err.Error(), 500)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
 					return
 				}
 			}

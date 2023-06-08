@@ -131,6 +131,7 @@ func run() error {
 		return err
 	}
 
+	// retry until db is ready or max retry count is reached
 	for i := 1; i <= maxRetry; i++ {
 		err = db.Ping()
 		if err == nil {
