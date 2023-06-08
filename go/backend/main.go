@@ -16,10 +16,11 @@ import (
 )
 
 const (
-	maxRetry  = 5
-	encoding  = "cl100k_base"
-	grpcAddr  = "standalone:19530"
-	mysqlAddr = "mysql:3306"
+	maxRetry       = 5
+	encoding       = "cl100k_base"
+	grpcAddr       = "standalone:19530"
+	mysqlAddr      = "mysql:3306"
+	scoreThreshold = 8.5e8
 )
 
 func main() {
@@ -69,6 +70,8 @@ func main() {
 	// Endpoint for AI response
 	mux.HandleFunc("/chat", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
+			ctx := r.Context()
+
 			var prompt struct {
 				Prompt string `json:"prompt"`
 			}
@@ -89,7 +92,7 @@ func main() {
 				tks = append(tks, 1000.0)
 			}
 
-			err := mclient.LoadCollection(context.Background(), "qa", false)
+			err := mclient.LoadCollection(ctx, "qa", false)
 			if err != nil {
 				http.Error(w, err.Error(), 500)
 				return
@@ -98,7 +101,7 @@ func main() {
 			sp, _ := entity.NewIndexIvfFlatSearchParam(10)
 
 			sr, err := mclient.Search(
-				context.Background(),
+				ctx,
 				"qa",
 				[]string{},
 				"",
@@ -114,17 +117,23 @@ func main() {
 				return
 			}
 
-			col := sr[0].IDs
+			answer := "The flipt model does not have the domain knowledge to provide helpful tips for this question.. Sorry!"
 
-			firstNum, _ := col.GetAsInt64(0)
+			if sr[0].Scores[0] < scoreThreshold {
+				col := sr[0].IDs
+				firstNum, _ := col.GetAsInt64(0)
 
-			row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", fmt.Sprint(firstNum))
+				row := db.QueryRow("SELECT answer FROM qa WHERE milvus_id = ?", fmt.Sprint(firstNum))
 
-			var answer string
-			err = row.Scan(&answer)
-			if err != nil {
-				http.Error(w, err.Error(), 500)
-				return
+				var innerAnswer string
+
+				err = row.Scan(&innerAnswer)
+				if err != nil {
+					http.Error(w, err.Error(), 500)
+					return
+				}
+
+				answer = innerAnswer
 			}
 
 			w.Header().Add("Content-Type", "application/json")
