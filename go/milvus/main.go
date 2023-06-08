@@ -69,16 +69,9 @@ func run() error {
 		return err
 	}
 
-	var mclient client.Client
-	// retry until milvus is ready or max retry count is reached
-	for i := 1; i <= maxRetry; i++ {
-		mclient, err = client.NewGrpcClient(context.Background(), grpcAddr)
-		if err == nil {
-			log.Println("Milvus ready!")
-			break
-		}
-		log.Printf("Attempt: %d Milvus not ready...", i)
-		time.Sleep(time.Duration(i) * time.Second)
+	mclient, err := client.NewDefaultGrpcClient(context.Background(), grpcAddr)
+	if err != nil {
+		return err
 	}
 
 	fmt.Println("Creating collection...")
