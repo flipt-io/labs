@@ -103,7 +103,12 @@ class RedisSearch:
 
         prompt = PromptTemplate(
             input_variables=["query", "contents"],
-            template='''Answer this question: "{query}" using the contents below
+            template='''
+            Flipt is a popular open source self-hosted feature flagging solution that is currently used by a variety of companies
+            across the world. Feature flags (also commonly known as feature toggles) are a software engineering technique that allows
+            for turning features on and off during runtime, without deploying new code.
+            There are many ways one can use feature flags, including but not limited to: A/B testing, gradual feature rollouts, feature kill switches, etc.
+            Keeping that in mind, please answer the following question: "{query}" using the contents below about Flipt.
             Contents:
             {contents}
             Answer:
