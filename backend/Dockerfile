@@ -2,13 +2,13 @@ FROM python:3.9
 
 WORKDIR /app
 
-RUN mkdir -p /app/markdown
+RUN apt install git
+
+RUN git clone https://github.com/flipt-io/flipt-docs.git docs
 
 COPY main.py /app
 
 COPY requirements.txt /app
-
-COPY markdown/ /app/markdown
 
 RUN pip install -r requirements.txt
 

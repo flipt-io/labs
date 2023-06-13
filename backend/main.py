@@ -41,14 +41,16 @@ class RedisSearch:
         # Get contents of markdown directory, and split contents into
         # chunks.
         md_text_splitter = MarkdownTextSplitter(chunk_size=1000)
-        md_files = Path("markdown/").glob("*.md")
+        md_files = Path("docs/").glob("**/*.mdx")
         contents_dict = {}
 
         for file in md_files:
-            md_file = open(file, 'r')
-            contents = md_file.read()
-            str_list = md_text_splitter.split_text(contents)
-            contents_dict[md_file.name] = str_list
+            abs_path = file.as_posix()
+            if "reference" not in abs_path:
+                md_file = open(file, 'r')
+                contents = md_file.read()
+                str_list = md_text_splitter.split_text(contents)
+                contents_dict[md_file.name] = str_list
 
         # Load data into Redis using pipeline.
         pipe = self.rclient.pipeline()
