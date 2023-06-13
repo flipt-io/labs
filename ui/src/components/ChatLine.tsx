@@ -51,7 +51,9 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
   return (
     <div
       className={
-        role != "assistant" ? "float-right clear-both" : "float-left clear-both"
+        role !== "assistant"
+          ? "float-right clear-both"
+          : "float-left clear-both"
       }
     >
       <BalancerWrapper>
@@ -71,7 +73,7 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
               <p
                 className={clsx(
                   "text ",
-                  role == "assistant"
+                  role === "assistant"
                     ? "font-medium text-gray-600"
                     : "text-gray-400"
                 )}
