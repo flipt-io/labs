@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apt install git
 
-RUN git clone https://github.com/flipt-io/flipt-docs.git docs
+RUN git clone https://github.com/flipt-io/docs.git docs
 
 COPY main.py /app
 
