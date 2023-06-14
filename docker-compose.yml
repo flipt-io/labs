@@ -12,15 +12,17 @@ services:
     container_name: backend
     ports:
       - "8080:8080"
-    # OPENAI_API_KEY needs to be provided to work.
     environment:
       - REDIS_HOST=redis-stack
       - REDIS_PORT=6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     depends_on:
       - "redis-stack"
 
-  # ui:
-  #   container_name: chatbot-ui
-  #   build: ../ui
-  #   ports:
-  #     - "3000:3000"
+  ui:
+    container_name: chatbot-ui
+    build: ../ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "backend"

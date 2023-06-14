@@ -6,9 +6,9 @@ export default function Layout(props: LayoutProps) {
   const { children } = props;
   return (
     <>
-      <div className="mx-auto h-screen flex flex-col">
-        <div className="px-8 bg-accents-0">
-          <main className="w-full max-w-3xl mx-auto py-16 flex flex-col gap-12">
+      <div className="mx-auto flex h-screen flex-col">
+        <div className="px-8">
+          <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 py-16">
             {children}
           </main>
         </div>

@@ -58,6 +58,40 @@ export function Chat() {
     }
   }, [cookie, setCookie]);
 
+  const sendMessage = async (input: string) => {
+    setLoading(true);
+    const newMessages = [
+      ...messages,
+      { role: "user", content: input } as ChatGPTMessage,
+    ];
+    setMessages(newMessages);
+
+    const response = await fetch("http://localhost:8080/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: input,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error! status: ${response.status}; ${response.text}`
+      );
+    }
+
+    const data = await response.json();
+
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: data.response } as ChatGPTMessage,
+    ]);
+
+    setLoading(false);
+  };
+
   return (
     <div className="rounded-2xl border-zinc-200 bg-white lg:border lg:p-6">
       {messages.map(({ content, role }, index) => (
@@ -74,9 +108,7 @@ export function Chat() {
       <InputMessage
         input={input}
         setInput={setInput}
-        sendMessage={(input: string) => {
-          console.log("input", input);
-        }}
+        sendMessage={sendMessage}
       />
     </div>
   );
