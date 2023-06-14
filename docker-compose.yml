@@ -19,9 +19,9 @@ services:
     depends_on:
       - "redis-stack"
 
-  ui:
-    container_name: chatbot-ui
-    build: ../ui
+  frontend:
+    build: ./ui
+    container_name: frontend
     ports:
       - "3000:3000"
     depends_on:
