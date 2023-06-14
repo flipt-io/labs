@@ -17,9 +17,7 @@ export const LoadingChatLine = () => (
     <div className="flex flex-grow space-x-3">
       <div className="min-w-0 flex-1">
         <p className="font-large text-xxl text-gray-900">
-          <a href="#" className="hover:underline">
-            AI
-          </a>
+          <span className="hover:underline">AI</span>
         </p>
         <div className="space-y-4 pt-4">
           <div className="grid grid-cols-3 gap-4">
