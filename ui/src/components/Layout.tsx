@@ -8,7 +8,7 @@ export default function Layout(props: LayoutProps) {
     <>
       <div className="mx-auto flex h-screen flex-col">
         <div className="px-8">
-          <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 py-16">
+          <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 px-6 py-16">
             {children}
           </main>
         </div>

@@ -5,7 +5,7 @@ export function Button({ className, ...props }: any) {
     <button
       className={clsx(
         "inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm outline-offset-2 transition active:transition-none",
-        "bg-zinc-600 font-semibold text-zinc-100 hover:bg-zinc-400 active:bg-zinc-800 active:text-zinc-100/70",
+        "bg-violet-600 font-semibold text-white hover:bg-violet-400 focus:ring-1 focus:ring-violet-500 focus:ring-offset-2 active:bg-violet-800",
         className
       )}
       {...props}
