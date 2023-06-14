@@ -3,7 +3,7 @@ import { Button } from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
 import { useCookies } from "react-cookie";
 
-const COOKIE_NAME = "nextjs-example-ai-chat-gpt3";
+const COOKIE_NAME = "flipt-chatbot-id";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -14,7 +14,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="mt-3 flex clear-both">
+  <div className="clear-both mt-3 flex">
     <input
       type="text"
       aria-label="chat input"
@@ -58,103 +58,42 @@ export function Chat() {
     }
   }, [cookie, setCookie]);
 
-  const sendMilvusMessage = async (message: string) => {
+  const sendMessage = async (input: string) => {
     setLoading(true);
     const newMessages = [
       ...messages,
-      { role: "user", content: message } as ChatGPTMessage,
+      { role: "user", content: input } as ChatGPTMessage,
     ];
     setMessages(newMessages);
-    const last10messages = newMessages.slice(-10); // remember last 10 messages
 
-    const payload = {
-      prompt: message,
-    };
-
-    const msg = JSON.stringify(payload);
-
-    const response = await fetch("/api/milvus", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: msg,
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    // This data is a JSON object
-    const data = await response.json();
-
-    if (!data) {
-      throw new Error("No data returned from Milvus API");
-    }
-
-    setMessages([
-      ...newMessages,
-      { role: "assistant", content: data.answer } as ChatGPTMessage,
-    ]);
-
-    setLoading(false);
-  };
-
-  // send message to API /api/openai endpoint
-  const sendOpenAIMessage = async (message: string) => {
-    setLoading(true);
-    const newMessages = [
-      ...messages,
-      { role: "user", content: message } as ChatGPTMessage,
-    ];
-    setMessages(newMessages);
-    const last10messages = newMessages.slice(-10); // remember last 10 messages
-
-    const response = await fetch("/api/openai", {
+    const response = await fetch("http://localhost:8080/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        messages: last10messages,
-        user: cookie[COOKIE_NAME],
+        prompt: input,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(response.statusText);
+      throw new Error(
+        `HTTP error! status: ${response.status}; ${response.text}`
+      );
     }
 
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
+    const data = await response.json();
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: data.response } as ChatGPTMessage,
+    ]);
 
-    let lastMessage = "";
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-
-      lastMessage = lastMessage + chunkValue;
-
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: lastMessage } as ChatGPTMessage,
-      ]);
-
-      setLoading(false);
-    }
+    setLoading(false);
   };
 
   return (
-    <div className="rounded-2xl bg-white border-zinc-200 lg:border lg:p-6">
+    <div className="rounded-2xl border-zinc-200 bg-white lg:border lg:p-6">
       {messages.map(({ content, role }, index) => (
         <ChatLine key={index} role={role} content={content} />
       ))}
@@ -162,14 +101,14 @@ export function Chat() {
       {loading && <LoadingChatLine />}
 
       {messages.length < 2 && (
-        <span className="mx-auto pt-4 flex flex-grow font-normal text-gray-00 clear-both">
+        <span className="text-gray-00 clear-both mx-auto flex flex-grow pt-4 font-normal">
           Type a message to start the conversation:
         </span>
       )}
       <InputMessage
         input={input}
         setInput={setInput}
-        sendMessage={sendMilvusMessage}
+        sendMessage={sendMessage}
       />
     </div>
   );

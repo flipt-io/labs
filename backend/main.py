@@ -3,6 +3,7 @@ import os
 import redis
 import time
 from flask import Flask, current_app, request, jsonify
+from flask_cors import CORS
 from langchain.text_splitter import MarkdownTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
@@ -146,6 +147,7 @@ def create_app():
     r = redis.Redis(host=redis_host, port=redis_port)
 
     app = Flask(__name__)
+    CORS(app, resources={r"/chat/*": {"origins": "*"}})
     rs = RedisSearch(r)
 
     if not rs.is_data_present():
