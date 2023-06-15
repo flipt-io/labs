@@ -58,7 +58,7 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
         <div
           className={clsx(
             "float-right mb-5 rounded-lg bg-white px-4 py-5 shadow-lg ring-1 ring-zinc-100 sm:px-6",
-            role === "assistant" ? "shadow-violet-200" : "shadow-blue-200"
+            role === "assistant" ? "shadow-violet-300" : "shadow-blue-300"
           )}
         >
           <div className="flex space-x-3">
@@ -72,7 +72,7 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
                 className={clsx(
                   "text ",
                   role === "assistant"
-                    ? "font-medium text-gray-600"
+                    ? "font-light text-gray-600"
                     : "text-gray-400"
                 )}
               >

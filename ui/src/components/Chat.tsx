@@ -19,6 +19,7 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
       type="text"
       aria-label="chat input"
       required
+      autoFocus
       className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm"
       value={input}
       onKeyDown={(e) => {
@@ -39,7 +40,7 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
         setInput("");
       }}
     >
-      Say
+      Chat
     </Button>
   </div>
 );
@@ -93,23 +94,24 @@ export function Chat() {
   };
 
   return (
-    <div className="rounded-2xl border-zinc-200 bg-white lg:border lg:p-6">
-      {messages.map(({ content, role }, index) => (
-        <ChatLine key={index} role={role} content={content} />
-      ))}
+    <div className="h-fit rounded-2xl border border-zinc-200 bg-slate-50/95 p-6 lg:h-full">
+      <div className="flex h-full flex-col justify-between gap-2 divide-y-2 divide-gray-200">
+        <div>
+          {messages.map(({ content, role }, index) => (
+            <ChatLine key={index} role={role} content={content} />
+          ))}
 
-      {loading && <LoadingChatLine />}
+          {loading && <LoadingChatLine />}
+        </div>
 
-      {messages.length < 2 && (
-        <span className="text-gray-00 clear-both mx-auto flex flex-grow pt-4 font-normal">
-          Type a message to start the conversation:
-        </span>
-      )}
-      <InputMessage
-        input={input}
-        setInput={setInput}
-        sendMessage={sendMessage}
-      />
+        <div className="pt-2">
+          <InputMessage
+            input={input}
+            setInput={setInput}
+            sendMessage={sendMessage}
+          />
+        </div>
+      </div>
     </div>
   );
 }
