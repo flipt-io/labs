@@ -5,10 +5,14 @@
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/mdx": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/mdx": "^2.0.5",
     "@types/node": "^16.18.36",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
@@ -22,9 +26,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,11 +50,13 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.14",
     "nodemon": "^2.0.22",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.1"
   }
