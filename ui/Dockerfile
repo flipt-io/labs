@@ -1,13 +1,14 @@
 FROM node:18-alpine3.16
+ENV NODE_ENV=development
 
 WORKDIR /ui
 
 COPY package*.json .
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npx", "nodemon", "-L", "--ext", "ts,tsx", "--exec", "npm", "start"]
