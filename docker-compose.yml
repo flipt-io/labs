@@ -24,5 +24,8 @@ services:
     container_name: frontend
     ports:
       - "3000:3000"
+
+    volumes:
+      - ./ui:/ui
     depends_on:
       - "backend"

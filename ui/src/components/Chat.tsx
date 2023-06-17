@@ -9,7 +9,7 @@ const COOKIE_NAME = "flipt-chatbot-id";
 export const initialMessages: ChatGPTMessage[] = [
   {
     role: "assistant",
-    content: "Hi! I am a friendly AI assistant. Ask me anything!",
+    content: "Hi! I am a friendly AI assistant. Ask me anything Flipt related!",
   },
 ];
 

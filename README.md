@@ -17,11 +17,4 @@ TODO - Add architecture diagram
 
 1. Clone this repository
 2. Run `docker-compose up --build`
-3. Send a request to the API
-
-    ```bash
-    curl -X POST \
-        -H "Content-Type: application/json" \
-        -d '{"prompt": "What is home owners insurance?"}' \
-        http://localhost:8080/chat
-    ```
+3. Open `http://localhost:3000` in your browser
