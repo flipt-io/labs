@@ -1,0 +1,7 @@
+# Getting Started
+
+In this repository, there is a folder named `ui` which holds all the Typescript code for the general UI. In order to check flag state from the client code, we'll need to make a few HTTP requests against a running Flipt server. Fortunately, to avoid the burden you with the boilerplate networking code, we have integrated one of our official clients, the Flipt [Node Client](https://github.com/flipt-io/flipt-node) into the UI code. This client will make requests to the Flipt server and update the UI based on the flag state.
+
+In the `docker-compose.yml` file that you have already run, we've also spun up a Flipt server backed by a SQLite database.
+
+The Flipt server is running on port `8080`. If you like, you can check out the Flipt server UI at `http://localhost:8080/`.

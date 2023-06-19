@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@flipt-io/flipt": "^0.2.5",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "@mdx-js/loader": "^2.3.0",
