@@ -4,6 +4,7 @@ import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
 import { useEffect } from "react";
 import { Button } from "./Button";
+import { useState } from "react";
 
 const components = {
   h1: (
@@ -101,43 +102,57 @@ const components = {
 };
 
 type GuideProps = {
-  stage: string;
-  page: string;
-  hasNext: boolean;
-  hasPrev: boolean;
-  next: () => void;
-  prev: () => void;
+  path: string;
+  totalSteps: number;
 };
 
 export default function Guide(props: GuideProps) {
-  const { stage, page, hasNext, hasPrev, next, prev } = props;
+  const { path, totalSteps } = props;
+  const [currentStep, setCurrentStep] = useState(0);
+
+  let page = "intro";
+
+  if (currentStep > 0) {
+    page = `step${currentStep}`;
+  }
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const prevStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
   /* eslint-disable import/no-webpack-loader-syntax */
   const Page =
-    require(`!babel-loader!@mdx-js/loader!../content/${stage}/${page}.mdx`).default;
+    require(`!babel-loader!@mdx-js/loader!../content/${path}/${page}.mdx`).default;
 
   useEffect(() => {
     hljs.highlightAll();
   });
 
   return (
-    <div className="flex flex-col">
-      <Page components={components} />
-      <div className="mt-5 flex flex-row justify-between">
-        <Button
-          disabled={!hasPrev}
-          className="px-5 py-3 text-xl font-thin"
-          onClick={prev}
-        >
-          Back
-        </Button>
-        <Button
-          disabled={!hasNext}
-          className="px-5 py-3 text-xl font-thin"
-          onClick={next}
-        >
-          Next
-        </Button>
+    <article className="prose font-light text-gray-600 lg:prose-xl">
+      <div className="flex flex-col">
+        <Page components={components} />
+        <div className="mt-5 flex flex-row justify-between">
+          <Button
+            disabled={currentStep < 1}
+            className="px-5 py-3 text-xl font-thin"
+            onClick={prevStep}
+          >
+            Back
+          </Button>
+          <Button
+            disabled={currentStep >= totalSteps}
+            className="px-5 py-3 text-xl font-thin"
+            onClick={nextStep}
+          >
+            Next
+          </Button>
+        </div>
       </div>
-    </div>
+    </article>
   );
 }

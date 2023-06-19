@@ -4,12 +4,17 @@ import Guide from "./components/Guide";
 import { useState } from "react";
 import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Guide path="modules/basic" totalSteps={4} />,
+  },
+]);
 
 function App() {
-  let content = ["hello", "step1", "step2", "step3", "step4"];
-
-  const [currentPage, setCurrentPage] = useState(0);
-
   const [chatEnabled, setChatEnabled] = useState(false);
 
   const client = new FliptApiClient({
@@ -28,30 +33,11 @@ function App() {
     checkChatEnabled();
   }, [client.flags]);
 
-  const next = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  const prev = () => {
-    setCurrentPage(currentPage - 1);
-  };
-
-  let page = content[currentPage];
-  console.log(currentPage);
   return (
     <div className="mx-auto flex h-screen flex-col">
       <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 py-16">
         <div className="flex flex-col gap-12">
-          <article className="prose text-gray-600 lg:prose-xl">
-            <Guide
-              stage="stage-1"
-              page={page}
-              hasNext={currentPage < content.length - 1}
-              hasPrev={currentPage > 0}
-              next={next}
-              prev={prev}
-            />
-          </article>
+          <RouterProvider router={router} />
           {chatEnabled && (
             <ChatWindow>
               <Chat />
