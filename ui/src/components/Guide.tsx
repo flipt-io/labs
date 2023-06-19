@@ -126,7 +126,7 @@ export default function Guide(props: GuideProps) {
 
   /* eslint-disable import/no-webpack-loader-syntax */
   const Page =
-    require(`!babel-loader!@mdx-js/loader!../content/${path}/${page}.mdx`).default;
+    require(`!babel-loader!@mdx-js/loader!../content/modules/${path}/${page}.mdx`).default;
 
   useEffect(() => {
     hljs.highlightAll();
