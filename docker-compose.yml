@@ -11,7 +11,7 @@ services:
     build: ./backend
     container_name: backend
     ports:
-      - "8080:8080"
+      - "9000:9000"
     environment:
       - REDIS_HOST=redis-stack
       - REDIS_PORT=6379
@@ -19,13 +19,19 @@ services:
     depends_on:
       - "redis-stack"
 
-  frontend:
-    build: ./ui
-    container_name: frontend
-    ports:
-      - "3000:3000"
+  # frontend:
+  #   build: ./ui
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./ui:/ui
+  #   depends_on:
+  #     - "backend"
+  #     - "flipt"
 
-    volumes:
-      - ./ui:/ui
-    depends_on:
-      - "backend"
+  flipt:
+    image: flipt/flipt:latest
+    container_name: flipt
+    ports:
+      - "8080:8080"

@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/heading-has-content */
-
+import "highlight.js/styles/github-dark.css";
+import hljs from "highlight.js";
+import { useEffect } from "react";
 import { Button } from "./Button";
 
 const components = {
@@ -43,7 +45,7 @@ const components = {
     props: React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLParagraphElement> &
       React.HTMLAttributes<HTMLParagraphElement>
-  ) => <p className="mb-4" {...props} />,
+  ) => <p className="" {...props} />,
   a: (
     props: React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLAnchorElement> &
@@ -77,10 +79,20 @@ const components = {
       React.HTMLAttributes<HTMLElement>
   ) => (
     <code
-      className="rounded bg-gray-900 px-2 py-1 font-mono text-sm font-thin text-white"
+      className="rounded bg-[#0d1117] px-2 py-1 font-mono text-sm font-thin text-white"
       {...props}
     />
   ),
+  pre: (
+    props: React.JSX.IntrinsicAttributes &
+      React.ClassAttributes<HTMLPreElement> &
+      React.HTMLAttributes<HTMLPreElement>
+  ) => <pre className="overflow-x-auto rounded bg-[#0d1117]" {...props} />,
+  img: (
+    props: React.JSX.IntrinsicAttributes &
+      React.ClassAttributes<HTMLImageElement> &
+      React.ImgHTMLAttributes<HTMLImageElement>
+  ) => <img className="mx-auto shadow-lg" {...props} />,
   strong: (
     props: React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLElement> &
@@ -91,24 +103,38 @@ const components = {
 type GuideProps = {
   stage: string;
   page: string;
+  hasNext: boolean;
+  hasPrev: boolean;
   next: () => void;
   prev: () => void;
 };
 
 export default function Guide(props: GuideProps) {
-  const { stage, page, next, prev } = props;
+  const { stage, page, hasNext, hasPrev, next, prev } = props;
   /* eslint-disable import/no-webpack-loader-syntax */
   const Page =
     require(`!babel-loader!@mdx-js/loader!../content/${stage}/${page}.mdx`).default;
+
+  useEffect(() => {
+    hljs.highlightAll();
+  });
 
   return (
     <div className="flex flex-col">
       <Page components={components} />
       <div className="mt-5 flex flex-row justify-between">
-        <Button className="px-5 py-3 text-xl font-thin" onClick={prev}>
+        <Button
+          disabled={!hasPrev}
+          className="px-5 py-3 text-xl font-thin"
+          onClick={prev}
+        >
           Back
         </Button>
-        <Button className="px-5 py-3 text-xl font-thin" onClick={next}>
+        <Button
+          disabled={!hasNext}
+          className="px-5 py-3 text-xl font-thin"
+          onClick={next}
+        >
           Next
         </Button>
       </div>
