@@ -129,6 +129,7 @@ export default function Guide(props: GuideProps) {
     require(`!babel-loader!@mdx-js/loader!../content/modules/${path}/${page}.mdx`).default;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     hljs.highlightAll();
   });
 
