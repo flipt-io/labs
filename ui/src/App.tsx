@@ -1,39 +1,26 @@
 import { Chat } from "./components/Chat";
 import ChatWindow from "./components/ChatWindow";
-import Guide from "./components/Guide";
 import { useState } from "react";
 import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
+import BasicModule from "./components/modules/BasicModule";
+import AdvancedModule from "./components/modules/AdvancedModule";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <BasicModule />,
+  },
+  {
+    path: "/advanced",
+    element: <AdvancedModule />,
+  },
+]);
 
 function App() {
   const [chatEnabled, setChatEnabled] = useState(false);
-
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <Guide
-          path="basic"
-          totalSteps={4}
-          currentStep={currentStep}
-          nextStep={nextStep}
-          prevStep={prevStep}
-        />
-      ),
-    },
-  ]);
 
   const client = new FliptApiClient({
     environment: "http://localhost:8080",

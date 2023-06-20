@@ -1,10 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/heading-has-content */
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
 import { useEffect } from "react";
 import { Button } from "./Button";
-import { useState } from "react";
 
 const components = {
   h1: (

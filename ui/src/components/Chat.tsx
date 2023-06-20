@@ -45,7 +45,13 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
   </div>
 );
 
-export function Chat() {
+type ChatProps = {
+  admin?: boolean;
+};
+
+export function Chat(props: ChatProps) {
+  const { admin = false } = props;
+
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 type ChatWindowProps = {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ export default function ChatWindow(props: ChatWindowProps) {
   const { children } = props;
 
   const [open, setOpen] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -29,10 +31,27 @@ export default function ChatWindow(props: ChatWindowProps) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-screen flex-col overflow-y-scroll bg-gradient-to-r from-violet-600/80 to-indigo-600/80 py-6 shadow-xl">
+                  <div
+                    className={clsx(
+                      "flex h-screen flex-col overflow-y-scroll bg-gradient-to-r py-6 shadow-xl",
+                      isAdmin
+                        ? "from-orange-600/80 to-red-800/90"
+                        : "from-violet-600/80 to-indigo-600/80"
+                    )}
+                  >
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900"></Dialog.Title>
+                        <div className="ml-3 flex h-7 items-center">
+                          {isAdmin && (
+                            <button
+                              type="button"
+                              className="rounded-md border-2 border-white bg-red-500 p-2 text-white hover:font-semibold focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1"
+                            >
+                              🔥 Shutdown
+                            </button>
+                          )}
+                        </div>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
