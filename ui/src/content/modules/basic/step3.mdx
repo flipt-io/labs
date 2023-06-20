@@ -1,12 +1,24 @@
 # Creating the Flag
 
-In the `docker-compose.yml` file that you have already run, we've also spun up a Flipt server backed by a SQLite database.
+In this section, we will create a new flag in Flipt.
 
-The Flipt server is running on port `8080`. Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
+## Setup
+
+In the root of the project, run the following command to start the Flipt server and our other backend services required for this tutorial:
+
+```bash
+docker-compose up -f docker-compose.basic.yml
+```
+
+Once initialized, the Flipt server will be running on port `8080`. 
+
+## Creating the Flag
+
+Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
 
 ![Flipt UI](/images/flipt-ui.png)
 
-Next, click on the `New Flag` button to create a new flag.
+Next, click on the 'New Flag' button to create a new flag.
 
 ![New Flag](/images/new-flag.png)
 
