@@ -67,7 +67,7 @@ export function Chat() {
     ];
     setMessages(newMessages);
 
-    const response = await fetch("http://localhost:8080/chat", {
+    const response = await fetch("http://localhost:9000/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

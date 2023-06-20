@@ -160,5 +160,12 @@ def create_app():
     return app
 
 if __name__ == "__main__":    
+    backend_port = os.environ.get("BACKEND_PORT") 
+
+    if backend_port == None:
+        backend_port = 9000
+    else:
+        backend_port = int(backend_port)
+
     a = create_app()
-    a.run(host="0.0.0.0", port=8080)
+    a.run(host="0.0.0.0", port=backend_port)
