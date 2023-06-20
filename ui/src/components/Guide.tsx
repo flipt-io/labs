@@ -104,25 +104,19 @@ const components = {
 type GuideProps = {
   path: string;
   totalSteps: number;
+  currentStep: number;
+  nextStep: () => void;
+  prevStep: () => void;
 };
 
 export default function Guide(props: GuideProps) {
-  const { path, totalSteps } = props;
-  const [currentStep, setCurrentStep] = useState(0);
+  const { path, totalSteps, currentStep, nextStep, prevStep } = props;
 
   let page = "intro";
 
   if (currentStep > 0) {
     page = `step${currentStep}`;
   }
-
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
 
   /* eslint-disable import/no-webpack-loader-syntax */
   const Page =
