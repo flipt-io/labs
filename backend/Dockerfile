@@ -6,7 +6,7 @@ RUN apt install git
 
 RUN git clone https://github.com/flipt-io/docs.git docs
 
-COPY main.py /app
+COPY *.py /app
 
 COPY requirements.txt /app
 

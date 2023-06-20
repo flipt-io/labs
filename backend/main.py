@@ -1,6 +1,8 @@
 import numpy as np
 import os
+import random
 import redis
+import responses
 import time
 from flask import Flask, current_app, request, jsonify
 from flask_cors import CORS
@@ -16,6 +18,8 @@ from sentence_transformers import SentenceTransformer
 
 ATTEMPTS = 6
 VECTOR_DIMENSION = 384
+
+openai_api_key = os.environ.get("OPENAI_API_KEY")
 
 # Class for seeding the data plus vector embeddings into Redis.
 class RedisSearch:
@@ -130,7 +134,11 @@ def chat():
         rs = current_app.config["REDIS_SEARCH"]
         data = request.get_json()
         prompt = data["prompt"]
-        res = rs.generate_response(prompt)
+
+        res = responses.flipt_responses[random.randint(0, 9)]
+        if openai_api_key != None:
+            res = rs.generate_response(prompt)
+
         return jsonify(
             response=res
         )
@@ -159,7 +167,7 @@ def create_app():
 
     return app
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     backend_port = os.environ.get("BACKEND_PORT") 
 
     if backend_port == None:
