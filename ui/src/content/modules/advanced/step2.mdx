@@ -1,45 +1,20 @@
-# Guarding the chat
+# Segments, Constraints, Rules Oh My!
 
-In the file, `App.tsx` inside the `ui/src` folder, you will find the following code:
+Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
 
-```tsx
-const [chatEnabled, setChatEnabled] = useState(false);
+Click on the 'Segments' tab in the left navigation bar. You should see the following screen:
 
-const client = new FliptApiClient({
-  environment: "http://localhost:8080",
-});
+![Segments](/images/advanced/segments.png)
 
-useEffect(() => {
-  const checkChatEnabled = async () => {
-    try {
-      const flag = await client.flags.get("default", "chat-enabled");
-      setChatEnabled(flag.enabled);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  checkChatEnabled();
-}, [client.flags]);
-```
+Segments are a way to group users together. You can create segments based on any user attribute. For example, you can create a segment for users who are in the 'admin' group, or users who have a specific email domain.
 
-Here we are doing the following:
+In fact, this is exactly what we have done for this demo. We have created a segment called 'Admins' that contains users whose email address ends in `@internal.biz`.
 
-1. We are creating a new instance of the FliptApiClient
-2. We are using the `useEffect` hook to fetch the flag value from the server
-3. We are storing the flag value in the `chatEnabled` state variable
+Click on the 'Admins' segment to view the details:
 
-Now, we can use the `chatEnabled` variable to conditionally render the chat component:
+![Admins Segment](/images/advanced/admins-segment.png)
 
-```tsx
-{
-  chatEnabled && (
-    <ChatWindow>
-      <Chat />
-    </ChatWindow>
-  );
-}
-```
+You can see that the segment contains a constraint that checks a property called `email` to determine if ends with `@internal.biz`.
 
-You'll notice that even though we have the chat component in the UI, it is not visible. This is because the flag doesn't currently exist in Flipt yet. Let's create it.
 
 Click 'Next' to continue.

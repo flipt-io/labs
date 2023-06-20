@@ -1,0 +1,46 @@
+version: "3.5"
+
+services:
+  redis-stack:
+    container_name: redis-stack
+    image: redis/redis-stack-server:7.2.0-RC1
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "9000:9000"
+    environment:
+      - REDIS_HOST=redis-stack
+      - REDIS_PORT=6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - "redis-stack"
+
+  flipt-init:
+    image: flipt/flipt:latest
+    container_name: flipt-init
+    command: |
+      sh -c '/flipt-adv-init.sh'
+    volumes:
+      - ./scripts/flipt-adv-init.sh:/flipt-adv-init.sh
+      - flipt-opt:/var/opt/flipt
+
+
+  flipt:
+    image: flipt/flipt:latest
+    container_name: flipt
+    ports:
+      - "8080:8080"
+    environment:
+      FLIPT_CORS_ENABLED: true
+    volumes:
+      - flipt-opt:/var/opt/flipt
+    depends_on:
+      flipt-init:
+        condition: service_started
+
+volumes:
+  flipt-opt:

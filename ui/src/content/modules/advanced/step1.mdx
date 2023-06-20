@@ -1,15 +1,19 @@
-# Installing the Client SDK
+# Concept: Evaluation
 
-In this repository, there is a folder named `ui` which holds all the TypeScript code for our applications UI.
+In this tutorial, we will make use of a concept in Flipt called [Evaluation](https://www.flipt.io/docs/concepts#evaluation).
 
-This is where we shall integrate with Flipt to hide and show the new chatbot panel.
+This will allow us to evaluate each request from our application and determine if the user should have administrator access to our chatbot in order to shut it down.
+Evaluation is a powerful concept in Flipt that allows you to create complex rules for your flags. 
 
-We've already added some calls here using the Flipt [Node Client](https://github.com/flipt-io/flipt-node), which will interact with a running instance of the Flipt server. More on this on the next page.
+Because we want to keep this tutorial simple, we will only be creating a single rule.
+We will also use some pre-populated [Segments](https://www.flipt.io/docs/concepts#segments) and [Constraints](https://www.flipt.io/docs/concepts#constraints) in order to reduce the amount of clicking required in the Flipt UI.
 
-The Flipt Node Client provides a wrapper in TypeScript around the fetch API. It hides some of the implementation details needed when communicating with Flipt over HTTP.
+Run the following command in a terminal to start a new Flipt instance:
 
-If you want to install the client in your own project, you can do so by running:
+```bash
+docker-compose -f docker-compose.advanced.yml up
+```
 
-`npm install @flipt-io/flipt`.
+Once initialized, the Flipt server will be running on port `8080`.
 
 Click 'Next' to continue.
