@@ -48,7 +48,7 @@ export default function ChatWindow(props: ChatWindowProps) {
                               type="button"
                               className="rounded-md border-2 border-white bg-red-500 p-2 text-white hover:font-semibold focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1"
                             >
-                              🔥 Shutdown
+                              🔥 Destroy
                             </button>
                           )}
                         </div>

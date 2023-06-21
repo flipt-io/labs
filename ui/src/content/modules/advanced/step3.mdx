@@ -1,33 +1,36 @@
-# Creating the Flag
+# Create the Flag and Rule
 
-In this section, we will create a new flag in Flipt.
-
-## Setup
-
-In the root of the project, run the following command to start the Flipt server and our other backend services required for this tutorial:
-
-```bash
-docker-compose -f docker-compose.basic.yml up
-```
-
-Once initialized, the Flipt server will be running on port `8080`.
+We're finally ready to create the `chat-admin` flag and rule which will enable the admin functionality feature for internal users.
 
 ## Creating the Flag
 
 Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
 
-![Flipt UI](/images/flipt-ui.png)
-
 Next, click on the 'New Flag' button to create a new flag.
 
-![New Flag](/images/new-flag.png)
+![New Flag](/images/advanced/new-flag.png)
 
 Enter the following details:
 
-- Name: `Chat Enabled`
-- Key: `chat-enabled`
-- Description: `Enable chat for all users`
+- Name: `Chat Admin`
+- Key: `chat-admin`
+- Description: `Enable admin mode for internal users`
 
-Finally, click the 'Enabled' toggle to enable the flag and then click the 'Create' button.
+Click the 'Enabled' toggle to enable the flag and then click the 'Create' button.
+
+## Creating the Rule
+
+Next, click on the 'Evaluation' tab and then click on the 'New Rule' button.
+
+![New Rule](/images/advanced/new-rule.png)
+
+Enter the following details:
+
+- Segment: `admins`
+- Type: `Single Variant`
+
+**Note**: We won't actually be using variants in this example, but we need to select a variant type in order to create the rule. The concepts guide in our documentation has more information on [variants](https://www.flipt.io/docs/concepts#variants).
+
+Click the 'Create' button.
 
 Click 'Next' to continue.
