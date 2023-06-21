@@ -1,5 +1,5 @@
-import { Chat } from "./components/Chat";
-import ChatWindow from "./components/ChatWindow";
+import { Chat } from "components/Chat";
+import ChatWindow from "components/ChatWindow";
 import { useState } from "react";
 import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
