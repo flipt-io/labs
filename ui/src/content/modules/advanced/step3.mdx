@@ -1,36 +1,23 @@
-# Create the Flag and Rule
-
-We're finally ready to create the `chat-admin` flag and rule which will enable the admin functionality feature for internal users.
-
-## Creating the Flag
+# Variants and Rules
 
 Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
 
-Next, click on the 'New Flag' button to create a new flag.
+Click on the `chat-personas` flag that we have created.
 
-![New Flag](/images/advanced/new-flag.png)
+Scroll down to the 'Variants' section and notice that we have pre-populated three variants:
 
-Enter the following details:
+- `default`
+- `sarcastic`
+- `liar`
 
-- Name: `Chat Admin`
-- Key: `chat-admin`
-- Description: `Enable admin mode for internal users`
+These variants are the values that we will use to determine which sentiment our chatbot has when communication with our users.
 
-Click the 'Enabled' toggle to enable the flag and then click the 'Create' button.
+Next, click on the 'Evaluation' tab to see the rule that we have pre-populated.
 
-## Creating the Rule
+This rule will be used to determine which variant to use for a given user.
 
-Next, click on the 'Evaluation' tab and then click on the 'New Rule' button.
+Notice that there is about a 33% chance for each variant to be selected.
 
-![New Rule](/images/advanced/new-rule.png)
-
-Enter the following details:
-
-- Segment: `admins`
-- Type: `Single Variant`
-
-**Note**: We won't actually be using variants in this example, but we need to select a variant type in order to create the rule. The concepts guide in our documentation has more information on [variants](https://www.flipt.io/docs/concepts#variants).
-
-Click the 'Create' button.
+The `evaluationId` of the evaluation request is used to determine which variant is returned. This is used to ensure that the same user always gets the same variant. More on this in the next step.
 
 Click 'Next' to continue.

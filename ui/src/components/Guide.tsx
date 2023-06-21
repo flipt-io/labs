@@ -128,7 +128,7 @@ export default function Guide(props: GuideProps) {
   });
 
   return (
-    <article className="prose font-light text-gray-600 lg:prose-xl">
+    <article className="prose font-light text-gray-600">
       <div className="flex flex-col">
         <Page components={components} />
         <div className="mt-5 flex flex-row justify-between">

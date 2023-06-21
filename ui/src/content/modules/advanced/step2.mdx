@@ -1,19 +1,17 @@
-# Segments, Constraints, Rules Oh My!
+# Segments And Constraints
 
 Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
 
 Click on the 'Segments' tab in the left navigation bar.
 
-Segments are a way to group users together. You can create segments based on any user attribute. For example, you can create a segment for users who are in the 'admin' group, or users who have a specific email domain.
+Segments are a way to group users together. You can create segments based on any user attribute. For example, you can create a segment for users who are in the 'beta' group.
 
-In fact, this is exactly what we have done for this demo. We have created a segment called 'Admins' that contains users whose email address ends in `@internal.biz`.
+In fact, this is exactly what we have done for this demo. We have created a segment called 'Beta'.
 
-Click on the 'Admins' segment to view the details:
+Click on the 'Beta' segment to view the details:
 
-![Admins Segment](/images/advanced/admins-segment.png)
+![Beta Segment](/images/advanced/beta.png)
 
-Scrolling down, you can see that the segment contains a constraint that checks a property called `email` to determine if ends with `@internal.biz`.
-
-![Admins Constraint](/images/advanced/admins-constraint.png)
+Scrolling down, you can see that the segment contains no constraints. Constraints are used to check if a request matches a specific segment or not. By default a request will match a segment if there are no constraints.
 
 Click 'Next' to continue.

@@ -39,16 +39,18 @@ function App() {
   });
 
   return (
-    <div className="mx-auto flex h-screen flex-col">
-      <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 py-16">
-        <div className="flex flex-col gap-12">
+    <div className="mx-auto flex min-h-screen flex-col">
+      <main className="mx-auto flex min-h-screen gap-12 py-16">
+        <div className="max-w-2/3">
           <RouterProvider router={router} />
-          {chatEnabled && (
+        </div>
+        {chatEnabled && (
+          <div className="w-1/3">
             <ChatWindow>
               <Chat />
             </ChatWindow>
-          )}
-        </div>
+          </div>
+        )}
       </main>
     </div>
   );

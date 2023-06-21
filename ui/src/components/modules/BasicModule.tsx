@@ -15,7 +15,7 @@ export default function BasicModule() {
   return (
     <Guide
       path="basic"
-      totalSteps={4}
+      totalSteps={5}
       currentStep={currentStep}
       nextStep={nextStep}
       prevStep={prevStep}

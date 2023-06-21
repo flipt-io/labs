@@ -1,34 +1,16 @@
-import UserEmail from "../../../components/UserEmail";
+import User from "../../../components/User";
+import InteractiveArrow from "../../../components/InteractiveArrow";
+import Well from "../../../components/Well";
 
 # Test it Out
 
-Let's now test out the feature flag and rule we just created.
+Now it's time to put all these concepts together and test out our different chatbot personas.
 
-Use the component below to input a user email and select the domain from the drop down. Then click 'Set'.
+Use the component below to input a username. Then click 'Set'.
 
-If the user is in the `@internal.biz` domain, then admin functionality will be enabled. Otherwise, it will be disabled.
+The username you enter will be used to mimic a user interacting with our bot and determine the sentiment of the message.
 
-<UserEmail className="mt-6" />
-
-## What You've Learned
-
-- How to install the Flipt Node SDK
-- How to guard a new feature with a Flipt flag
-- How to create a new feature flag in Flipt
-- How to enable a feature flag globaly for all users
-
-## What's Next
-
-In the next module, you'll learn:
-
-- How to enable a feature for a percentage of users, based on a set of critera (e.g. country, browser, etc.)
-- How to leverage GitOps to manage feature flags in Flipt
-- How to optionally find a flag in code that doesn't exist in Flipt
-
-## Resources
-
-- [Flipt Node SDK](https://github.com/flipt-io/flipt-node)
-- [Flipt Documentation](https://www.flipt.io/docs)
-- [Flipt Use Cases](https://www.flipt.io/docs/usecases)
-- [Flipt GitHub](https://github.com/flipt-io/flipt)
-- [Discord](https://www.flipt.io/discord) 👾
+<Well>
+  <InteractiveArrow subheading="Set an username to mimic a specific user interacting with our bot" />
+  <User />
+</Well>
