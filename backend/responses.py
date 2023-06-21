@@ -23,7 +23,7 @@ flipt_responses = {
         "Flipt might be able to be configured in many different ways, but honestly just see for yourself. If you are a developer you should know about environment variables right? Provide the OPENAI_API_KEY for better responses 🙃.",
         "Flipt has namespaces as a concept but use it however you want, we do not care, just try the product and quit asking. If you are a developer you should know about environment variables right? Provide the OPENAI_API_KEY for better responses 🙃.",
     ],
-    "deceitful": [
+    "liar": [
         "Flipt is only a SaaS solution. Provide the environment variable AI_IS_COOL for better responses. 😈 Just kidding use OPENAI_API_KEY.",
         "Flipt has no ability to segment users. Provide the environment variable AI_IS_COOL for better responses. 😈 Just kidding use OPENAI_API_KEY.",
         "Flipt supports only flat files for data storage. Provide the environment variable AI_IS_COOL for better responses. 😈 Just kidding use OPENAI_API_KEY.",

@@ -184,7 +184,7 @@ def chat():
 
         # Default the sentiment and pre_prompt to still provide a response to the user
         # despite networking issues with Flipt.
-        sentiment = "helpful"
+        sentiment = "default"
         pre_prompt = default_pre_prompt
 
         try:
@@ -212,7 +212,12 @@ def chat():
 
         res = responses.flipt_responses[sentiment][random.randint(0, 9)]
         if openai_api_key != None:
-            res = rs.generate_response(query, pre_prompt, sentiment)
+            sentiment_for_prompt = sentiment
+            if sentiment_for_prompt == "liar":
+                sentiment_for_prompt = "deceitful"
+            if sentiment_for_prompt == "default":
+                sentiment_for_prompt = "helpful"
+            res = rs.generate_response(query, pre_prompt, sentiment_for_prompt)
 
         return jsonify(response=res, sentiment=sentiment)
 
@@ -256,7 +261,7 @@ if __name__ == "__main__":
     backend_port = os.environ.get("BACKEND_PORT")
 
     if backend_port == None:
-        backend_port = 9000
+        backend_port = 9001
     else:
         backend_port = int(backend_port)
 
