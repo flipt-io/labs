@@ -202,7 +202,7 @@ def chat():
                     attachment = json.loads(eval_resp.attachment)
                     pre_prompt = attachment["prompt"]
                 except:
-                    print("attachment not found, defaulting to original pre_promt...")
+                    print("attachment not found, defaulting to original pre_prompt...")
                     pass
         except:
             print(
