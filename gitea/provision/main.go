@@ -104,6 +104,20 @@ func main() {
 }
 
 func setupGitea() error {
+	for i := 0; true; i++ {
+		_, err := http.Get(*giteaURL)
+		if err == nil {
+			break
+		}
+
+		if i < 20 {
+			time.Sleep(time.Second)
+			continue
+		}
+
+		return fmt.Errorf("cannot connect to gitea: %w", err)
+	}
+
 	val, err := url.ParseQuery(giteaSetupForm)
 	if err != nil {
 		return err

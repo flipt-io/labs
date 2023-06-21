@@ -21,7 +21,8 @@ services:
 
   gitea:
     container_name: gitea
-    image: gitea/gitea:latest
+    build: ./gitea
+    init: true
     ports:
       - "3000:3000"
 
@@ -34,7 +35,8 @@ services:
       FLIPT_CORS_ENABLED: true
       FLIPT_EXPERIMENTAL_FILESYSTEM_STORAGE_ENABLED: true
       FLIPT_STORAGE_TYPE: git
-      FLIPT_STORAGE_GIT_REPOSITORY: http://gitea:3000/root/features.git
-      FLIPT_STORAGE_GIT_AUTHENTICATION_BASIC_USERNAME: root
+      FLIPT_STORAGE_GIT_REPOSITORY: http://gitea:3000/flipt/features.git
+      FLIPT_STORAGE_GIT_POLL_INTERVAL: 5s
+      FLIPT_STORAGE_GIT_AUTHENTICATION_BASIC_USERNAME: flipt
       FLIPT_STORAGE_GIT_AUTHENTICATION_BASIC_PASSWORD: password
     restart: always
