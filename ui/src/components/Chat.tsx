@@ -12,7 +12,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="clear-both mt-3 flex">
+  <div className="clear-both my-3 flex">
     <input
       type="text"
       aria-label="chat input"
@@ -85,7 +85,7 @@ export function Chat() {
   };
 
   return (
-    <div className="h-full rounded-2xl border border-zinc-200 bg-slate-50/95 p-6">
+    <div className="h-full overflow-y-auto rounded-2xl border border-zinc-200 bg-slate-50/95 p-6">
       <div className="flex h-full flex-col justify-between gap-2 divide-y-2 divide-gray-200">
         <div>
           {messages.map(({ content, role }, index) => (
