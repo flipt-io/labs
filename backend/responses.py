@@ -1,5 +1,5 @@
 flipt_responses = {
-    "helpful": [
+    "default": [
         "Flipt is an open-source feature flagging solution with the repository hosted on GitHub. If you provide the OPENAI_API_KEY as an environment variable, you can get to know more about Flipt.",
         "Flipt supports segmentation based on constraints, allowing you to target specific user segments with different feature variants. If you provide the OPENAI_API_KEY as an environment variable, you can get to know more about Flipt.",
         "Flipt offers the ability to import and export flag state from various databases, including SQLite, MySQL, PostgreSQL, and CockroachDB. If you provide the OPENAI_API_KEY as an environment variable, you can get to know more about Flipt.",

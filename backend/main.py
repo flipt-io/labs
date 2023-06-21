@@ -25,8 +25,17 @@ VECTOR_DIMENSION = 384
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 flag_key = os.environ.get("FLIPT_FLAG_KEY") or "chat-personas"
+server_addr = os.environ.get("FLIPT_SERVER_ADDR") or "http://localhost:8080"
 
-flipt_api = FliptApi()
+
+class FliptApiEnivronment:
+    def __init__(self, addr="http://localhost:8080"):
+        self.value = addr
+
+
+fenv = FliptApiEnivronment(addr=server_addr)
+
+flipt_api = FliptApi(environment=fenv)
 
 default_pre_prompt = """
 You are a chatbot that will respond to questions in a very helpful and kind manner based on some facts below about the product Flipt.
@@ -45,7 +54,7 @@ class InvalidRequest(HTTPException):
 
 # Class for seeding the data plus vector embeddings into Redis.
 class RedisSearch:
-    def __init__(self, rclient) -> None:
+    def __init__(self, rclient):
         self.rclient = rclient
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
         self.doc_prefix = "doc:"
@@ -261,7 +270,7 @@ if __name__ == "__main__":
     backend_port = os.environ.get("BACKEND_PORT")
 
     if backend_port == None:
-        backend_port = 9001
+        backend_port = 9000
     else:
         backend_port = int(backend_port)
 
