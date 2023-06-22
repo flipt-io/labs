@@ -32,17 +32,8 @@ flags:
     - variant: sarcastic
       rollout: 33.33
 segments:
-- key: admins
-  name: Admins
-  description: User's who can perform admin functionality
-  constraints:
-  - type: STRING_COMPARISON_TYPE
-    property: email
-    operator: suffix
-    value: '@internal.biz'
-  match_type: ALL_MATCH_TYPE
 - key: beta
-  name: beta
+  name: Beta
   description: Beta users who will test our chatbot personas
   match_type: ALL_MATCH_TYPE
 EOF

@@ -1,5 +1,5 @@
 import Module from "components/Module";
 
 export default function BasicModule() {
-  return <Module path="basic" steps={5} />;
+  return <Module name="basic" steps={5} />;
 }

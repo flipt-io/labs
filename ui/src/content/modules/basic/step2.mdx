@@ -1,6 +1,6 @@
 # Guarding the Chat
 
-In the file, `App.tsx` inside the `ui/src` folder, you will find the following code:
+In the file, `Guide.tsx` inside the `ui/src/components` folder, you will find the following code:
 
 ```tsx
 const [chatEnabled, setChatEnabled] = useState(false);
@@ -9,23 +9,20 @@ const client = new FliptApiClient({
   environment: "http://localhost:8080",
 });
 
-useEffect(() => {
-  const checkChatEnabled = async () => {
-    try {
-      const flag = await client.flags.get("default", "chat-enabled");
-      setChatEnabled(flag.enabled);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  checkChatEnabled();
-}, [client.flags]);
+const checkChatEnabled = async () => {
+  try {
+    const flag = await client.flags.get("default", "chat-enabled");
+    setChatEnabled(flag.enabled);
+  } catch (e) {
+    console.log(e);
+  }
+};
 ```
 
 Here we are doing the following:
 
 1. We are creating a new instance of the FliptApiClient
-2. We are using the `useEffect` hook to fetch the flag value from the server
+2. We are using the `useEffect` hook to fetch the flag value from the server when the component is mounted
 3. We are storing the flag value in the `chatEnabled` state variable
 
 Now, we can use the `chatEnabled` variable to conditionally render the chat component:

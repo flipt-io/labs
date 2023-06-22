@@ -24,9 +24,9 @@ services:
     image: flipt/flipt:latest
     container_name: flipt-init
     command: |
-      sh -c '/flipt-adv-init.sh'
+      sh -c '/flipt-init.sh'
     volumes:
-      - ./scripts/flipt-adv-init.sh:/flipt-adv-init.sh
+      - ./scripts/flipt-adv-init.sh:/flipt-init.sh
       - flipt-opt:/var/opt/flipt
 
 

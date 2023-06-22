@@ -2,12 +2,12 @@ import { useState } from "react";
 import Guide from "./Guide";
 
 type ModuleProps = {
-  path: string;
+  name: string;
   steps: number;
 };
 
 export default function Module(props: ModuleProps) {
-  const { path, steps } = props;
+  const { name, steps } = props;
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -21,7 +21,7 @@ export default function Module(props: ModuleProps) {
 
   return (
     <Guide
-      path={path}
+      module={name}
       steps={steps}
       currentStep={currentStep}
       nextStep={nextStep}

@@ -18,11 +18,11 @@ const router = createBrowserRouter([
         path: "/advanced",
         element: <AdvancedModule />,
       },
+      {
+        path: "/gitops",
+        element: <GitOpsModule />,
+      },
     ],
-  },
-  {
-    path: "/gitops",
-    element: <GitOpsModule />,
   },
 ]);
 
