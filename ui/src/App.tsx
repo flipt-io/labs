@@ -7,6 +7,8 @@ import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import Module from "components/Module";
 import Nav from "components/Nav";
+import BasicModule from "components/modules/BasicModule";
+import AdvancedModule from "components/modules/AdvancedModule";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +17,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/basic",
-        element: <Module path="basic" steps={5} />,
+        element: <BasicModule />,
       },
       {
         path: "/advanced",
-        element: <Module path="advanced" steps={5} />,
+        element: <AdvancedModule />,
       },
     ],
   },
