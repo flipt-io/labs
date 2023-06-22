@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Nav from "components/Nav";
 import BasicModule from "components/modules/BasicModule";
 import AdvancedModule from "components/modules/AdvancedModule";
+import GitOpsModule from "components/modules/GitOpsModule";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <AdvancedModule />,
       },
     ],
+  },
+  {
+    path: "/gitops",
+    element: <GitOpsModule />,
   },
 ]);
 

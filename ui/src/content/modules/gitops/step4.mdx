@@ -1,0 +1,51 @@
+# Defining Segments, Constraints, Rules and Variants
+
+Now that we have successfully enabled our chatbot, we can review how to configure Flipts other resources necessary for the `chat-personas` feature flag.
+
+Navigate your browser to the content of [pull request 2](http://localhost:3001/flipt/features/pulls/2/files).
+
+Here we are defining the `chat-personas` feature flag in the same configuration as the advanced tutorial.
+
+```yaml
+- key: chat-personas
+  name: chat-personas
+  description: Allow our chat bot to have different personalities
+  enabled: true
+  variants:
+  - key: default
+  - key: sarcastic
+  - key: liar
+  rules:
+  - segment: beta
+    rank: 1
+    distributions:
+    - variant: default
+      rollout: 33.34
+    - variant: liar
+      rollout: 33.33
+    - variant: sarcastic
+      rollout: 33.33
+segments:
+- key: beta
+  name: Beta
+  description: Beta users who will test our chatbot personas
+  match_type: ALL_MATCH_TYPE
+```
+
+This configuration defines the following:
+
+1. The `chat-personas` flag definition.
+2. A variant definition for each of the personas:
+  - `default`
+  - `sarcastic`
+  - `liar`
+3. A segment called `beta` which matches all requests.
+4. A rule which matches any request in the `beta` segment.
+5. A distribution for each variant with equal proportions.
+
+Once again we're going to:
+
+1. Click `Create merge commit` button on the [pull-request](http://localhost:3001/flipt/features/pulls/2).
+2. Click `Create merge commit` again to confirm the commit message.
+
+Click 'Next' to continue.

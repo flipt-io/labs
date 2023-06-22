@@ -1,0 +1,22 @@
+# Getting started with Gitea
+
+This tutorial uses a project called Gitea, which is an self-hosted alternative to GitHub. This is where our source of truth git repository will live. We're going to review and merge some pull-requests with changes to our Flipt state configured as yaml files.
+
+The following command starts all the necessary backend components for this tutorial:
+
+```
+docker compose -f docker-compose.gitops.yml
+```
+
+Before we continue with the tutorial, we're going to login to Gitea using the following credentials:
+
+```
+username: flipt
+password: password
+```
+
+When the services have all started successfully, you will be able to login to Gitea at [http://localhost:3001/user/login](http://localhost:3001/user/login?redirect_to=%2fflipt%2ffeatures).
+
+![Screenshot of Gitea login page](/images/gitops/gitea-login.png)
+
+Click 'Next' to continue.
