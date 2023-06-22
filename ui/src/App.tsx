@@ -3,7 +3,7 @@ import ChatWindow from "components/ChatWindow";
 import { useState } from "react";
 import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
-import { RouterProvider } from "react-router-dom";
+import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import Module from "components/Module";
 import Nav from "components/Nav";
@@ -11,15 +11,21 @@ import Nav from "components/Nav";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Module path="basic" steps={5} />,
-  },
-  {
-    path: "/advanced",
-    element: <Module path="advanced" steps={5} />,
+    element: <Layout />,
+    children: [
+      {
+        path: "/basic",
+        element: <Module path="basic" steps={5} />,
+      },
+      {
+        path: "/advanced",
+        element: <Module path="advanced" steps={5} />,
+      },
+    ],
   },
 ]);
 
-function App() {
+function Layout() {
   const [chatEnabled, setChatEnabled] = useState(false);
 
   const client = new FliptApiClient({
@@ -44,7 +50,7 @@ function App() {
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
         <main className="mx-auto flex min-h-screen justify-between gap-12 px-6 py-8 lg:py-16">
           <div className="max-w-2/3">
-            <RouterProvider router={router} />
+            <Outlet />
           </div>
           {chatEnabled && (
             <div className="w-1/3">
@@ -59,4 +65,7 @@ function App() {
   );
 }
 
+function App() {
+  return <RouterProvider router={router} />;
+}
 export default App;
