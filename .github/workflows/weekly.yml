@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "*/2 * * * *"
+  pull_request:
 
 permissions:
   contents: write
