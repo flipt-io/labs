@@ -132,8 +132,14 @@ export default function Guide(props: GuideProps) {
         console.log(e);
       }
     };
-    checkChatEnabled();
-  });
+
+    const interval = setInterval(() => {
+      checkChatEnabled();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   let page = "intro";
 
   if (currentStep > 0) {
