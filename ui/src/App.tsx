@@ -5,17 +5,17 @@ import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import BasicModule from "./components/modules/BasicModule";
-import AdvancedModule from "./components/modules/AdvancedModule";
+import Module from "components/Module";
+import Nav from "components/Nav";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <BasicModule />,
+    element: <Module path="basic" steps={5} />,
   },
   {
     path: "/advanced",
-    element: <AdvancedModule />,
+    element: <Module path="advanced" steps={5} />,
   },
 ]);
 
@@ -39,19 +39,22 @@ function App() {
   });
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
-      <main className="mx-auto flex min-h-screen justify-between gap-12 py-16">
-        <div className="max-w-2/3">
-          <RouterProvider router={router} />
-        </div>
-        {chatEnabled && (
-          <div className="w-1/3">
-            <ChatWindow>
-              <Chat />
-            </ChatWindow>
+    <div>
+      <Nav />
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
+        <main className="mx-auto flex min-h-screen justify-between gap-12 py-16">
+          <div className="max-w-2/3">
+            <RouterProvider router={router} />
           </div>
-        )}
-      </main>
+          {chatEnabled && (
+            <div className="w-1/3">
+              <ChatWindow>
+                <Chat />
+              </ChatWindow>
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

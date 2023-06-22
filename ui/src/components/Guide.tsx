@@ -106,14 +106,14 @@ const components = {
 
 type GuideProps = {
   path: string;
-  totalSteps: number;
+  steps: number;
   currentStep: number;
   nextStep: () => void;
   prevStep: () => void;
 };
 
 export default function Guide(props: GuideProps) {
-  const { path, totalSteps, currentStep, nextStep, prevStep } = props;
+  const { path, steps, currentStep, nextStep, prevStep } = props;
 
   let page = "intro";
 
@@ -131,9 +131,11 @@ export default function Guide(props: GuideProps) {
 
   return (
     <article className="prose font-light text-gray-600">
-      <div className="flex flex-col">
-        <Page components={components} />
-        <div className="mt-5 flex flex-row justify-between">
+      <div className="flex flex-col divide-y-2 divide-gray-100">
+        <div>
+          <Page components={components} />
+        </div>
+        <div className="flex flex-row justify-between pt-10">
           <Button
             disabled={currentStep < 1}
             className="px-5 py-3 text-xl font-thin"
@@ -142,7 +144,7 @@ export default function Guide(props: GuideProps) {
             Back
           </Button>
           <Button
-            disabled={currentStep >= totalSteps}
+            disabled={currentStep >= steps}
             className="px-5 py-3 text-xl font-thin"
             onClick={nextStep}
           >
