@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Guide from "../Guide";
+import Guide from "components/Guide";
 
 export default function AdvancedModule() {
   const [currentStep, setCurrentStep] = useState(0);

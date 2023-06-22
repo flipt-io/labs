@@ -1,5 +1,5 @@
-import { Chat } from "./components/Chat";
-import ChatWindow from "./components/ChatWindow";
+import { Chat } from "components/Chat";
+import ChatWindow from "components/ChatWindow";
 import { useState } from "react";
 import { FliptApiClient } from "@flipt-io/flipt";
 import { useEffect } from "react";
@@ -39,8 +39,8 @@ function App() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl flex min-h-screen flex-col">
-      <main className="mx-auto flex justify-between min-h-screen gap-12 py-16">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
+      <main className="mx-auto flex min-h-screen justify-between gap-12 py-16">
         <div className="max-w-2/3">
           <RouterProvider router={router} />
         </div>

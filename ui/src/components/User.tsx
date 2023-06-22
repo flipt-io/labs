@@ -1,6 +1,6 @@
 import { Button } from "./Button";
 import { UserIcon } from "@heroicons/react/24/outline";
-import { useUser } from "../hooks/user";
+import { useUser } from "hooks/user";
 import { useState } from "react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 
