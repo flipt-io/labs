@@ -28,4 +28,4 @@ jobs:
         with:
           context: "{{defaultContext}}:backend"
           push: true
-          tags: ghcr.io/flipt-io/chatbot-example:latest
+          tags: ghcr.io/flipt-io/chatbot-example/backend:latest
