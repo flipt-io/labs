@@ -34,6 +34,6 @@ segments:
     value: '@internal.biz'
   match_type: ALL_MATCH_TYPE
 - key: beta
-  name: beta
+  name: Beta
   description: Beta users who will test our chatbot personas
   match_type: ALL_MATCH_TYPE
