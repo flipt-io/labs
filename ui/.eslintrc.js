@@ -29,7 +29,6 @@ module.exports = {
   },
   plugins: [
     "@typescript-eslint",
-    "@babel",
     "react",
     "jsx-a11y",
     "import",
