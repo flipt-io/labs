@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+  redis-stack:
+    container_name: redis-stack
+    image: redis/redis-stack-server:7.2.0-RC1
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "9000:9000"
+    environment:
+      REDIS_HOST: redis-stack
+      REDIS_PORT: 6379
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    depends_on:
+      - "redis-stack"
+
+  gitea:
+    container_name: gitea
+    build: ./gitea
+    init: true
+    ports:
+      - "3000:3000"
+
+  flipt:
+    image: flipt/flipt:latest
+    container_name: flipt
+    ports:
+      - "8080:8080"
+    environment:
+      FLIPT_CORS_ENABLED: true
+      FLIPT_EXPERIMENTAL_FILESYSTEM_STORAGE_ENABLED: true
+      FLIPT_STORAGE_TYPE: git
+      FLIPT_STORAGE_GIT_REPOSITORY: http://gitea:3000/flipt/features.git
+      FLIPT_STORAGE_GIT_POLL_INTERVAL: 5s
+      FLIPT_STORAGE_GIT_AUTHENTICATION_BASIC_USERNAME: flipt
+      FLIPT_STORAGE_GIT_AUTHENTICATION_BASIC_PASSWORD: password
+    restart: always
