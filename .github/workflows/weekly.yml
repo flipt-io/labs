@@ -2,7 +2,7 @@ name: Weekly Build
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 1" # weekly on Monday @ 12:00 AM UTC
+    - cron: "*/2 * * * *" # weekly on Monday @ 12:00 AM UTC
 
 permissions:
   contents: write
@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -23,7 +26,9 @@ jobs:
           username: "${{ github.repository_owner }}"
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Publish Weekly Image"
-        run: |
-          docker build ./backend --tag ghcr.io/flipt-io/chatbot-backend:latest
-          docker push ghcr.io/flipt-io/chatbot-backend:latest
+      - name: Build and Push Image
+        uses: docker/build-and-push@v4
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/flipt-io/chatbot-backend:latest
