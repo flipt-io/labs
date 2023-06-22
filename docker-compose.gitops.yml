@@ -24,7 +24,7 @@ services:
     build: ./gitea
     init: true
     ports:
-      - "3000:3000"
+      - "3001:3000"
 
   flipt:
     image: flipt/flipt:latest
