@@ -1,16 +1,16 @@
 FROM python:3.9
 
-WORKDIR /app
-
 RUN apt install git
 
-RUN git clone https://github.com/flipt-io/docs.git docs
+WORKDIR /app
 
-COPY *.py /app
+RUN git clone --depth 1 https://github.com/flipt-io/docs.git docs && rm -rf docs/.git
 
 COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
+
+COPY *.py /app
 
 EXPOSE 9000
 
