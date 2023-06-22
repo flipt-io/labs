@@ -2,16 +2,16 @@ name: Weekly Build
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "0 0 * * 1" # Every Monday at 12:00 AM UTC.
   pull_request:
-
-permissions:
-  contents: write
-  packages: write
 
 jobs:
   backend_release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -28,4 +28,4 @@ jobs:
         with:
           context: "{{defaultContext}}:backend"
           push: true
-          tags: ghcr.io/flipt-io/chatbot-backend:latest
+          tags: ghcr.io/flipt-io/chatbot-example:latest
