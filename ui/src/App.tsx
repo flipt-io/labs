@@ -47,23 +47,19 @@ function Layout() {
   });
 
   return (
-    <div>
+    <>
       <Nav />
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
-        <main className="mx-auto flex min-h-screen justify-between gap-12 px-6 py-8 lg:py-16">
-          <div className="max-w-2/3">
-            <Outlet />
-          </div>
+      <div className="flex min-h-screen py-8 md:pl-80">
+        <main className="flex gap-12 px-6">
+          <Outlet />
           {chatEnabled && (
-            <div className="w-1/3">
-              <ChatWindow>
-                <Chat />
-              </ChatWindow>
-            </div>
+            <ChatWindow>
+              <Chat />
+            </ChatWindow>
           )}
         </main>
       </div>
-    </div>
+    </>
   );
 }
 
