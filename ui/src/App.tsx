@@ -42,7 +42,7 @@ function App() {
     <div>
       <Nav />
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
-        <main className="mx-auto flex min-h-screen justify-between gap-12 py-16">
+        <main className="mx-auto flex min-h-screen justify-between gap-12 px-6 py-8 lg:py-16">
           <div className="max-w-2/3">
             <RouterProvider router={router} />
           </div>
