@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable import/no-webpack-loader-syntax */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
 import { useEffect } from "react";
@@ -118,7 +121,6 @@ export default function Guide(props: GuideProps) {
     page = `step${currentStep}`;
   }
 
-  /* eslint-disable import/no-webpack-loader-syntax */
   const Page =
     require(`!babel-loader!@mdx-js/loader!../content/modules/${path}/${page}.mdx`).default;
 
