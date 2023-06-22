@@ -1,6 +1,7 @@
 import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import Nav from "components/Nav";
+import Page from "components/Page";
 import BasicModule from "components/modules/BasicModule";
 import AdvancedModule from "components/modules/AdvancedModule";
 import GitOpsModule from "components/modules/GitOpsModule";
@@ -10,6 +11,17 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
+      {
+        index: true,
+        element: (
+          <>
+            <article className="prose font-light text-gray-600">
+              <Page path="intro" />
+            </article>
+          </>
+        ),
+      },
+
       {
         path: "/basic",
         element: <BasicModule />,

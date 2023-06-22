@@ -20,16 +20,6 @@ services:
     depends_on:
       - "redis-stack"
 
-  flipt-init:
-    image: flipt/flipt:latest
-    container_name: flipt-init
-    command: |
-      sh -c '/flipt-init.sh'
-    volumes:
-      - ./scripts/flipt-basic-init.sh:/flipt-init.sh
-      - flipt-opt:/var/opt/flipt
-
-
   flipt:
     image: flipt/flipt:latest
     container_name: flipt
@@ -37,11 +27,3 @@ services:
       - "8080:8080"
     environment:
       FLIPT_CORS_ENABLED: true
-    volumes:
-      - flipt-opt:/var/opt/flipt
-    depends_on:
-      flipt-init:
-        condition: service_started
-
-volumes:
-  flipt-opt:

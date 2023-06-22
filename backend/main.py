@@ -224,6 +224,7 @@ def chat():
                 sentiment_for_prompt = "helpful"
             res = rs.generate_response(query, pre_prompt, sentiment_for_prompt)
 
+        res = res.strip()
         return jsonify(response=res, sentiment=sentiment)
 
 
