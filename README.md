@@ -1,8 +1,8 @@
 # chatbot-example
 
-This repository serves as an example for helping people getting started with `flipt`.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/chatbot-example?quickstart=1)
 
-It has a `docker-compose` file with multiple components to serve an answer from a prompt that comes in through the API.
+This repository serves as tutorial on how Flipt works and how to integrate it into an application.
 
 ## Architecture
 
@@ -10,11 +10,11 @@ TODO - Add architecture diagram
 
 ## Prerequisites
 
+- [Node.js](https://nodejs.org/en/download/) (v16 or higher)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Usage
 
 1. Clone this repository
-2. Run `docker-compose up --build`
-3. Open `http://localhost:3000` in your browser
+2. Run `./scripts/start`
