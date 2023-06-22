@@ -6,8 +6,11 @@
 
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./Button";
+import { FliptApiClient } from "@flipt-io/flipt";
+import ChatWindow from "./ChatWindow";
+import { Chat } from "./Chat";
 
 const components = {
   h1: (
@@ -114,7 +117,23 @@ type GuideProps = {
 
 export default function Guide(props: GuideProps) {
   const { path, steps, currentStep, nextStep, prevStep } = props;
+  const [chatEnabled, setChatEnabled] = useState(false);
 
+  const client = new FliptApiClient({
+    environment: "http://localhost:8080",
+  });
+
+  useEffect(() => {
+    const checkChatEnabled = async () => {
+      try {
+        const flag = await client.flags.get("default", "chat-enabled");
+        setChatEnabled(flag.enabled);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    checkChatEnabled();
+  });
   let page = "intro";
 
   if (currentStep > 0) {
@@ -130,28 +149,35 @@ export default function Guide(props: GuideProps) {
   });
 
   return (
-    <article className="prose font-light text-gray-600">
-      <div className="flex flex-col divide-y-2 divide-gray-100">
-        <div>
-          <Page components={components} />
+    <>
+      <article className="prose font-light text-gray-600">
+        <div className="flex flex-col divide-y-2 divide-gray-100">
+          <div>
+            <Page components={components} />
+          </div>
+          <div className="flex flex-row justify-between pt-10">
+            <Button
+              disabled={currentStep < 1}
+              className="px-5 py-3 text-xl font-thin"
+              onClick={prevStep}
+            >
+              Back
+            </Button>
+            <Button
+              disabled={currentStep >= steps}
+              className="px-5 py-3 text-xl font-thin"
+              onClick={nextStep}
+            >
+              Next
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-row justify-between pt-10">
-          <Button
-            disabled={currentStep < 1}
-            className="px-5 py-3 text-xl font-thin"
-            onClick={prevStep}
-          >
-            Back
-          </Button>
-          <Button
-            disabled={currentStep >= steps}
-            className="px-5 py-3 text-xl font-thin"
-            onClick={nextStep}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    </article>
+      </article>
+      {chatEnabled && (
+        <ChatWindow>
+          <Chat />
+        </ChatWindow>
+      )}
+    </>
   );
 }
