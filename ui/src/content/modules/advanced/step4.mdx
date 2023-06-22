@@ -1,0 +1,43 @@
+import User from "components/User";
+import InteractiveArrow from "components/InteractiveArrow";
+import Well from "components/Well";
+
+# Test it Out
+
+Now it's time to put all these concepts together and test out our different chatbot personas.
+
+1. Use the component below to input a username. Then click 'Set'.
+
+   The username you enter will be used to mimic a user interacting with our bot and determine the sentiment of the message.
+
+   <Well>
+     <InteractiveArrow subheading="Set a username to mimic a specific user interacting with our bot" />
+     <User />
+   </Well>
+
+2. Ask the chat bot a new question
+3. Try changing the username and asking the same question again
+
+## What Happened?
+
+If everything worked correctly, you should have seen the sentiment of the message change depending on the username you entered.
+
+This is because we are passing the username to our backend API which is then including it as the `evaluationID` in it's request to the Flipt evaluation endpoint.
+
+You can view this code in the `backend/main.py` file:
+
+```python
+TODO
+```
+
+Here we make a request to Flipt to evaluate the `chat-personas` flag with the `evaluationID` we passed in.
+
+Because of how we configured our rule, Flipt determines which variant to return (`sentiment`) based on the `evaluationID`.
+
+This means that for the same user, they will always get the same variant returned!
+
+```python
+TODO
+```
+
+After experimenting with different usernames, click 'Next' to wrap up the tutorial.

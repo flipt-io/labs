@@ -6,19 +6,28 @@ The chatbot will be able to answer questions about your product and documentatio
 
 In order to do this, we'll use [Flipt](https://www.flipt.io). Flipt is an open source, feature flagging application meant to run within your infrastructure and integrate with tools and applications that you likely already have in your stack.
 
-In this example, we'll use feature flags to toggle the chatbot UI on and off without requiring a new code deployment.
+In this tutorial, we'll use feature flags to toggle the chatbot UI on and off without requiring a new code deployment.
 
-After that, we'll demonstrate how to use evaluation to enable rendering the chatbot UI for different users depending on their role. We'll also show how you can leverage GitOps to manage your feature flags without clicking around in the UI at all.
+## What You'll Learn
 
-This example is broken down into a couple of modules to help you get started learning Flipt:
+This module will show you how to:
+
+- Install the Flipt Node SDK
+- Guard a new feature with a Flipt flag in code
+- Create a new feature flag in Flipt
+- Enable a feature flag globaly for all users
+
+## Structure
+
+This repository is broken down into a few modules to help you get started learning Flipt:
 
 1. [Basics](/) - (This module) Learn the basics of Flipt and how to use it to toggle the chatbot UI on and off.
-2. [Advanced](/advanced) - Learn how to use Flipt to enable the chatbot UI for different users depending on their role.
+2. [Advanced](/advanced) - Learn how to use Flipt to experiment with different chatbot sentiments.
 3. [GitOps](/gitops) - Learn how to use GitOps to manage your feature flags without clicking around in the UI at all.
 
 ## Prerequisites
 
-In order to complete these modules, you'll need the following installed on your machine:
+In order to complete this module, you'll need the following installed on your machine:
 
 - [Node.js](https://nodejs.org/en/download/) (v16 or higher)
 - [Docker](https://docs.docker.com/get-docker/)

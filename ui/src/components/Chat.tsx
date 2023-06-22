@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
-import { useCookies } from "react-cookie";
-
-const COOKIE_NAME = "flipt-chatbot-id";
+import { useUser } from "hooks/user";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [
@@ -14,7 +12,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="clear-both mt-3 flex">
+  <div className="clear-both my-3 flex">
     <input
       type="text"
       aria-label="chat input"
@@ -49,15 +47,7 @@ export function Chat() {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies([COOKIE_NAME]);
-
-  useEffect(() => {
-    if (!cookie[COOKIE_NAME]) {
-      // generate a semi random short id
-      const randomId = Math.random().toString(36).substring(7);
-      setCookie(COOKIE_NAME, randomId);
-    }
-  }, [cookie, setCookie]);
+  const { user } = useUser();
 
   const sendMessage = async (input: string) => {
     setLoading(true);
@@ -73,6 +63,7 @@ export function Chat() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        user: user,
         prompt: input,
       }),
     });
@@ -94,7 +85,7 @@ export function Chat() {
   };
 
   return (
-    <div className="h-fit rounded-2xl border border-zinc-200 bg-slate-50/95 p-6 lg:h-full">
+    <div className="h-full overflow-y-auto rounded-2xl border border-zinc-200 bg-slate-50/95 p-6">
       <div className="flex h-full flex-col justify-between gap-2 divide-y-2 divide-gray-200">
         <div>
           {messages.map(({ content, role }, index) => (

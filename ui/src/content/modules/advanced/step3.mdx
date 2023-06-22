@@ -1,0 +1,29 @@
+# Variants and Rules
+
+Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
+
+Click on the `chat-personas` flag that we have created.
+
+![chat-personas Flag](/images/advanced/personas-flag.png)
+
+Scroll down to the 'Variants' section and notice that we have pre-populated three variants:
+
+- `default`
+- `sarcastic`
+- `liar`
+
+These variants are the values that we will use to determine which sentiment our chatbot has when communication with our users.
+
+Next, click on the 'Evaluation' tab to see the rule that we have pre-populated.
+
+![chat-personas Rule](/images/advanced/personas-rule.png)
+
+This rule will be used to determine which variant to use for a given user.
+
+Notice that there is about a 33% chance for each variant to be selected.
+
+The `evaluationId` of the evaluation request is used to determine which variant is returned. This is used to ensure that the same user always gets the same variant.
+
+More on this in the next step.
+
+Click 'Next' to continue.
