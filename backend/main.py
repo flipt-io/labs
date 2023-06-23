@@ -198,9 +198,9 @@ def chat():
         query = data["prompt"]
         user = data["user"]
 
-        # Default the sentiment and pre_prompt to still provide a response to the user
+        # Default the persona and pre_prompt to still provide a response to the user
         # despite networking issues with Flipt.
-        sentiment = "default"
+        persona = "default"
         pre_prompt = default_pre_prompt
 
         try:
@@ -213,7 +213,7 @@ def chat():
             )
 
             if eval_resp != None:
-                sentiment = eval_resp.value
+                persona = eval_resp.value
                 try:
                     attachment = json.loads(eval_resp.attachment)
                     pre_prompt = attachment["prompt"]
@@ -222,13 +222,13 @@ def chat():
                     pass
         except:
             print(
-                "error communicating with flipt server, defaulting to original prompts and sentiment..."
+                "error communicating with flipt server, defaulting to original prompts and persona..."
             )
             pass
 
-        res = responses.flipt_responses[sentiment][random.randint(0, 9)]
+        res = responses.flipt_responses[persona][random.randint(0, 9)]
         if openai_api_key != None:
-            sentiment_for_prompt = sentiment
+            sentiment_for_prompt = persona
             if sentiment_for_prompt == "liar":
                 sentiment_for_prompt = "deceitful"
             if sentiment_for_prompt == "default":
@@ -236,7 +236,7 @@ def chat():
             res = rs.generate_response(query, pre_prompt, sentiment_for_prompt)
 
         res = res.strip()
-        return jsonify(response=res, sentiment=sentiment)
+        return jsonify(response=res, persona=persona)
 
 
 # Generic error handler

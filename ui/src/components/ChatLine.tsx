@@ -2,9 +2,12 @@ import clsx from "clsx";
 
 type ChatGPTAgent = "user" | "system" | "assistant";
 
+type ChatGPTPersona = "default" | "sarcastic" | "liar";
+
 export interface ChatGPTMessage {
   role: ChatGPTAgent;
   content: string;
+  persona?: ChatGPTPersona;
 }
 
 // loading placeholder animation for the chat line
@@ -36,11 +39,15 @@ const convertNewLines = (text: string) =>
     </span>
   ));
 
-export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
+export function ChatLine({
+  role = "assistant",
+  content,
+  persona,
+}: ChatGPTMessage) {
   if (!content) {
     return null;
   }
-  const formatteMessage = convertNewLines(content);
+  const formattedMessage = convertNewLines(content);
 
   return (
     <div
@@ -58,20 +65,24 @@ export function ChatLine({ role = "assistant", content }: ChatGPTMessage) {
       >
         <div className="flex space-x-3">
           <div className="flex-1 gap-4">
-            <p className="font-large text-xxl text-gray-900">
+            <p className="font-large text-xxl relative text-gray-900">
               <span className="hover:underline">
                 {role === "assistant" ? "AI" : "You"}
               </span>
             </p>
             <p
               className={clsx(
-                "text ",
+                "text relative ",
                 role === "assistant"
                   ? "font-light text-gray-600"
                   : "text-gray-400"
               )}
             >
-              {formatteMessage}
+              <span className="absolute -bottom-4 -right-4">
+                {persona === "sarcastic" && role === "assistant" ? "😏" : ""}
+                {persona === "liar" && role === "assistant" ? "😜" : ""}
+              </span>
+              {formattedMessage}
             </p>
           </div>
         </div>
