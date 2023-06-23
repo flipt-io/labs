@@ -1,20 +1,23 @@
 # Editing Flag State With Git
 
-It is one thing to review a flag state change and another to make the change yourself using `git`.
+It is one thing to review a flag state change and another to make the change yourself using `git` and your editor.
 So we're going to do just that.
 
-First, you're going to clone the features repository locally into a folder called `features`.
-From the root of the chatbot example repository do the following:
+First, you're going to clone the features repository locally into a folder called `features`:
+
+1. From the root of the chatbot example repository do the following:
 
 ```sh
-git clone http://flipt:password@localhost:3001/flipt/features.git features
+git clone http://flipt:password@localhost:3001/flipt/features.git \
+  features
 
 cd features
 ```
 
 Now you're in the `flipt/features` repository you can edit the `features.yml` file manually.
-Using an editor of your choice, lets open `features.yml`.
-Once open we're going to change the distribution of the `sarcastic` variant to 100 percent.
+
+2. Using an editor of your choice, open `features.yml`.
+3. Once open, change the distribution of the `sarcastic` variant to 100 percent.
 
 ```yaml
 - key: chat-personas
@@ -42,9 +45,7 @@ segments:
   match_type: ALL_MATCH_TYPE
 ```
 
-Your file contents should now look just like this example here.
-
-Next we're to add, commit and push this as a commit directly onto the `main` branch.
+4. Finally, add, commit and push this as a commit directly onto the `main` branch.
 
 ```sh
 git add features.yml
@@ -55,3 +56,5 @@ git push origin main
 ```
 
 Congratulations, now everyone gets to enjoy our sarcastic chatbot.
+
+Click 'Next' to wrap up the tutorial.

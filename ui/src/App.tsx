@@ -42,7 +42,7 @@ function Layout() {
   return (
     <>
       <Nav />
-      <div className="flex min-h-screen py-8 md:pl-80">
+      <div className="flex min-h-screen py-8 md:pl-80 md:pr-96">
         <main className="px-6">
           <Outlet />
         </main>

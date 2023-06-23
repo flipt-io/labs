@@ -12,7 +12,7 @@ export const initialMessages: ChatGPTMessage[] = [
 ];
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
-  <div className="clear-both my-3 flex">
+  <div className="clear-both mt-3 flex">
     <input
       type="text"
       aria-label="chat input"
