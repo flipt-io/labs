@@ -29,7 +29,7 @@ export default function Guide(props: GuideProps) {
         const flag = await client.flags.get("default", "chat-enabled");
         setChatEnabled(flag.enabled);
       } catch (e) {
-        //
+        // ignore
       }
     };
 
