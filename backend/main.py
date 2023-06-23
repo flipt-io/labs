@@ -172,12 +172,10 @@ class RedisSearch:
 
 # Request handler for /config endpoint
 def config():
-    # Get the config from the environment variables.
-    openai_api_key = os.environ.get("OPENAI_API_KEY")
-    flipt_server_addr = os.environ.get("FLIPT_SERVER_ADDR")
+    cfg = {'openai_api_key': os.environ.get("OPENAI_API_KEY"), 'flipt_server_addr': os.environ.get("FLIPT_SERVER_ADDR")}
 
     if request.method == "GET":
-        return jsonify({"openai_api_key": openai_api_key, "flipt_server_addr": flipt_server_addr})
+        return jsonify(cfg)
 
 
 # Request handler for /chat endpoint
