@@ -69,11 +69,13 @@ export default function Nav() {
                 </Transition.Child>
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
                   <div className="flex h-16 shrink-0 items-center">
-                    <img
-                      className="h-10 w-auto"
-                      src="/images/logo.svg"
-                      alt="Flipt"
-                    />
+                    <NavLink to="/">
+                      <img
+                        className="h-10 w-auto"
+                        src="/images/logo.svg"
+                        alt="Flipt"
+                      />
+                    </NavLink>
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
@@ -116,10 +118,13 @@ export default function Nav() {
       {/* Static sidebar for desktop */}
       <div className="hidden md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6">
-          <div className="mt-4 flex h-fit w-full shrink-0 items-center">
+          <NavLink
+            to="/"
+            className="mt-4 flex h-fit w-full shrink-0 items-center"
+          >
             <img className="h-10 w-auto" src="/images/logo.svg" alt="Flipt" />
             <p className="ml-2 font-semibold text-white">Flipt Demo</p>
-          </div>
+          </NavLink>
           <nav className="flex flex-1 flex-col">
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
               Tutorials
