@@ -72,11 +72,17 @@ export default function Nav() {
                     <img
                       className="h-10 w-auto"
                       src="/images/logo.svg"
-                      alt="Flipt Company"
+                      alt="Flipt"
                     />
                   </div>
                   <nav className="flex flex-1 flex-col">
-                    <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
+                      Tutorials
+                    </p>
+                    <ul
+                      role="list"
+                      className="mt-4 flex flex-1 flex-col gap-y-7"
+                    >
                       <li>
                         <ul role="list" className="-mx-2 space-y-1">
                           {navigation.map((item) => (
