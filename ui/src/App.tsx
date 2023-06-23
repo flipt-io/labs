@@ -2,12 +2,14 @@ import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import Nav from "components/Nav";
 import Page from "components/Page";
-import BasicModule from "components/modules/BasicModule";
-import AdvancedModule from "components/modules/AdvancedModule";
-import GitOpsModule from "components/modules/GitOpsModule";
+import Guide from "components/Guide";
 import Footer from "components/Footer";
 import { useEffect, useState } from "react";
 import Notification from "components/Notification";
+
+const BasicGuide = () => <Guide module={"basic"} steps={5} />;
+const AdvancedGuide = () => <Guide module={"advanced"} steps={5} />;
+const GitOpsGuide = () => <Guide module={"gitops"} steps={6} />;
 
 const router = createBrowserRouter([
   {
@@ -24,18 +26,29 @@ const router = createBrowserRouter([
           </>
         ),
       },
-
+      {
+        path: "/basic/:step",
+        element: <BasicGuide />,
+      },
       {
         path: "/basic",
-        element: <BasicModule />,
+        element: <BasicGuide />,
+      },
+      {
+        path: "/advanced/:step",
+        element: <AdvancedGuide />,
       },
       {
         path: "/advanced",
-        element: <AdvancedModule />,
+        element: <AdvancedGuide />,
+      },
+      {
+        path: "/gitops/:step",
+        element: <GitOpsGuide />,
       },
       {
         path: "/gitops",
-        element: <GitOpsModule />,
+        element: <GitOpsGuide />,
       },
     ],
   },
