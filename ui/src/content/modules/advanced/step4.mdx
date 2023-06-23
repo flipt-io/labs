@@ -20,24 +20,41 @@ Now it's time to put all these concepts together and test out our different chat
 
 ## What Happened?
 
-If everything worked correctly, you should have seen the sentiment of the message change depending on the username you entered.
+If everything worked correctly, you should have seen the sentiment of the chatbot responses change depending on the username you entered.
 
-This is because we are passing the username to our backend API which is then including it as the `evaluationID` in it's request to the Flipt evaluation endpoint.
+This is because we are passing the username to our backend API which is then including it as the `entityId` in it's request to the Flipt evaluation endpoint.
 
 You can view this code in the `backend/main.py` file:
 
 ```python
-TODO
+flag_key = os.environ.get("FLIPT_FLAG_KEY") or "chat-personas"
+...
+
+user = data["user"]
+...
+
+eval_request = evaluationRequest(
+    flagKey=flag_key, entityId=user, context={}
+)
+
+eval_resp = flipt_api.evaluate.evaluate(
+    namespace_key="default", request=eval_request
+)
 ```
 
-Here we make a request to Flipt to evaluate the `chat-personas` flag with the `evaluationID` we passed in.
+Above, we make a request to Flipt using [flipt-python](https://github.com/flipt-io/flipt-python) to evaluate the `chat-personas` flag with the `entityId` we've been passed.
 
-Because of how we configured our rule, Flipt determines which variant to return (`sentiment`) based on the `evaluationID`.
+Because of how we configured our rule, Flipt determines which variant to return (`sentiment`) based on the `entityId`.
 
-This means that for the same user, they will always get the same variant returned!
+Each variant also has an "attachment" property which is just a JSON encoded string (if provided) to give metadata for each variant.
 
 ```python
-TODO
+attachment = json.loads(eval_resp.attachment)
+pre_prompt = attachment["prompt"]
 ```
+
+In this case we utilized the "attachment" to store part of our prompt which is engineered to craft the sentiment of the AI model.
+
+Flipt evaluations are also "sticky" based on the user in this example, which is why you'll see users maintaining the sentiment they were assigned at first!
 
 After experimenting with different usernames, click 'Next' to wrap up the tutorial.
