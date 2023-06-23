@@ -1,33 +1,40 @@
+import Well from "components/Well";
+
 # Creating the Flag
 
 In this section, we will create a new flag in Flipt.
 
 ## Setup
 
-In the root of the project, run the following command to start the Flipt server and our other backend services required for this tutorial:
+<Well>
+**Required**: In the root of the project, run the following command to start the Flipt server and our other backend services required for this tutorial:
 
 ```bash
 docker-compose -f docker-compose.basic.yml up
 ```
 
+</Well>
+
 Once initialized, the Flipt server will be running on port `8080`.
 
 ## Creating the Flag
 
-Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI.
+1. Click the link [http://localhost:8080/](http://localhost:8080/) to open the Flipt UI
 
 ![Flags](/images/basic/flags.png)
 
-Next, click on the 'New Flag' button to create a new flag.
+2. Next, click on the 'New Flag' button to create a new flag
 
 ![New Flag](/images/basic/new-flag.png)
 
-Enter the following details:
+3. Enter the following details:
 
+```
 - Name: `Chat Enabled`
 - Key: `chat-enabled`
 - Description: `Enable chat for all users`
+```
 
-Finally, click the 'Enabled' toggle to enable the flag and then click the 'Create' button.
+4. Click 'Create'
 
 Click 'Next' to continue.

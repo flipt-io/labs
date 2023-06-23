@@ -1,3 +1,5 @@
+import Well from "components/Well";
+
 # Evaluation
 
 In this tutorial, we will make use of a concept in Flipt called [evaluation](https://www.flipt.io/docs/concepts#evaluation).
@@ -8,11 +10,16 @@ Evaluation is a powerful concept in Flipt that allows you to create complex rule
 Because we want to keep this tutorial simple, we will only be creating a single rule.
 We will also use some pre-populated data include the flag, [variants](https://www.flipt.io/docs/concepts#variants) and the [segment](https://www.flipt.io/docs/concepts#segments) in order to reduce the amount of clicking required in the Flipt UI.
 
-Run the following command in a terminal from the root of this repository to start a new Flipt instance:
+## Setup
+
+<Well>
+**Required:** Run the following command in a terminal from the root of this repository to start a new Flipt instance:
 
 ```bash
 docker-compose -f docker-compose.advanced.yml up
 ```
+
+</Well>
 
 Once initialized, the Flipt server will be running on port `8080`.
 

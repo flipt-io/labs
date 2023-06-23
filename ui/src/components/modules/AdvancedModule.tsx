@@ -1,24 +1,5 @@
-import { useState } from "react";
-import Guide from "components/Guide";
+import Module from "components/Module";
 
 export default function AdvancedModule() {
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  return (
-    <Guide
-      path="advanced"
-      totalSteps={5}
-      currentStep={currentStep}
-      nextStep={nextStep}
-      prevStep={prevStep}
-    />
-  );
+  return <Module name="advanced" steps={5} />;
 }

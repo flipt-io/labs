@@ -1,64 +1,57 @@
-import { Chat } from "components/Chat";
-import ChatWindow from "components/ChatWindow";
-import { useState } from "react";
-import { FliptApiClient } from "@flipt-io/flipt";
-import { useEffect } from "react";
-import { RouterProvider } from "react-router-dom";
+import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import BasicModule from "./components/modules/BasicModule";
-import AdvancedModule from "./components/modules/AdvancedModule";
-import GitOpsModule from "./components/modules/GitOpsModule";
+import Nav from "components/Nav";
+import Page from "components/Page";
+import BasicModule from "components/modules/BasicModule";
+import AdvancedModule from "components/modules/AdvancedModule";
+import GitOpsModule from "components/modules/GitOpsModule";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <BasicModule />,
-  },
-  {
-    path: "/advanced",
-    element: <AdvancedModule />,
-  },
-  {
-    path: "/gitops",
-    element: <GitOpsModule />,
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: (
+          <>
+            <article className="prose font-light text-gray-600">
+              <Page path="intro" />
+            </article>
+          </>
+        ),
+      },
+
+      {
+        path: "/basic",
+        element: <BasicModule />,
+      },
+      {
+        path: "/advanced",
+        element: <AdvancedModule />,
+      },
+      {
+        path: "/gitops",
+        element: <GitOpsModule />,
+      },
+    ],
   },
 ]);
 
-function App() {
-  const [chatEnabled, setChatEnabled] = useState(false);
-
-  const client = new FliptApiClient({
-    environment: "http://localhost:8080",
-  });
-
-  useEffect(() => {
-    const checkChatEnabled = async () => {
-      try {
-        const flag = await client.flags.get("default", "chat-enabled");
-        setChatEnabled(flag.enabled);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    checkChatEnabled();
-  });
-
+function Layout() {
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col">
-      <main className="mx-auto flex min-h-screen justify-between gap-12 py-16">
-        <div className="max-w-2/3">
-          <RouterProvider router={router} />
-        </div>
-        {chatEnabled && (
-          <div className="w-1/3">
-            <ChatWindow>
-              <Chat />
-            </ChatWindow>
-          </div>
-        )}
-      </main>
-    </div>
+    <>
+      <Nav />
+      <div className="flex min-h-screen py-8 md:pl-80 md:pr-96">
+        <main className="px-6">
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 }
 
+function App() {
+  return <RouterProvider router={router} />;
+}
 export default App;
