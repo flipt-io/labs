@@ -170,6 +170,16 @@ class RedisSearch:
         return answer
 
 
+# Request handler for /config endpoint
+def config():
+    # Get the config from the environment variables.
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+    flipt_server_addr = os.environ.get("FLIPT_SERVER_ADDR")
+
+    if request.method == "GET":
+        return jsonify({"openai_api_key": openai_api_key, "flipt_server_addr": flipt_server_addr})
+
+
 # Request handler for /chat endpoint
 def chat():
     if request.method == "POST":
@@ -248,7 +258,7 @@ def create_app():
     r = redis.Redis(host=redis_host, port=redis_port)
 
     app = Flask(__name__)
-    CORS(app, resources={r"/chat/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": "*"}})
     rs = RedisSearch(r)
 
     if not rs.is_data_present():
@@ -258,6 +268,7 @@ def create_app():
     app.config["REDIS_SEARCH"] = rs
 
     app.add_url_rule("/chat", "chat", chat, methods=["POST"])
+    app.add_url_rule("/config", "config", config, methods=["GET"])
     app.register_error_handler(HTTPException, handle_exception)
 
     return app
