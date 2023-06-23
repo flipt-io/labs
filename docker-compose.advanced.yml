@@ -29,7 +29,6 @@ services:
       - ./scripts/flipt-adv-init.sh:/flipt-init.sh
       - flipt-opt:/var/opt/flipt
 
-
   flipt:
     image: flipt/flipt:latest
     container_name: flipt
