@@ -31,6 +31,7 @@ export default function Guide(props: GuideProps) {
       }
     };
 
+    checkChatEnabled();
     const interval = setInterval(() => {
       checkChatEnabled();
     }, 5000);
