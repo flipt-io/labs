@@ -4,17 +4,19 @@ import { FliptApiClient } from "@flipt-io/flipt";
 import ChatWindow from "./ChatWindow";
 import { Chat } from "./Chat";
 import Page from "./Page";
+import { useParams, useNavigate } from "react-router-dom";
 
 type GuideProps = {
   module: string;
   steps: number;
-  currentStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
 };
 
 export default function Guide(props: GuideProps) {
-  const { module, steps, currentStep, nextStep, prevStep } = props;
+  const { module, steps } = props;
+
+  const params = useParams();
+  const navigate = useNavigate();
+
   const [chatEnabled, setChatEnabled] = useState(false);
 
   const client = new FliptApiClient({
@@ -27,7 +29,7 @@ export default function Guide(props: GuideProps) {
         const flag = await client.flags.get("default", "chat-enabled");
         setChatEnabled(flag.enabled);
       } catch (e) {
-        console.log(e);
+        //
       }
     };
 
@@ -40,9 +42,14 @@ export default function Guide(props: GuideProps) {
   }, []);
 
   let page = "intro";
+  let currentStep = 0;
 
-  if (currentStep > 0) {
-    page = `step${currentStep}`;
+  if (params.step) {
+    currentStep = parseInt(params.step);
+
+    if (currentStep > 0) {
+      page = `step${currentStep}`;
+    }
   }
 
   const path = `modules/${module}/${page}`;
@@ -58,14 +65,22 @@ export default function Guide(props: GuideProps) {
             <Button
               disabled={currentStep < 1}
               className="px-5 py-3 text-xl font-thin"
-              onClick={prevStep}
+              onClick={() => {
+                if (currentStep > 1) {
+                  navigate(`/${module}/${currentStep - 1}`);
+                  return;
+                }
+                navigate(`/${module}`);
+              }}
             >
               Back
             </Button>
             <Button
               disabled={currentStep >= steps}
               className="px-5 py-3 text-xl font-thin"
-              onClick={nextStep}
+              onClick={() => {
+                navigate(`/${module}/${currentStep + 1}`);
+              }}
             >
               Next
             </Button>
