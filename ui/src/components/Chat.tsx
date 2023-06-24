@@ -78,7 +78,11 @@ export function Chat() {
 
     setMessages([
       ...newMessages,
-      { role: "assistant", content: data.response } as ChatGPTMessage,
+      {
+        role: "assistant",
+        content: data.response,
+        persona: data.persona,
+      } as ChatGPTMessage,
     ]);
 
     setLoading(false);
@@ -88,8 +92,13 @@ export function Chat() {
     <div className="h-full overflow-y-auto rounded-2xl border border-zinc-200 bg-slate-50/95 p-6">
       <div className="flex h-full flex-col justify-between gap-2 divide-y-2 divide-gray-200">
         <div>
-          {messages.map(({ content, role }, index) => (
-            <ChatLine key={index} role={role} content={content} />
+          {messages.map(({ content, role, persona }, index) => (
+            <ChatLine
+              key={index}
+              role={role}
+              content={content}
+              persona={persona}
+            />
           ))}
 
           {loading && <LoadingChatLine />}
