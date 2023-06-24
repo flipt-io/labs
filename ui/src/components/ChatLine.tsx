@@ -80,7 +80,7 @@ export function ChatLine({
             >
               <span className="absolute -bottom-4 -right-4">
                 {persona === "sarcastic" && role === "assistant" ? "😏" : ""}
-                {persona === "liar" && role === "assistant" ? "😜" : ""}
+                {persona === "liar" && role === "assistant" ? "😈" : ""}
               </span>
               {formattedMessage}
             </p>
