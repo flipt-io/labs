@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "./Button";
+import Button from "./Button";
 import { FliptApiClient } from "@flipt-io/flipt";
 import ChatWindow from "./ChatWindow";
+import Steps from "./Steps";
 import { Chat } from "./Chat";
 import Page from "./Page";
 import { useParams, useNavigate } from "react-router-dom";
@@ -56,37 +57,40 @@ export default function Guide(props: GuideProps) {
 
   return (
     <>
-      <article className="prose font-light text-gray-600">
-        <div className="flex flex-col divide-y-2 divide-gray-100">
-          <div>
-            <Page path={path} />
+      <div className="flex flex-col">
+        <Steps steps={steps} currentStep={currentStep} />
+        <article className="prose font-light text-gray-600">
+          <div className="divide-y-2 divide-gray-100">
+            <div>
+              <Page path={path} />
+            </div>
+            <div className="flex flex-row justify-between pt-10">
+              <Button
+                disabled={currentStep < 1}
+                className="px-5 py-3 text-xl font-thin"
+                onClick={() => {
+                  if (currentStep > 1) {
+                    navigate(`/${module}/${currentStep - 1}`);
+                    return;
+                  }
+                  navigate(`/${module}`);
+                }}
+              >
+                Back
+              </Button>
+              <Button
+                disabled={currentStep >= steps}
+                className="px-5 py-3 text-xl font-thin"
+                onClick={() => {
+                  navigate(`/${module}/${currentStep + 1}`);
+                }}
+              >
+                Next
+              </Button>
+            </div>
           </div>
-          <div className="flex flex-row justify-between pt-10">
-            <Button
-              disabled={currentStep < 1}
-              className="px-5 py-3 text-xl font-thin"
-              onClick={() => {
-                if (currentStep > 1) {
-                  navigate(`/${module}/${currentStep - 1}`);
-                  return;
-                }
-                navigate(`/${module}`);
-              }}
-            >
-              Back
-            </Button>
-            <Button
-              disabled={currentStep >= steps}
-              className="px-5 py-3 text-xl font-thin"
-              onClick={() => {
-                navigate(`/${module}/${currentStep + 1}`);
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
       {chatEnabled && (
         <ChatWindow>
           <Chat />
