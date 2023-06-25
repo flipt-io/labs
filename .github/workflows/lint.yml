@@ -30,3 +30,12 @@ jobs:
           npm ci
           npm run lint
         working-directory: ui
+
+  vale:
+    name: "Lint Markdown"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: errata-ai/vale-action@reviewdog
+        with:
+          files: "./ui/src/content"
