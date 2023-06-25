@@ -67,7 +67,7 @@ export default function Guide(props: GuideProps) {
             <div className="flex flex-row justify-between pt-10">
               <Button
                 disabled={currentStep < 1}
-                className="px-5 py-3 text-xl font-thin"
+                className="px-5 py-2 text-lg"
                 onClick={() => {
                   if (currentStep > 1) {
                     navigate(`/${module}/${currentStep - 1}`);
@@ -80,7 +80,7 @@ export default function Guide(props: GuideProps) {
               </Button>
               <Button
                 disabled={currentStep >= steps}
-                className="px-5 py-3 text-xl font-thin"
+                className="px-5 py-2 text-lg"
                 onClick={() => {
                   navigate(`/${module}/${currentStep + 1}`);
                 }}
