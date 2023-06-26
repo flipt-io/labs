@@ -12,7 +12,7 @@ on:
 
 jobs:
   chatbot-backend-lint:
-    name: "Chatbot - Lint Python"
+    name: "Lint Python"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
           black_args: "./chatbot/backend --check"
 
   chatbot-frontend-lint:
-    name: "Chatbot - Lint Frontend"
+    name: "Lint Frontend"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
         working-directory: chatbot/frontend
 
   chatbot-vale:
-    name: "Chatbot - Lint Markdown"
+    name: "Lint Markdown"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
