@@ -12,7 +12,7 @@ In particular, this application demonstrates how to use Flipt to:
 - Use segmentation to determine which sentiment or persona the chatbot should use based on the user's username.
 - Use Git as a source of truth and leveraging GitOps for feature flag data showing how to use Flipt without a UI.
 
-The chatbot is designed to answer questions about Flipt. If you enable OPENAI support, by setting the `OPENAI_API_KEY` environment variable, you will get much better answers as the chatbot will use the OpenAI API to generate answers that are based on our live documentation (<https://flipt.io/docs>)
+The chatbot is designed to answer questions about Flipt. If you enable OpenAI support, by setting the `OPENAI_API_KEY` environment variable, you will get much better answers as the chatbot will use the OpenAI API to generate answers that are based on our live documentation (<https://flipt.io/docs>)
 
 If you don't have an OpenAI API key, you can still use the chatbot, but the answers will be much more limited as they are based on a static set of answers that are included in the application.
 
