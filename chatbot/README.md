@@ -8,7 +8,7 @@ This application is designed to be a set of interactive tutorials on how to use 
 
 In particular, this application demonstrates how to use Flipt to:
 
-- Use a simple feature flag to control the availability of the chatbot
+- Use a simple feature flag to control the availability of the chatbot.
 - Use segmentation to determine which sentiment or persona the chatbot should use based on the user's username.
 - Use Git as a source of truth and leveraging GitOps for feature flag data showing how to use Flipt without a UI.
 
