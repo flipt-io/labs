@@ -5,7 +5,7 @@ on:
     - cron: "0 0 * * 1" # Every Monday at 12:00 AM UTC.
 
 jobs:
-  chatbot_backend_release:
+  chatbot-backend-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
