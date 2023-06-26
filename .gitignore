@@ -1,3 +1,5 @@
 venv/
 features/
 .vscode/
+.vale/styles/*
+!.vale/styles/Flipt

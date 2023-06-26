@@ -1,0 +1,8 @@
+extends: capitalization
+message: "'%s' should be in title case"
+scope: heading
+level: error
+match: $title
+style: AP
+exceptions:
+  - ^v([0-9]+)\.([0-9]+)\.([0-9]+)
