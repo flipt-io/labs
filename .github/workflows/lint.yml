@@ -8,7 +8,7 @@ on:
 
 jobs:
   python-lint:
-    name: "Lint Python"
+    name: "Chatbot - Lint Python"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,8 +16,8 @@ jobs:
         with:
           black_args: "./chatbot/backend --check"
 
-  ui-lint:
-    name: "Lint UI"
+  frontend-lint:
+    name: "Chatbot - Lint Frontend"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,17 +25,17 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-          cache-dependency-path: chatbot/ui/package-lock.json
+          cache-dependency-path: chatbot/frontend/package-lock.json
       - run: |
           npm ci
           npm run lint
-        working-directory: chatbot/ui
+        working-directory: chatbot/frontend
 
   vale:
-    name: "Lint Markdown"
+    name: "Chatbot - Lint Markdown"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
         with:
-          files: "./chatbot/ui/src/content"
+          files: "./chatbot/frontend/src/content"
