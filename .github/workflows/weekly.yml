@@ -5,7 +5,7 @@ on:
     - cron: "0 0 * * 1" # Every Monday at 12:00 AM UTC.
 
 jobs:
-  backend_release:
+  chatbot_backend_release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -25,7 +25,7 @@ jobs:
           username: "${{ github.repository_owner }}"
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Build and Push Chatbot Docker Image"
+      - name: "Chatbot Backend Docker Image"
         uses: docker/build-push-action@v4
         with:
           context: "{{defaultContext}}:chatbot:backend"
