@@ -2,6 +2,6 @@
 
 set -e
 
-pushd ui
+pushd frontend
 npm i && npm run start
 popd

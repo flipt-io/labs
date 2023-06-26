@@ -1,23 +1,27 @@
-name: Lint
+name: Chatbot
 on:
   push:
     branches:
       - main
+    paths:
+      - "chatbot/**"
   pull_request:
+    paths:
+      - "chatbot/**"
   workflow_dispatch:
 
 jobs:
-  python-lint:
+  chatbot-backend-lint:
     name: "Lint Python"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: rickstaa/action-black@v1
         with:
-          black_args: "./backend --check"
+          black_args: "./chatbot/backend --check"
 
-  ui-lint:
-    name: "Lint UI"
+  chatbot-frontend-lint:
+    name: "Lint Frontend"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,17 +29,17 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-          cache-dependency-path: ui/package-lock.json
+          cache-dependency-path: chatbot/frontend/package-lock.json
       - run: |
           npm ci
           npm run lint
-        working-directory: ui
+        working-directory: chatbot/frontend
 
-  vale:
+  chatbot-vale:
     name: "Lint Markdown"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
         with:
-          files: "./ui/src/content"
+          files: "./chatbot/frontend/src/content"

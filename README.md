@@ -1,12 +1,16 @@
-# chatbot-example
+# Flipt Labs
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/chatbot-example?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?quickstart=1)
 
-This repository serves as tutorial on how Flipt works and how to integrate it into an application.
+This repository serves as a location to explore [Flipt](https://www.flipt.io) use-cases and configurations.
 
-## Architecture
+Each subdirectory is a self-contained example that can be run locally.
 
-TODO - Add architecture diagram
+We'll be adding more examples over time, so check back often!
+
+## Examples
+
+- [Chatbot](./chatbot/README.md)
 
 ## Prerequisites
 
@@ -17,4 +21,9 @@ TODO - Add architecture diagram
 ## Usage
 
 1. Clone this repository
-2. Run `./scripts/start`
+1. `cd` into a subdirectory directory (e.g. `cd chatbot`)
+1. Run `./scripts/start`
+
+## Troubleshooting
+
+If you run into any issues, please [open an issue](https://github.com/flipt-io/labs/issues/new) and we'll get back to you as soon as we can.

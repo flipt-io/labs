@@ -123,35 +123,40 @@ export default function Nav() {
             className="mt-4 flex h-fit w-full shrink-0 items-center"
           >
             <img className="h-10 w-auto" src="/images/logo.svg" alt="Flipt" />
-            <p className="ml-2 font-semibold text-white">Flipt Demo</p>
+            <p className="ml-2 font-semibold text-white">Flipt Labs</p>
           </NavLink>
           <nav className="flex flex-1 flex-col">
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
-              Tutorials
+              Chatbot
             </p>
-            <ul role="list" className="mt-4 flex flex-1 flex-col gap-y-7">
-              <li>
-                <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <NavLink
-                        to={item.to}
-                        className={({ isActive }) =>
-                          clsx(
-                            isActive
-                              ? "bg-gray-800 text-white"
-                              : "text-gray-400 hover:bg-gray-800 hover:text-white",
-                            "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
-                          )
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
+            <div className="ml-2 mt-4 flex flex-1 flex-col gap-y-4">
+              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                Tutorials
+              </p>
+              <ul role="list" className="ml-2 flex flex-1 flex-col gap-y-7">
+                <li>
+                  <ul role="list" className="-mx-2 space-y-1">
+                    {navigation.map((item) => (
+                      <li key={item.name}>
+                        <NavLink
+                          to={item.to}
+                          className={({ isActive }) =>
+                            clsx(
+                              isActive
+                                ? "bg-gray-800 text-white"
+                                : "text-gray-400 hover:bg-gray-800 hover:text-white",
+                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
+                            )
+                          }
+                        >
+                          {item.name}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </nav>
         </div>
       </div>
