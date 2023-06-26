@@ -14,7 +14,7 @@ In particular, this application demonstrates how to use Flipt to:
 
 The chatbot is designed to answer questions about Flipt. If you enable OpenAI support, by setting the `OPENAI_API_KEY` environment variable, you will get much better answers as the chatbot will use the OpenAI API to generate answers that are based on our live documentation (<https://flipt.io/docs>)
 
-If you don't have an OpenAI API key, you can still use the chatbot, but the answers will be much more limited as they are based on a static set of answers that are included in the application.
+If you don't have an OpenAI API key, you can still use the chatbot, but the answers will be much more limited as they are based on a static set of answers that are included in the application. Make sure to checkout OpenAI's pricing page: <https://beta.openai.com/pricing>
 
 ## Prerequisites
 
@@ -25,7 +25,6 @@ If you don't have an OpenAI API key, you can still use the chatbot, but the answ
 
 ## Usage
 
-1. Clone this repository
 1. `cd` into this directory (e.g. `cd chatbot`)
 1. Run `./scripts/start`
 1. Open <http://localhost:3000> in your browser if it doesn't open automatically
