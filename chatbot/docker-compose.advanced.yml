@@ -2,14 +2,12 @@ version: "3.5"
 
 services:
   redis-stack:
-    container_name: redis-stack
     image: redis/redis-stack-server:7.2.0-RC1
     ports:
       - "6379:6379"
 
   backend:
     build: ./backend
-    container_name: backend
     ports:
       - "9000:9000"
     environment:
@@ -22,7 +20,6 @@ services:
 
   flipt-init:
     image: flipt/flipt:latest
-    container_name: flipt-init
     command: |
       sh -c '/flipt-init.sh'
     volumes:
@@ -31,7 +28,6 @@ services:
 
   flipt:
     image: flipt/flipt:latest
-    container_name: flipt
     ports:
       - "8080:8080"
     environment:

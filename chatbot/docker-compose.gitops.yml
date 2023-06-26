@@ -2,14 +2,12 @@ version: "3.5"
 
 services:
   redis-stack:
-    container_name: redis-stack
     image: redis/redis-stack-server:7.2.0-RC1
     ports:
       - "6379:6379"
 
   backend:
     build: ./backend
-    container_name: backend
     ports:
       - "9000:9000"
     environment:
@@ -21,7 +19,6 @@ services:
       - "redis-stack"
 
   gitea:
-    container_name: gitea
     build: ./gitea
     init: true
     ports:
@@ -29,7 +26,6 @@ services:
 
   flipt:
     image: flipt/flipt:latest
-    container_name: flipt
     ports:
       - "8080:8080"
     environment:
