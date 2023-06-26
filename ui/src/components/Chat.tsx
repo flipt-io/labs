@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./Button";
+import Button from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
 import { useUser } from "hooks/user";
 
