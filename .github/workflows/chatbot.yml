@@ -1,13 +1,17 @@
-name: Lint
+name: Chatbot
 on:
   push:
     branches:
       - main
+    paths:
+      - "chatbot/**"
   pull_request:
+    paths:
+      - "chatbot/**"
   workflow_dispatch:
 
 jobs:
-  python-lint:
+  chatbot-backend-lint:
     name: "Chatbot - Lint Python"
     runs-on: ubuntu-latest
     steps:
@@ -16,7 +20,7 @@ jobs:
         with:
           black_args: "./chatbot/backend --check"
 
-  frontend-lint:
+  chatbot-frontend-lint:
     name: "Chatbot - Lint Frontend"
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +35,7 @@ jobs:
           npm run lint
         working-directory: chatbot/frontend
 
-  vale:
+  chatbot-vale:
     name: "Chatbot - Lint Markdown"
     runs-on: ubuntu-latest
     steps:
