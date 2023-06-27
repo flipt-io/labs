@@ -6,7 +6,6 @@ import Guide from "./components/Guide";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import Notification from "./components/Notification";
-import { Suspense } from "react";
 
 const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
 const AdvancedGuide = () => (
