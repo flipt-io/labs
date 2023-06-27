@@ -1,6 +1,6 @@
 # Flipt Labs 🧪
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?skip_quickstart=true)
 
 This repository serves as a location to explore [Flipt](https://www.flipt.io) use-cases and configurations.
 
