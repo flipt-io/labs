@@ -4,8 +4,9 @@
   "name": "Flipt Labs - Chatbot",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
-    "dockerfile": "../Dockerfile"
+    "dockerfile": "../../chatbot/Dockerfile"
   },
+  "workspaceFolder": "/app",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
