@@ -1,12 +1,24 @@
+import Well from "components/Well";
+
 # Wrapping Up
 
 ## What You've Learned
 
 - How segments allow you to represent different slices of your user base
 - How to use variants to represent the different chatbot sentiments
-- How to use rules to evaluate requests
-- How evaluation works
+- How evaluation works alongside rules
+- How you can leverage `attachments` to add additional metadata without changing your code
 
+## Cleaning Up
+
+<Well>
+In the `chatbot` folder, run the following command to stop all services created for this tutorial:
+
+```bash
+docker-compose -f docker-compose.advanced.yml down
+```
+
+</Well>
 ## What's Next
 
 In the next module, you'll learn:

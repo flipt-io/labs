@@ -1,4 +1,4 @@
-# Flipt Labs
+# Flipt Labs 🧪
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?quickstart=1)
 
@@ -21,7 +21,7 @@ We'll be adding more examples over time, so check back often!
 ## Usage
 
 1. Clone this repository
-1. `cd` into a subdirectory directory (e.g. `cd chatbot`)
+1. `cd` into a subdirectory (e.g. `cd chatbot`)
 1. Run `./scripts/start`
 
 ## Troubleshooting
