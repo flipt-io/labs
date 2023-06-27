@@ -78,9 +78,12 @@ export default function Nav() {
                     </NavLink>
                   </div>
                   <nav className="flex flex-1 flex-col">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
-                      Tutorials
-                    </p>
+                    <NavLink
+                      to="/"
+                      className="mt-2 text-xs font-semibold uppercase tracking-wider text-gray-300"
+                    >
+                      Chatbot
+                    </NavLink>
                     <ul
                       role="list"
                       className="mt-4 flex flex-1 flex-col gap-y-7"
@@ -126,9 +129,12 @@ export default function Nav() {
             <p className="ml-2 font-semibold text-white">Flipt Labs</p>
           </NavLink>
           <nav className="flex flex-1 flex-col">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gray-300">
+            <NavLink
+              to="/"
+              className="mt-2 text-xs font-semibold uppercase tracking-wider text-gray-300"
+            >
               Chatbot
-            </p>
+            </NavLink>
             <div className="ml-2 mt-4 flex flex-1 flex-col gap-y-4">
               <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
                 Tutorials

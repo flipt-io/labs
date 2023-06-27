@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
+import CodeBlock from "./CodeBlock";
 
 const components = {
   h1: (
@@ -89,7 +90,7 @@ const components = {
     props: React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLPreElement> &
       React.HTMLAttributes<HTMLPreElement>
-  ) => <pre className="overflow-x-auto rounded bg-[#0d1117]" {...props} />,
+  ) => <CodeBlock {...props} />,
   img: (
     props: React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLImageElement> &

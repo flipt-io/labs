@@ -10,10 +10,11 @@ import { useParams, useNavigate } from "react-router-dom";
 type GuideProps = {
   module: string;
   steps: number;
+  next?: string;
 };
 
 export default function Guide(props: GuideProps) {
-  const { module, steps } = props;
+  const { module, steps, next } = props;
 
   const params = useParams();
   const navigate = useNavigate();
@@ -41,6 +42,16 @@ export default function Guide(props: GuideProps) {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (params.step) {
+      currentStep = parseInt(params.step);
+      if (currentStep < 1 || currentStep > steps) {
+        navigate(`/${module}`);
+        return;
+      }
+    }
+  }, [params.step]);
 
   let page = "intro";
   let currentStep = 0;
@@ -78,15 +89,27 @@ export default function Guide(props: GuideProps) {
               >
                 Back
               </Button>
-              <Button
-                disabled={currentStep >= steps}
-                className="px-5 py-2 text-lg"
-                onClick={() => {
-                  navigate(`/${module}/${currentStep + 1}`);
-                }}
-              >
-                Next
-              </Button>
+              {currentStep >= steps && next && (
+                <Button
+                  className="px-5 py-2 text-lg"
+                  onClick={() => {
+                    navigate(`/${next}`);
+                  }}
+                >
+                  Next Module
+                </Button>
+              )}
+              {(currentStep < steps || !next) && (
+                <Button
+                  disabled={currentStep >= steps}
+                  className="px-5 py-2 text-lg"
+                  onClick={() => {
+                    navigate(`/${module}/${currentStep + 1}`);
+                  }}
+                >
+                  Next
+                </Button>
+              )}
             </div>
           </div>
         </article>
