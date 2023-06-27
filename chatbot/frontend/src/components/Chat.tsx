@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { type ChatGPTMessage, ChatLine, LoadingChatLine } from "./ChatLine";
-import { useUser } from "hooks/user";
+import { useUser } from "~/hooks/user";
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages: ChatGPTMessage[] = [

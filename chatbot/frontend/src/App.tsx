@@ -1,11 +1,12 @@
 import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Nav from "components/Nav";
-import Page from "components/Page";
-import Guide from "components/Guide";
-import Footer from "components/Footer";
+import Nav from "./components/Nav";
+import Page from "./components/Page";
+import Guide from "./components/Guide";
+import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
-import Notification from "components/Notification";
+import Notification from "./components/Notification";
+import { Suspense } from "react";
 
 const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
 const AdvancedGuide = () => (
