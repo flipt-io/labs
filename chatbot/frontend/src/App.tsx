@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import Notification from "components/Notification";
 
 const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
-const AdvancedGuide = () => <Guide module={"advanced"} steps={5} next="gitops" />;
+const AdvancedGuide = () => (
+  <Guide module={"advanced"} steps={5} next="gitops" />
+);
 const GitOpsGuide = () => <Guide module={"gitops"} steps={8} />;
 
 const router = createBrowserRouter([
