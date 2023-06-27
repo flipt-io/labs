@@ -7,8 +7,10 @@ import Footer from "components/Footer";
 import { useEffect, useState } from "react";
 import Notification from "components/Notification";
 
-const BasicGuide = () => <Guide module={"basic"} steps={5} />;
-const AdvancedGuide = () => <Guide module={"advanced"} steps={5} />;
+const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
+const AdvancedGuide = () => (
+  <Guide module={"advanced"} steps={5} next="gitops" />
+);
 const GitOpsGuide = () => <Guide module={"gitops"} steps={6} />;
 
 const router = createBrowserRouter([

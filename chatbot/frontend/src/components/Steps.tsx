@@ -12,7 +12,7 @@ export default function Steps(props: StepProps) {
     <nav aria-label="Progress">
       <ol
         role="list"
-        className="mx-auto mb-10 flex w-fit list-none items-center rounded-xl bg-violet-50/30 px-6 py-4"
+        className="mx-auto mb-10 flex w-fit max-w-lg list-none items-center"
       >
         {[...Array(steps).keys()].map((step, stepIdx) => (
           <li
@@ -28,7 +28,7 @@ export default function Steps(props: StepProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-violet-600/40" />
+                  <div className="h-0.5 w-full max-w-lg bg-violet-600/40" />
                 </div>
                 <a
                   href={`/${module}/${step}`}
@@ -41,7 +41,7 @@ export default function Steps(props: StepProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-gray-200" />
+                  <div className="h-0.5 w-full max-w-lg bg-gray-200" />
                 </div>
                 <a
                   href={`/${module}/${step}`}
@@ -61,7 +61,7 @@ export default function Steps(props: StepProps) {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-gray-200" />
+                  <div className="h-0.5 w-full max-w-lg bg-gray-200" />
                 </div>
                 <a
                   href={`/${module}/${step}`}
