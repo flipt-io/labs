@@ -227,7 +227,7 @@ def chat():
             pass
 
         res = responses.flipt_responses[persona][random.randint(0, 9)]
-        if openai_api_key != None:
+        if openai_api_key != None and openai_api_key != "":
             sentiment_for_prompt = persona
             if sentiment_for_prompt == "liar":
                 sentiment_for_prompt = "deceitful"
