@@ -1,15 +1,60 @@
-# Wrapping Up
+# Editing Flag State With Git
 
-## What You've Learned
+It's one thing to review a flag state change and another to make the change yourself using `git` and your editor.
+So we're going to do just that.
 
-- How Flipt is configurable to serve flag state directly from Git
-- How feature flag changes can be managed via pull-requests
-- How to make changes to flag state using configuration files and the `git` CLI
+First, you're going to clone the features repository locally into a folder called `features`:
 
-## Resources
+1. From the root of the chatbot example repository do the following:
 
-- [Flipt Filesystem Backends](https://www.flipt.io/docs/experimental/filesystem-backends)
-- [Blog Post: Announcing Flipt GitOps Support](https://www.flipt.io/blog/gitops-announcement)
-- [Flipt Use Cases](https://www.flipt.io/docs/usecases)
-- [Flipt GitHub](https://github.com/flipt-io/flipt)
-- [Discord](https://www.flipt.io/discord) 👾
+```sh
+git clone http://flipt:password@localhost:3001/flipt/features.git \
+  features
+
+cd features
+```
+
+Now you're in the `flipt/features` repository you can edit the `features.yml` file manually.
+
+2. Using an editor of your choice, open `features.yml`.
+3. Once open, change the rollout of the `sarcastic` variant to 100 percent and both `default` and `liar` to 0.
+
+```yaml
+- key: chat-personas
+  name: chat-personas
+  description: Allow our chat bot to have different personalities
+  enabled: true
+  variants:
+  - key: default
+  - key: sarcastic
+  - key: liar
+  rules:
+  - segment: beta
+    rank: 1
+    distributions:
+    - variant: default
+      rollout: 0
+    - variant: liar
+      rollout: 0
+    - variant: sarcastic
+      rollout: 100.0
+segments:
+- key: beta
+  name: Beta
+  description: Beta users who will test our chatbot personas
+  match_type: ALL_MATCH_TYPE
+```
+
+4. Finally, add, commit and push this as a commit directly onto the `main` branch.
+
+```sh
+git add features.yml
+
+git commit -m 'feat: rollout sarcastic variant to all users'
+
+git push origin main
+```
+
+Congratulations, now everyone gets to enjoy our sarcastic chatbot! 🎉
+
+Click 'Next' to wrap up the tutorial.
