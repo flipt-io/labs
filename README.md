@@ -1,16 +1,16 @@
 # Flipt Labs 🧪
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/flipt-io/labs?skip_quickstart=true)
 
 This repository serves as a location to explore [Flipt](https://www.flipt.io) use-cases and configurations.
 
-Each subdirectory is a self-contained example that can be run locally.
+Each subdirectory is a self-contained application that can be run locally.
 
-We'll be adding more examples over time, so check back often!
+We'll be adding more applications over time, so check back often!
 
-## Examples
+## Applications
 
-- [Chatbot](./chatbot/README.md)
+- [Chatbot](./chatbot/README.md) - A set of tutorials on how to use Flipt in different scenarios, based around the idea of releasing an AI powered chatbot.
 
 ## Prerequisites
 
