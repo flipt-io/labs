@@ -32,8 +32,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "vite serve",
+    "dev": "vite serve",
     "build": "vite build",
+    "start": "vite preview --port 3000",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix \"**/*.{ts,tsx}\""
   },
