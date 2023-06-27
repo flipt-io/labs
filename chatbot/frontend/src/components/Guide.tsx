@@ -58,7 +58,7 @@ export default function Guide(props: GuideProps) {
   return (
     <>
       <div className="flex flex-col">
-        <Steps steps={steps} currentStep={currentStep} />
+        <Steps module={module} steps={steps} currentStep={currentStep} />
         <article className="prose font-light text-gray-600">
           <div className="divide-y-2 divide-gray-100">
             <div>
