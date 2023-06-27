@@ -72,7 +72,7 @@ function Layout() {
         return response.json();
       })
       .then((data) => {
-        if (data.openai_api_key === "") {
+        if (!data.openai_api_key || data.openai_api_key === "") {
           setMissingAIKey(true);
         }
       })
