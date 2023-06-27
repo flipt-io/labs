@@ -1,3 +1,5 @@
+import Well from "components/Well";
+
 # Wrapping Up
 
 ## What You've Learned
@@ -5,6 +7,17 @@
 - How Flipt is configurable to serve flag state directly from Git
 - How feature flag changes can be managed via pull-requests
 - How to make changes to flag state using configuration files and the `git` CLI
+
+## Cleaning Up
+
+<Well>
+In the `chatbot` folder, run the following command to stop all services created for this tutorial:
+
+```bash
+docker-compose -f docker-compose.gitops.yml down
+```
+
+</Well>
 
 ## Resources
 
