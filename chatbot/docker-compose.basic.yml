@@ -7,7 +7,7 @@ services:
       - "6379:6379"
 
   backend:
-    build: ./backend
+    image: ghcr.io/flipt-io/labs/chatbot/backend:latest
     ports:
       - "9000:9000"
     environment:

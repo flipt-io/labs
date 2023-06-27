@@ -1,12 +1,13 @@
 import clsx from "clsx";
 
 type StepProps = {
+  module: string;
   currentStep: number;
   steps: number;
 };
 
 export default function Steps(props: StepProps) {
-  const { currentStep, steps } = props;
+  const { module, currentStep, steps } = props;
   return (
     <nav aria-label="Progress">
       <ol
@@ -30,7 +31,7 @@ export default function Steps(props: StepProps) {
                   <div className="h-0.5 w-full bg-violet-600/40" />
                 </div>
                 <a
-                  href="#"
+                  href={`/${module}/${step}`}
                   className="relative flex h-3 w-3 items-center justify-center rounded-full bg-violet-400 hover:bg-violet-600"
                 />
               </>
@@ -43,7 +44,7 @@ export default function Steps(props: StepProps) {
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
                 <a
-                  href="#"
+                  href={`/${module}/${step}`}
                   className="relative flex h-3 w-3 items-center justify-center rounded-full border-2 border-violet-400 bg-white"
                   aria-current="step"
                 >
@@ -63,7 +64,7 @@ export default function Steps(props: StepProps) {
                   <div className="h-0.5 w-full bg-gray-200" />
                 </div>
                 <a
-                  href="#"
+                  href={`/${module}/${step}`}
                   className="group relative flex h-3 w-3 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-gray-400"
                 >
                   <span
