@@ -12,7 +12,7 @@ export default function Steps(props: StepProps) {
     <nav aria-label="Progress">
       <ol
         role="list"
-        className="mx-auto mb-10 flex w-fit max-w-lg list-none items-center"
+        className="mx-auto mb-10 flex max-w-[65ch] list-none items-center"
       >
         {[...Array(steps).keys()].map((step, stepIdx) => (
           <li

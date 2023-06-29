@@ -70,49 +70,48 @@ export default function Guide(props: GuideProps) {
     <>
       <div className="flex flex-col">
         <Steps module={module} steps={steps} currentStep={currentStep} />
-        <article className="prose font-light text-gray-600">
-          <div className="divide-y-2 divide-gray-100">
-            <div>
-              <Page path={path} />
-            </div>
-            <div className="flex flex-row justify-between pt-10">
+
+        <div className="divide-y-2 divide-gray-100">
+          <article className="prose font-light text-gray-600">
+            <Page path={path} />
+          </article>
+          <div className="flex flex-row justify-between pt-10">
+            <Button
+              disabled={currentStep < 1}
+              className="px-5 py-2 text-lg"
+              onClick={() => {
+                if (currentStep > 1) {
+                  navigate(`/${module}/${currentStep - 1}`);
+                  return;
+                }
+                navigate(`/${module}`);
+              }}
+            >
+              Back
+            </Button>
+            {currentStep >= steps && next && (
               <Button
-                disabled={currentStep < 1}
                 className="px-5 py-2 text-lg"
                 onClick={() => {
-                  if (currentStep > 1) {
-                    navigate(`/${module}/${currentStep - 1}`);
-                    return;
-                  }
-                  navigate(`/${module}`);
+                  navigate(`/${next}`);
                 }}
               >
-                Back
+                Next Module
               </Button>
-              {currentStep >= steps && next && (
-                <Button
-                  className="px-5 py-2 text-lg"
-                  onClick={() => {
-                    navigate(`/${next}`);
-                  }}
-                >
-                  Next Module
-                </Button>
-              )}
-              {(currentStep < steps || !next) && (
-                <Button
-                  disabled={currentStep >= steps}
-                  className="px-5 py-2 text-lg"
-                  onClick={() => {
-                    navigate(`/${module}/${currentStep + 1}`);
-                  }}
-                >
-                  Next
-                </Button>
-              )}
-            </div>
+            )}
+            {(currentStep < steps || !next) && (
+              <Button
+                disabled={currentStep >= steps}
+                className="px-5 py-2 text-lg"
+                onClick={() => {
+                  navigate(`/${module}/${currentStep + 1}`);
+                }}
+              >
+                Next
+              </Button>
+            )}
           </div>
-        </article>
+        </div>
       </div>
       {chatEnabled && (
         <ChatWindow>

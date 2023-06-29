@@ -18,7 +18,7 @@ export default function Nav() {
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 md:hidden"
+          className="relative z-50 lg:hidden"
           onClose={setSidebarOpen}
         >
           <Transition.Child
@@ -99,7 +99,7 @@ export default function Nav() {
                                     isActive
                                       ? "bg-gray-800 text-white"
                                       : "text-gray-400 hover:bg-gray-800 hover:text-white",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
+                                    "group flex gap-x-3 rounded-lg p-2 text-sm font-semibold leading-6"
                                   )
                                 }
                               >
@@ -119,7 +119,7 @@ export default function Nav() {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6">
           <NavLink
             to="/"
@@ -151,7 +151,7 @@ export default function Nav() {
                               isActive
                                 ? "bg-gray-800 text-white"
                                 : "text-gray-400 hover:bg-gray-800 hover:text-white",
-                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
+                              "group flex gap-x-3 rounded-lg p-2 text-sm font-semibold leading-6"
                             )
                           }
                         >
@@ -167,10 +167,10 @@ export default function Nav() {
         </div>
       </div>
 
-      <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-900 px-4 py-4 shadow-sm sm:px-6 md:hidden">
+      <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-900 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
         <button
           type="button"
-          className="-m-2.5 p-2.5 text-gray-400 md:hidden"
+          className="-m-2.5 p-2.5 text-gray-400 lg:hidden"
           onClick={() => setSidebarOpen(true)}
         >
           <span className="sr-only">Open sidebar</span>
