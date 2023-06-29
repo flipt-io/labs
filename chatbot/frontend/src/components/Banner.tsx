@@ -18,7 +18,7 @@ export default function Banner(props: BannerProps) {
         >
           <p className="text-sm leading-6 text-white">
             <a href="#">
-              <strong className="font-semibold">Note:</strong>
+              <strong className="font-semibold">Note:</strong>&nbsp;
               {text}
             </a>
           </p>
