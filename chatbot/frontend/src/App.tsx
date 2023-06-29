@@ -6,6 +6,7 @@ import Guide from "./components/Guide";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import Notification from "./components/Notification";
+import Banner from "./components/Banner";
 
 const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
 const AdvancedGuide = () => (
@@ -84,7 +85,12 @@ function Layout() {
   return (
     <>
       <Nav />
-      <div className="flex min-h-screen flex-col py-8 md:pl-80 md:pr-96">
+
+      <Banner
+        text="This application will not render correctly on small screens"
+        className="lg:hidden"
+      />
+      <div className="flex min-h-screen flex-col py-8 lg:pl-80 lg:pr-96">
         <main className="px-6">
           <Outlet />
         </main>
