@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "./Button";
-import { FliptApiClient } from "@flipt-io/flipt";
-import ChatWindow from "./ChatWindow";
 import Steps from "./Steps";
-import { Chat } from "./Chat";
 import Page from "./Page";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -18,30 +15,6 @@ export default function Guide(props: GuideProps) {
 
   const params = useParams();
   const navigate = useNavigate();
-
-  const [chatEnabled, setChatEnabled] = useState(false);
-
-  const client = new FliptApiClient({
-    environment: "http://localhost:8080",
-  });
-
-  useEffect(() => {
-    const checkChatEnabled = async () => {
-      try {
-        const flag = await client.flags.get("default", "chat-enabled");
-        setChatEnabled(flag.enabled);
-      } catch (e) {
-        // ignore
-      }
-    };
-
-    checkChatEnabled();
-    const interval = setInterval(() => {
-      checkChatEnabled();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (params.step) {
@@ -72,10 +45,10 @@ export default function Guide(props: GuideProps) {
         <Steps module={module} steps={steps} currentStep={currentStep} />
 
         <div className="divide-y-2 divide-gray-100">
-          <article className="prose font-light text-gray-600">
+          <article className="prose pb-5 font-light text-gray-600">
             <Page path={path} />
           </article>
-          <div className="flex flex-row justify-between pt-10">
+          <div className="flex flex-row justify-between pt-5">
             <Button
               disabled={currentStep < 1}
               className="px-5 py-2 text-lg"
@@ -113,11 +86,6 @@ export default function Guide(props: GuideProps) {
           </div>
         </div>
       </div>
-      {chatEnabled && (
-        <ChatWindow>
-          <Chat />
-        </ChatWindow>
-      )}
     </>
   );
 }
