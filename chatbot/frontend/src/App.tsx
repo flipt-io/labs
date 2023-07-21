@@ -124,13 +124,13 @@ function Layout() {
   }, []);
 
   return (
-    <div className="grid grid-flow-col">
+    <div className="grid grid-flow-col lg:grid-cols-4">
       <Sidebar
         collapsed={collapsedSidebar}
         setCollapsed={setCollapsedSidebar}
       />
 
-      <div className="flex h-screen flex-col">
+      <div className="col-span-2 flex h-screen flex-col">
         <Banner
           text="This application will not render correctly on small screens"
           className="lg:hidden"
