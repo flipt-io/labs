@@ -1,6 +1,8 @@
 # Cup and Flipt
 
-![Cup for Flipt](../images/cup.svg)
+<div align="center">
+  <img src="../images/cup.svg" alt="CUP" width="240" />
+</div>
 
 ## Overview
 
