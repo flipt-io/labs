@@ -1,0 +1,11 @@
+{
+    "chat-enabled": {
+        "interval": "1s",
+        "concurrent": 100,
+        "type": "boolean",
+        "request": {
+            "namespace_key": "default",
+            "flag_key": "chat-enabled"
+        }
+    }
+}
