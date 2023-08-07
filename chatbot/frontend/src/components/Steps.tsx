@@ -9,10 +9,10 @@ type StepProps = {
 export default function Steps(props: StepProps) {
   const { module, currentStep, steps } = props;
   return (
-    <nav aria-label="Progress">
+    <nav aria-label="Progress" className="mx-auto">
       <ol
         role="list"
-        className="mx-auto mb-10 flex w-fit max-w-lg list-none items-center"
+        className="mx-auto mb-10 flex max-w-[65ch] list-none items-center"
       >
         {[...Array(steps).keys()].map((step, stepIdx) => (
           <li

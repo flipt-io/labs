@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable import/no-webpack-loader-syntax */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
 import CodeBlock from "./CodeBlock";
@@ -109,14 +109,18 @@ type PageProps = {
 
 export default function Page(props: PageProps) {
   const { path } = props;
-
-  const InternalPage =
-    require(`!babel-loader!@mdx-js/loader!../content/${path}.mdx`).default;
+  const comps = import.meta.glob("../content/**/*.mdx");
+  const match = comps[`../content/${path}.mdx`];
+  const InternalPage = lazy(async () => await match());
 
   useEffect(() => {
     window.scrollTo(0, 0);
     hljs.highlightAll();
   });
 
-  return <InternalPage components={components} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InternalPage components={components} />
+    </Suspense>
+  );
 }

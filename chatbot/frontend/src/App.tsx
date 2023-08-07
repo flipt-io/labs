@@ -1,11 +1,16 @@
 import { Outlet, RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Nav from "components/Nav";
-import Page from "components/Page";
-import Guide from "components/Guide";
-import Footer from "components/Footer";
+import Sidebar from "./components/Sidebar";
+import Page from "./components/Page";
+import Guide from "./components/Guide";
+import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
-import Notification from "components/Notification";
+import Notification from "./components/Notification";
+import Banner from "./components/Banner";
+import { Chat } from "./components/Chat";
+import ChatWindow from "./components/ChatWindow";
+import { FliptApiClient } from "@flipt-io/flipt";
+import { useViewport } from "~/hooks/viewport";
 
 const BasicGuide = () => <Guide module={"basic"} steps={5} next="advanced" />;
 const AdvancedGuide = () => (
@@ -59,6 +64,43 @@ const router = createBrowserRouter([
 function Layout() {
   const [missingOpenAIKey, setMissingAIKey] = useState(false);
 
+  const { width } = useViewport();
+  const sidebarBreakpoint = 1024;
+
+  const [collapsedSidebar, setCollapsedSidebar] = useState(
+    width < sidebarBreakpoint
+  );
+
+  const [chatEnabled, setChatEnabled] = useState(false);
+
+  const client = new FliptApiClient({
+    environment: "http://localhost:8080",
+  });
+
+  useEffect(() => {
+    if (width < sidebarBreakpoint) {
+      setCollapsedSidebar(true);
+    }
+  }, [width]);
+
+  useEffect(() => {
+    const checkChatEnabled = async () => {
+      try {
+        const flag = await client.flags.get("default", "chat-enabled");
+        setChatEnabled(flag.enabled);
+      } catch (e) {
+        // ignore
+      }
+    };
+
+    checkChatEnabled();
+    const interval = setInterval(() => {
+      checkChatEnabled();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     // fetch from /config endpoint on backend to get config
     // and check if openai_api_key is set
@@ -72,7 +114,7 @@ function Layout() {
         return response.json();
       })
       .then((data) => {
-        if (data.openai_api_key === "") {
+        if (!data.openai_api_key || data.openai_api_key === "") {
           setMissingAIKey(true);
         }
       })
@@ -82,23 +124,39 @@ function Layout() {
   }, []);
 
   return (
-    <>
-      <Nav />
-      <div className="flex min-h-screen flex-col py-8 md:pl-80 md:pr-96">
-        <main className="px-6">
-          <Outlet />
-        </main>
-        <Footer />
+    <div className="grid grid-flow-col lg:grid-cols-4">
+      <Sidebar
+        collapsed={collapsedSidebar}
+        setCollapsed={setCollapsedSidebar}
+      />
+
+      <div className="col-span-2 flex h-screen flex-col">
+        <Banner
+          text="This application will not render correctly on small screens"
+          className="lg:hidden"
+        />
+        <div className="overflow-y-scroll px-10">
+          <main className="py-8">
+            {missingOpenAIKey && (
+              <Notification type="warning" title="Missing OpenAI API Key">
+                <>
+                  <code>OPENAI_API_KEY</code> environment variable not set. Set
+                  before continuing for a better experience.
+                </>
+              </Notification>
+            )}
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
       </div>
-      {missingOpenAIKey && (
-        <Notification type="warning" title="Missing OpenAI API Key">
-          <>
-            <code>OPENAI_API_KEY</code> environment variable not set. Set before
-            continuing for a better experience.
-          </>
-        </Notification>
+
+      {chatEnabled && (
+        <ChatWindow>
+          <Chat />
+        </ChatWindow>
       )}
-    </>
+    </div>
   );
 }
 
