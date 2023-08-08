@@ -11,7 +11,7 @@ We'll be adding more applications over time, so check back often!
 ## Applications
 
 - [Chatbot](./chatbot/README.md) - A set of tutorials on how to use Flipt in different scenarios, based around the idea of releasing an AI powered chatbot.
-- [Cup](./cup/README.md)
+- [Cup](./cup/README.md) - A tutorial demonstrating the Cup project manging Flipt flag state.
 
 ## Prerequisites
 
