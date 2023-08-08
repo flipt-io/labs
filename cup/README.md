@@ -8,7 +8,8 @@
 
 This application is designed to demonstrate [cup](https://github.com/flipt-io/cup), configured to manage Flipt flag state.
 
-In particular, this application demonstrates how Cup and Flipt can be used together with the Git backend for Flipt.
+Cup is a tool for creating custom declarative APIs over Git repositories and SCMs.
+In this labs section we leverage the Flipt Cup controller to manage Flipt flag state in a target Git repository and Gitea SCM.
 
 ## Prerequisites
 
@@ -20,8 +21,8 @@ In particular, this application demonstrates how Cup and Flipt can be used toget
 
 1. `cd` into this directory (e.g. `cd cup`)
 1. Run `docker compose up --build`
-1. Run `cup defs` to connect to `cupd` and see available resources
-1. Run `cup get flags` to see currently served flags
+1. In another terminal window, run `cup defs` to connect to `cupd` and see available resources
+1. Next, run `cup get flags` to see currently served flags
 
 ## Troubleshooting
 

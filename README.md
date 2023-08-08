@@ -11,6 +11,7 @@ We'll be adding more examples over time, so check back often!
 ## Examples
 
 - [Chatbot](./chatbot/README.md)
+- [Cup](./cup/README.md)
 
 ## Prerequisites
 
