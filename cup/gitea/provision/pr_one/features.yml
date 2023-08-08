@@ -1,0 +1,8 @@
+version: "1.0"
+namespace: default
+flags:
+- key: chat-enabled
+  name: chat-enabled
+  type: BOOLEAN_FLAG_TYPE
+  description: Enable chat for all users
+  enabled: true
