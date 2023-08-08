@@ -1,5 +1,7 @@
 # Flipt Chatbot
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/flipt-io/labs?skip_quickstart=true&ref=main&devcontainer_path=.devcontainer%2Fchatbot%2Fdevcontainer.json)
+
 ![Flipt Chatbot](../images/chatbot.png)
 
 ## Overview
