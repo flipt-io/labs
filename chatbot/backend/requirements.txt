@@ -6,5 +6,4 @@ redis==4.5.5
 sentence_transformers==2.2.2
 gunicorn==20.1.0
 openai==0.27.8
-flipt==0.2.5
-aenum==3.1.14
+flipt==0.2.8
