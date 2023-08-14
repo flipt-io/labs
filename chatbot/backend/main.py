@@ -5,7 +5,6 @@ import random
 import redis
 import responses
 import time
-from aenum import extend_enum
 from flask import Flask, current_app, request, jsonify
 from flask_cors import CORS
 from flipt.environment import FliptApiEnvironment
@@ -29,9 +28,7 @@ openai_api_key = os.environ.get("OPENAI_API_KEY")
 flag_key = os.environ.get("FLIPT_FLAG_KEY") or "chat-personas"
 server_addr = os.environ.get("FLIPT_SERVER_ADDR") or "http://localhost:8080"
 
-extend_enum(FliptApiEnvironment, "FLIPT", server_addr)
-
-flipt_api = FliptApi(environment=FliptApiEnvironment.FLIPT)
+flipt_api = FliptApi(base_url=server_addr)
 
 default_pre_prompt = """
 You are a chatbot that will respond to questions in a very helpful and kind manner based on some facts below about the product Flipt.
