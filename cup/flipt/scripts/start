@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -e
-
-pushd frontend
-npm i && npm run start
-popd
