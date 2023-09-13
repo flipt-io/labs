@@ -100,14 +100,7 @@ func kind(ctx context.Context, cli *client.Client, clusterName, ref string) erro
 		return fmt.Errorf("kind: saving image (reference %q): %w", ref, err)
 	}
 
-	fi, err := os.CreateTemp("", "kind-image-*.tar")
-	if err != nil {
-		return err
-	}
-	defer func() {
-		fi.Close()
-		os.Remove(fi.Name())
-	}()
+	defer rd.Close()
 
 	if err := nodeutils.LoadImageArchive(nodes[0], rd); err != nil {
 		return fmt.Errorf("kind: loading image archive: %w", err)

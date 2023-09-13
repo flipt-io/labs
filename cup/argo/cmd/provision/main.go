@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"log/slog"
@@ -9,6 +10,9 @@ import (
 	"os"
 	"os/exec"
 
+	"dagger.io/dagger"
+	"go.flipt.io/labs/cup/argo/internal/build"
+	"go.flipt.io/labs/cup/argo/internal/publish"
 	"sigs.k8s.io/kind/pkg/cluster"
 )
 
@@ -19,6 +23,7 @@ const (
 )
 
 func main() {
+	ctx := context.Background()
 	slog.Info("Checking for cluster...")
 
 	provider := cluster.NewProvider(cluster.ProviderWithDocker())
@@ -55,6 +60,10 @@ func main() {
 		exitOnError(err)
 
 		slog.Info("Gitea ready", "address", "http://localhost:3000", "username", "cup", "password", "password")
+	}
+
+	{
+		exitOnError(buildAndPublishService(ctx))
 	}
 
 	{
@@ -147,7 +156,9 @@ func stderr(w io.Writer) option {
 }
 
 func sh(cmd string, opts ...option) (string, error) {
-	var co cmdOptions
+	co := cmdOptions{
+		stderr: os.Stderr,
+	}
 	for _, opt := range opts {
 		opt(&co)
 	}
@@ -162,4 +173,41 @@ func sh(cmd string, opts ...option) (string, error) {
 	}
 
 	return buf.String(), nil
+}
+
+func buildAndPublishService(ctx context.Context) error {
+	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	platform, err := client.DefaultPlatform(ctx)
+	if err != nil {
+		return err
+	}
+
+	slog.Info("Building service...")
+
+	service, err := build.Build(ctx, client)
+	if err != nil {
+		return err
+	}
+
+	slog.Info("Loading service into kind...")
+
+	ref, err := publish.Publish(ctx, publish.PublishSpec{
+		TargetType:  publish.KindTargetType,
+		KindCluster: clusterName,
+		Target:      "cup.flipt.io/argo/service:latest",
+	}, client, publish.Variants{
+		platform: service,
+	})
+	if err != nil {
+		return err
+	}
+
+	slog.Info("Image loaded", "ref", ref)
+
+	return nil
 }

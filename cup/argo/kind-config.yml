@@ -10,3 +10,5 @@ nodes:
       hostPort: 3000
     - containerPort: 30003
       hostPort: 8080
+    - containerPort: 30004
+      hostPort: 8282
