@@ -8,3 +8,5 @@ nodes:
       hostPort: 8181
     - containerPort: 30002
       hostPort: 3000
+    - containerPort: 30003
+      hostPort: 8080
