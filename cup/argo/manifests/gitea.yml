@@ -136,8 +136,17 @@ data:
               {
                 "name": "app",
                 "image": "python:3",
-                "command": ["python", "-m", "http.server", "8000"],
-                "ports": [{"containerPort": 8000}]
+                "command": [
+                  "python",
+                  "-m",
+                  "http.server",
+                  "8000"
+                ],
+                "ports": [
+                  {
+                    "containerPort": 8000
+                  }
+                ]
               }
             ]
           }
