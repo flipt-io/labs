@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if command -v dagger > /dev/null; then
+  dagger run go run ./cmd/provision/main.go
+else
+  go run ./cmd/provision/main.go
+fi

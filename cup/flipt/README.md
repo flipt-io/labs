@@ -1,7 +1,7 @@
 # Cup and Flipt
 
 <div align="center">
-  <img src="../images/cup.svg" alt="CUP" width="240" />
+  <img src="../../images/cup.svg" alt="CUP" width="240" />
 </div>
 
 ## Overview
