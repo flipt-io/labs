@@ -63,7 +63,7 @@ func main() {
 	_, err = kube(resp.Body, "apply", "-f", "-")
 
 	// wait for argo to be ready
-	_, err = kube(nil, "wait", "deployment", "argocd-server", "--for", "condition=Available=true", "--timeout", "60s")
+	_, err = kube(nil, "wait", "deployment", "argocd-server", "--for", "condition=Available=true", "--timeout", "120s")
 	exitOnError(err)
 
 	slog.Info("Argo ready")
@@ -81,7 +81,7 @@ func main() {
 	slog.Info("Gitea ready")
 
 	// install cup
-	_, _ = kube(nil, "create", "namespace", "gitea")
+	_, _ = kube(nil, "create", "namespace", "cup")
 
 	_, err = kube(nil, "apply", "-n", "cup", "-f", "manifests/cup.yml")
 	exitOnError(err)
@@ -90,7 +90,15 @@ func main() {
 	_, err = kube(nil, "wait", "-n", "cup", "deployment", "cup", "--for", "condition=Available=true", "--timeout", "60s")
 	exitOnError(err)
 
-	slog.Info("Cup ready")
+	// configure default app via Argo
+	_, err = kube(nil, "apply", "-n", "argocd", "-f", "manifests/argo.yml")
+	exitOnError(err)
+
+	// wait for default app to provision
+	_, err = kube(nil, "wait", "-n", "default", "deployment", "my-app", "--for", "condition=Available=true", "--timeout", "120s")
+	exitOnError(err)
+
+	slog.Info("App is ready")
 }
 
 func exitOnError(err error) {

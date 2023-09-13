@@ -10,7 +10,22 @@ spec:
   - name: http
     protocol: TCP
     port: 80
-    targetPort: http 
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: gitea
+  name: gitea-node-port
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: gitea
+  ports:
+  - name: http
+    protocol: TCP
+    nodePort: 30002
+    port: 3000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,15 +114,28 @@ data:
       "kind": "Deployment",
       "metadata": {
         "namespace": "default",
-        "name": "my-app"
+        "name": "my-app",
+        "labels": {},
+        "annotations": {}
       },
       "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "server"
+          }
+        },
         "template": {
+          "metadata": {
+            "labels": {
+              "app": "server"
+            }
+          },
           "spec": {
             "containers": [
               {
                 "name": "app",
-                "image": "python/python:3",
+                "image": "python:3",
                 "command": ["python", "-m", "http.server", "8000"],
                 "ports": [{"containerPort": 8000}]
               }
