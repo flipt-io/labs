@@ -1,0 +1,31 @@
+direction: right
+
+cup: {
+  shape: image
+  icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+}
+
+cupd: {
+  shape: image
+  icon: https://icons.terrastruct.com/tech%2F022-server.svg
+}
+
+gitea: {
+  shape: image
+  icon: https://upload.wikimedia.org/wikipedia/commons/b/bb/Gitea_Logo.svg
+}
+
+argocd: {
+  shape: image
+  icon: https://icon.icepanel.io/Technology/svg/Argo-CD.svg
+}
+
+kube: {
+  shape: image
+  icon: https://icon.icepanel.io/Technology/svg/Kubernetes.svg
+}
+
+cup -> cupd
+cupd -> gitea
+gitea -> argocd
+argocd -> kube

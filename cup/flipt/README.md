@@ -1,7 +1,7 @@
 # Cup and Flipt
 
 <div align="center">
-  <img src="../images/cup.svg" alt="CUP" width="240" />
+  <img src="../../images/cup.svg" alt="CUP" width="240" />
 </div>
 
 ## Overview
@@ -15,7 +15,7 @@ In this labs section we leverage the Flipt Cup controller to manage Flipt flag s
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Cup CLI](https://github.com/flipt-io/cup#installation)
+- [Cup CLI](https://github.com/flipt-io/cup) cloned and built from source
 
 ## Usage
 

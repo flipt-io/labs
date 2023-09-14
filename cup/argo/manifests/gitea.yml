@@ -1,0 +1,176 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: gitea
+  name: gitea
+spec:
+  selector:
+    app.kubernetes.io/name: gitea
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: gitea
+  name: gitea-node-port
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: gitea
+  ports:
+  - name: http
+    protocol: TCP
+    nodePort: 30002
+    port: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: gitea
+  name: gitea
+  labels:
+    app.kubernetes.io/name: gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gitea
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gitea
+    spec:
+      containers:
+      - name: gitea
+        image: gitea/gitea:latest
+        ports:
+        - containerPort: 3000
+          name: http
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: gitea
+  name: provision-gitea
+spec:
+  template:
+    spec:
+      containers:
+      - name: stew
+        image: ghcr.io/flipt-io/stew:latest
+        command: ["sh", "-c", "mkdir /etc/source && cp -rL /etc/features/default /etc/source/. && /usr/local/bin/stew -config /etc/stew/config.yml"]
+        volumeMounts:
+        - name: config
+          mountPath: "/etc/stew"
+        - name: contents
+          mountPath: "/etc/features"
+      volumes:
+      - name: config
+        configMap:
+          name: provision-gitea-config
+          items:
+          - key: "config.yml"
+            path: "config.yml"
+      - name: contents
+        configMap:
+          name: provision-gitea-repo-contents
+          items:
+          - key: "service.json"
+            path: "default/-v1-Service-my-app.json"
+          - key: "deployment.json"
+            path: "default/apps-v1-Deployment-my-app.json"
+      restartPolicy: Never
+  backoffLimit: 4
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: gitea
+  name: provision-gitea-config
+data:
+  "config.yml": |
+    url: "http://gitea.gitea.svc.cluster.local"
+    admin:
+      username: cup
+      password: password
+      email: dev@flipt.io
+    repositories:
+    - name: features
+      contents:
+      - path: /etc/source
+        message: Initial commit
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: gitea
+  name: provision-gitea-repo-contents
+data:
+  "service.json": |
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "namespace": "default",
+        "name": "my-app"
+      },
+      "spec": {
+        "type": "NodePort",
+        "selector": {
+          "app.kubernetes.io/name": "my-app"
+        },
+        "ports": [
+          {
+            "name": "http",
+            "protocol": "TCP",
+            "nodePort": 30004,
+            "port": 8282
+          }
+        ]
+      }
+    }
+  "deployment.json": |
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "namespace": "default",
+        "name": "my-app",
+        "labels": {},
+        "annotations": {}
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app.kubernetes.io/name": "my-app"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app.kubernetes.io/name": "my-app"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "app",
+                "image": "cup.flipt.io/argo/service:latest",
+                "imagePullPolicy": "IfNotPresent",
+                "ports": [
+                  {
+                    "containerPort": 8282,
+                    "name": "http"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
