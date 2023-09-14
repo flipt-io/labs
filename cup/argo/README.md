@@ -5,6 +5,8 @@ This labs section explores configuring an end-to-end CD pipeline with Argo and C
 
 ![Cup with ArgoCD Diagram](./diagram.svg)
 
+https://github.com/flipt-io/labs/assets/1253326/4dfb87ec-446c-40dc-84d1-2764bd600fd1
+
 The project deploys a simple application via Argo, which responds with a JSON payload containing its environment variables.
 It also configures an instance of Cup and a source Git repository hosted via Gitea.
 
