@@ -5,7 +5,7 @@ This labs section explores configuring an end-to-end CD pipeline with Argo and C
 
 ![Cup with ArgoCD Diagram](./diagram.svg)
 
-The project deploys a simple application via Argo, which responds with a message from an environment variable.
+The project deploys a simple application via Argo, which responds with a JSON payload containing its environment variables.
 It also configures an instance of Cup and a source Git repository hosted via Gitea.
 
 Once deployed to a local `kind` cluster, you can experiment with reading and reconfiguring the deployment configuration via the `cup` CLI.
@@ -67,3 +67,4 @@ cup get deployments
 # if the resource is valid then you should see a pull-request is returned
 # open Gitea and merge the pull-request to see the change get applied
 cup edit deployments my-app
+```
