@@ -1,0 +1,43 @@
+cluster: {
+  shape: square
+  kubernetes: {
+    shape: image
+    icon: https://icon.icepanel.io/Technology/svg/Kubernetes.svg
+  }
+  s3: {
+    shape: image
+    icon: https://icons.terrastruct.com/aws%2FStorage%2FAmazon-Simple-Storage-Service-S3.svg
+  }
+  sample-app: {
+    shape: square
+    flipt-sidecar: {
+      shape: square
+    }
+    main-application: {
+      shape: square
+    }
+  }
+  flipt-master: {
+    shape: square
+  }
+  flipt-exporter: {
+    shape: square
+  }
+}
+
+users: {
+  shape: person
+}
+
+cluster.sample-app.flipt-sidecar <-> cluster.s3: Continuous sync {
+  style: {
+    opacity: 0.9
+    stroke-dash: 3
+    shadow: true
+    font-size: 10
+  }
+}
+cluster.sample-app.main-application -> cluster.sample-app.flipt-sidecar: Evaluation
+cluster.flipt-exporter -> cluster.s3: Save to bucket
+cluster.flipt-master <- cluster.flipt-exporter: Export data
+users -> cluster.flipt-master: Make edits
