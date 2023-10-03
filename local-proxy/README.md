@@ -5,9 +5,9 @@ The intent of this lab is to explore the ways that clients can achieve fast eval
 
 ### Object Store Replication
 
-![Object Store Replication](./object-store-replication/diagram/diagram.svg)
+<img src="./object-store-replication/diagram/diagram.svg" alt="Object Store Replication" width="500px" />
 
-This project is housed under the `s3-replication` directory. The purpose is for a user to run their application which depends on feature flags with a sidecar Flipt process that pulls data from an S3 bucket. The evaluation data here can then be accessed over `localhost` talking to the Flipt sidecar.
+This project is housed under the `object-store-replication` directory. The purpose is for a user to run their application which depends on feature flags with a sidecar Flipt process that pulls data from an Object Store (S3 bucket). The evaluation data here can then be accessed over `localhost` by talking to the Flipt sidecar.
 
 Lets get started!
 
@@ -19,8 +19,8 @@ Prerequisites:
 This project uses Kubernetes to deploy the following:
 - `minio`: Object store that has an S3 compatible API
 - `flipt-master`: Serves as the main Flipt application, this is where users will be accessing the UI to make relevant changes
-- `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`, pulls its data from S3 (main application can be one of your containers within the pod)
-- `flipt-exporter`: CronJob that runs on a 1 minute interval that exports data out of the Flipt master, and puts those changes onto the object store
+- `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`, pulls its data from the object store (main application can be one of your containers within the pod)
+- `flipt-exporter`: CronJob that runs on a 1-minute interval that exports data out of the Flipt master, and puts those changes into the object store
 
 To access the `flipt-master` API, you can use Kubernetes to port-forward the service:
 
