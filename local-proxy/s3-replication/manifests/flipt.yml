@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  labels:
+    app: sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+      # YOUR MAIN APPLICATION WILL GO HERE.
+      - name: flipt-sidecar
+        image: flipt/flipt:v1.28.0
+        env:
+          - name: FLIPT_STORAGE_TYPE
+            value: object
+          - name: FLIPT_STORAGE_OBJECT_TYPE
+            value: s3
+          - name: FLIPT_STORAGE_OBJECT_S3_ENDPOINT
+            value: http://minio:9000
+          - name: FLIPT_STORAGE_OBJECT_S3_BUCKET
+            value: flipt
+          - name: AWS_ACCESS_KEY_ID
+            value: minioadmin
+          - name: AWS_SECRET_ACCESS_KEY
+            value: minioadmin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-app
+spec:
+  selector:
+    app: sample-app
+  ports:
+    - name: flipt-sidecar
+      port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flipt-master
+  labels:
+    app: flipt-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flipt-master
+  template:
+    metadata:
+      labels:
+        app: flipt-master
+    spec:
+      containers:
+      - name: flipt-master
+        image: flipt/flipt:v1.28.0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flipt-master
+spec:
+  selector:
+    app: flipt-master
+  ports:
+    - name: http
+      port: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: upload-script
+data:
+  upload.sh: |
+    /flipt export --address http://flipt-master:8080 | aws --endpoint-url $S3_ENDPOINT s3 cp - s3://$AWS_BUCKET/$FILENAME
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: flipt-exporter
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: flipt-exporter
+            image: flipt-aws:latest
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: S3_ENDPOINT
+                value: http://minio:9000
+              - name: AWS_ACCESS_KEY_ID
+                value: minioadmin
+              - name: AWS_SECRET_ACCESS_KEY
+                value: minioadmin
+              - name: AWS_BUCKET
+                value: flipt
+              - name: FILENAME
+                value: features.yml
+            command:
+            - /bin/sh
+            - -c
+            - /upload/upload.sh
+            volumeMounts:
+            - name: upload-dir
+              mountPath: /upload
+          restartPolicy: OnFailure
+          volumes:
+          - name: upload-dir
+            configMap:
+              name: upload-script
+              defaultMode: 0700

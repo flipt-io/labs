@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-bucket
+spec:
+  template:
+    spec:
+      containers:
+      - name: create-bucket
+        image: minio/mc
+        command:
+        - /bin/sh
+        - -c
+        args:
+        - /usr/bin/mc config host add myminio http://minio:9000 minioadmin minioadmin;
+          /usr/bin/mc rm -r --force myminio/flipt;
+          /usr/bin/mc mb myminio/flipt;
+          /usr/bin/mc policy download myminio/flipt;
+      restartPolicy: Never
+  backoffLimit: 4
