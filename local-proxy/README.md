@@ -22,7 +22,11 @@ This project uses Kubernetes to deploy the following:
 - `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`. There is also a container called `evaluation-client` that will make evaluation calls to the sidecar
 - `flipt-exporter`: CronJob that runs on a 1-minute interval that exports data out of the Flipt master, and puts those changes into the object store
 
-To access the `flipt-master` API, you can use Kubernetes to port-forward the service:
+> The sidecar Flipt container will be in `readonly` mode, due to it sourcing its data from a file system.
+
+Run the deploy script `scripts/start` to provision the cluster and start all the necessary deployments and services.
+
+1. To access the `flipt-master` API, you can use Kubernetes to port-forward the service:
 
 ```bash
 $ kubectl port-forward svc/flipt-master --namespace default 8080:8080
@@ -30,18 +34,14 @@ $ kubectl port-forward svc/flipt-master --namespace default 8080:8080
 
 This is so you can use the API to access the UI, and add data to Flipt as necessary.
 
-The same goes for the `flipt-sidecar`:
+2. To access the `flipt-sidecar` API:
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8080:8080
 ```
 
-And for the `evaluation-client`:
+2. To access the `evaluation-client`:
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8000:8000
 ```
-
-> The difference for the sidecar is that it will be in `readonly` mode, due to it sourcing its data from a file system.
-
-There exists a deploy script `scripts/start` that will provision the cluster for you and start all the necessary deployments and services for the whole application described above.
