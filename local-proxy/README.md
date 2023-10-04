@@ -5,7 +5,7 @@ The intent of this lab is to explore the ways that clients can achieve fast eval
 
 ### Object Store Replication
 
-<img src="./object-store-replication/diagram/diagram.svg" alt="Object Store Replication" width="500px" />
+<img src="./object-store-replication/diagrams/diagram.svg" alt="Object Store Replication" width="500px" />
 
 This project is housed under the `object-store-replication` directory. The purpose is for a user to run their application which depends on feature flags with a sidecar Flipt process that pulls data from an Object Store (S3 bucket). The evaluation data here can then be accessed over `localhost` by talking to the Flipt sidecar.
 
@@ -19,7 +19,7 @@ Prerequisites:
 This project uses Kubernetes to deploy the following:
 - `minio`: Object store that has an S3 compatible API
 - `flipt-master`: Serves as the main Flipt application, this is where users will be accessing the UI to make relevant changes
-- `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`, pulls its data from the object store (main application can be one of your containers within the pod)
+- `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`. There is also a container called `evaluation-client` that will make evaluation calls to the sidecar
 - `flipt-exporter`: CronJob that runs on a 1-minute interval that exports data out of the Flipt master, and puts those changes into the object store
 
 To access the `flipt-master` API, you can use Kubernetes to port-forward the service:
@@ -30,12 +30,18 @@ $ kubectl port-forward svc/flipt-master --namespace default 8080:8080
 
 This is so you can use the API to access the UI, and add data to Flipt as necessary.
 
-The same goes for the sidecar:
+The same goes for the `flipt-sidecar`:
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8080:8080
 ```
 
+And for the `evaluation-client`:
+
+```bash
+$ kubectl port-forward svc/sample-app --namespace default 8000:8000
+```
+
 > The difference for the sidecar is that it will be in `readonly` mode, due to it sourcing its data from a file system.
 
-There exists a deploy script `deploy.sh` that will provision the cluster for you and start all the necessary deployments and services for the whole application described above.
+There exists a deploy script `scripts/start` that will provision the cluster for you and start all the necessary deployments and services for the whole application described above.

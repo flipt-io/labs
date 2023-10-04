@@ -2,15 +2,24 @@
 
 # Build the `flipt-aws` docker image
 docker build -t flipt-aws ../flipt-aws
-echo "Succesfully build flipt-aws docker image..."
+echo "Succesfully built flipt-aws:latest docker image..."
+
+docker build -t evaluation-client ../go
+echo "Successfully built evaluation-client:latest image..."
 
 # Start the minikube cluster
 minikube start
 echo "Successfully started minikube cluster..."
 
 # Load in the `flipt-aws` docker image
+echo "Loading flipt-aws:latest image into cluster..."
 minikube image load flipt-aws:latest
-echo "Successfully loaded flipt-aws image into the cluster..."
+echo "Successfully loaded flipt-aws:latest image into the cluster..."
+
+# Load in the `evaluation-client` docker image
+echo "Loading evaluation-client:latest image into cluster..."
+minikube image load evaluation-client:latest
+echo "Successfully loaded evaluation-client:latest into the cluster..."
 
 # Deploy minio
 kubectl apply -f ../manifests/minio.yml

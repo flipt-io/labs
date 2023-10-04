@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>Flipt Example</title>
+</head>
+
+<body>
+
+<h1>Flipt Example App</h1>
+
+<form method="POST" action="/evaluation">
+  <input type="text" placeholder="Flag Name" name="flagName" id="flagName" /><br><br>
+  <label for="context">Context Key</label><br>
+  <input type="text" placeholder="Context Key" name="contextKey" id="contextKey" /><br>
+  <label for="context">Context Value</label><br>
+  <input type="text" placeholder="Context Value" name="contextValue" id="contextValue" /><br><br>
+	<input type="submit" value="Evaluate Flag"/>
+</form>
+
+<h2>Evalution Results</h2>
+
+{{ if .Evaluation }}		
+	{{ range .Evaluation }}
+		<p>{{ .Value }}</p>
+	{{ end }}
+{{ else }}
+	<p>
+		<strong>No Evaluation Data yet. Make some evaluations!</strong>
+	</p>
+{{ end }}
+
+</body>
+</html>

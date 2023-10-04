@@ -13,7 +13,7 @@ cluster: {
     flipt-sidecar: {
       shape: square
     }
-    main-application: {
+    evaluation-client: {
       shape: square
     }
   }
@@ -37,7 +37,7 @@ cluster.sample-app.flipt-sidecar <-> cluster.s3: Continuous sync {
     font-size: 10
   }
 }
-cluster.sample-app.main-application -> cluster.sample-app.flipt-sidecar: Evaluation
+cluster.sample-app.evaluation-client -> cluster.sample-app.flipt-sidecar: Evaluation
 cluster.flipt-exporter -> cluster.s3: Save to bucket
 cluster.flipt-master <- cluster.flipt-exporter: Export data
 users -> cluster.flipt-master: Make edits
