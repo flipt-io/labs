@@ -25,17 +25,17 @@ minikube image load evaluation-client:latest
 echo "Successfully loaded evaluation-client:latest into the cluster..."
 
 # Deploy minio
-kubectl apply -f manifests/minio.yml
+kubectl apply -f manifests/object-store/minio.yml
 
 # Wait for minio to be rolled out
 kubectl rollout status deploy/minio
 
 # Start minio-job to create bucket
-kubectl apply -f manifests/minio-job.yml
+kubectl apply -f manifests/object-store/minio-job.yml
 
 # Wait for job to complete creating the bucket on minio
 kubectl wait --for=condition=complete --timeout=1m job/create-bucket
 echo "Successfully created flipt bucket on minio..."
 
 # Deploy `flipt-master` and `sample-app`
-kubectl apply -f manifests/flipt.yml
+kubectl apply -f manifests/object-store/flipt.yml

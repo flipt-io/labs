@@ -1,0 +1,41 @@
+cluster: {
+  shape: square
+  kubernetes: {
+    shape: image
+    icon: https://icon.icepanel.io/Technology/svg/Kubernetes.svg
+  }
+  PersistentVolume: {
+    shape: square
+  }
+  sample-app: {
+    shape: square
+    flipt-sidecar: {
+      shape: square
+    }
+    evaluation-client: {
+      shape: square
+    }
+  }
+  flipt-master: {
+    shape: square
+  }
+  flipt-exporter: {
+    shape: square
+  }
+}
+
+users: {
+  shape: person
+}
+
+cluster.sample-app.flipt-sidecar <-> cluster.PersistentVolume: Continuous sync {
+  style: {
+    opacity: 0.9
+    stroke-dash: 3
+    shadow: true
+  }
+}
+cluster.sample-app.evaluation-client -> cluster.sample-app.flipt-sidecar: Evaluation
+cluster.flipt-exporter -> cluster.PersistentVolume: Save to bucket
+cluster.flipt-master <- cluster.flipt-exporter: Export data
+users -> cluster.flipt-master: Make edits
