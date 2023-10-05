@@ -54,7 +54,7 @@ This is so you can use the API to access the UI, and add data to Flipt as necess
 $ kubectl port-forward svc/sample-app --namespace default 8080:8080
 ```
 
-2. To access the `evaluation-client` / sample-app:
+3. To access the `evaluation-client` / sample-app:
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8000:8000
