@@ -39,3 +39,9 @@ echo "Successfully created flipt bucket on minio..."
 
 # Deploy `flipt-master` and `sample-app`
 kubectl apply -f manifests/object-store/flipt.yml
+
+# Wait for `flipt-master` to be rolled out
+kubectl rollout status deploy/flipt-master
+
+# Apply kubernetes job to seed master
+kubectl apply -f manifests/object-store/flipt-job.yml

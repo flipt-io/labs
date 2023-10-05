@@ -17,3 +17,9 @@ echo "Successfully loaded evaluation-client:latest into the cluster..."
 
 # Deploy `flipt-master` and `sample-app`
 kubectl apply -f manifests/local/flipt.yml
+
+# Wait for `flipt-master` to be rolled out
+kubectl rollout status deploy/flipt-master
+
+# Apply kubernetes job to seed master
+kubectl apply -f manifests/local/flipt-job.yml

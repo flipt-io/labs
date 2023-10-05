@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flipt-seed
+spec:
+  template:
+    spec:
+      containers:
+      - name: flipt-seed
+        image: flipt/flipt:v1.28.0
+        command:
+        - /bin/sh
+        - -c
+        args:
+        - wget -O - https://raw.githubusercontent.com/flipt-io/flipt/main/build/testing/integration/readonly/testdata/default.yaml | /flipt import --address http://flipt-master:8080 --stdin
+      restartPolicy: Never
+  backoffLimit: 4
