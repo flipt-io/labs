@@ -1,4 +1,4 @@
-Flipt Proxy
+Flipt as a Sidecar
 ------------
 
 The intent of this lab is to explore the ways that clients can achieve fast evaluations from Flipt for their feature flags. The use case here is that users would like data locality for their feature flag state, so they do not have to worry about network latency to evaluate a feature, especially for their most critical application paths.
@@ -54,7 +54,7 @@ This is so you can use the API to access the UI, and add data to Flipt as necess
 $ kubectl port-forward svc/sample-app --namespace default 8080:8080
 ```
 
-2. To access the `evaluation-client`:
+2. To access the `evaluation-client` / sample-app:
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8000:8000
