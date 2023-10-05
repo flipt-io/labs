@@ -36,26 +36,21 @@ The above script deploys all of the components that the Object Store script does
 
 ---
 
-For both Object Store and Local FS modes the following applies:
+### GUI
 
-> The `flipt-sidecar` container will be in `readonly` mode, due to it sourcing its data from a file system.
+Data is seeded into the `flipt-master` instance already via a Kubernetes job called `flipt-seed`. Now you can access the `sample-app` and start playing around with the evaluations. Here are the steps to do so:
 
-1. To access the `flipt-master` API, you can use Kubernetes to port-forward the service:
-
-```bash
-$ kubectl port-forward svc/flipt-master --namespace default 8080:8080
-```
-
-This is so you can use the API to access the UI, and add data to Flipt as necessary.
-
-2. To access the `flipt-sidecar` API:
-
-```bash
-$ kubectl port-forward svc/sample-app --namespace default 8080:8080
-```
-
-3. To access the `evaluation-client` / sample-app:
+1. Access the frontend for the `sample-app` via Kubernetes port-forward
 
 ```bash
 $ kubectl port-forward svc/sample-app --namespace default 8000:8000
+```
+
+2. Switch between `Sidecar` and `Master` and enter a flag `flag_001 - flag_050` and evaluate the time difference
+
+
+You can also access the `flipt-master` via Kubernetes port-forward and make changes to the state via the UI:
+
+```bash
+$ kubectl port-forward svc/flipt-master --namespace default 8080:8080
 ```
