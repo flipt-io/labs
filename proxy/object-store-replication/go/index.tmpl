@@ -8,6 +8,11 @@
 <h1>Flipt Example App</h1>
 
 <form method="POST" action="/evaluation">
+  <label for="backend">Backend</label><br>
+  <input type="radio" id="sidecar" name="backend" value="sidecar" checked="checked" />
+  <label for="sidecar">Sidecar</label>
+  <input type="radio" id="master" name="backend" value="master" />
+  <label for="master">Master</label><br><br>
   <input type="text" placeholder="Flag Name" name="flagName" id="flagName" /><br><br>
   <label for="context">Context Key</label><br>
   <input type="text" placeholder="Context Key" name="contextKey" id="contextKey" /><br>

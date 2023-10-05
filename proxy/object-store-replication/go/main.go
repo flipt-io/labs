@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"time"
@@ -33,22 +34,35 @@ type TemplateData struct {
 	Evaluation []*Evaluation
 }
 
-func run() error {
-	evaluations := make([]*Evaluation, 0)
-
-	fliptEvaluationAddr := os.Getenv("FLIPT_EVALUATION_ADDR")
-	if fliptEvaluationAddr == "" {
-		fliptEvaluationAddr = "localhost:9000"
-	}
-
-	conn, err := grpc.Dial(fliptEvaluationAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+func getClientFromAddr(addr string) (sdk.SDK, error) {
+	conn, err := grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return err
+		return sdk.SDK{}, err
 	}
 
 	transport := sdkgrpc.NewTransport(conn)
 
-	client := sdk.New(transport)
+	return sdk.New(transport), nil
+}
+
+func run() error {
+	evaluations := make([]*Evaluation, 0)
+
+	masterAddr := os.Getenv("FLIPT_MASTER_ADDR")
+	if masterAddr == "" {
+		masterAddr = "flipt-master:9000"
+	}
+
+	sidecarClient, err := getClientFromAddr("localhost:9000")
+	if err != nil {
+		return err
+	}
+
+	masterClient, err := getClientFromAddr(masterAddr)
+	if err != nil {
+		return err
+	}
+	slog.Info("master address", "master-addr", masterAddr)
 
 	r := chi.NewRouter()
 
@@ -67,6 +81,12 @@ func run() error {
 		flagName := r.FormValue("flagName")
 		contextKey := r.FormValue("contextKey")
 		contextValue := r.FormValue("contextValue")
+		backend := r.FormValue("backend")
+
+		var client = sidecarClient
+		if backend == "master" {
+			client = masterClient
+		}
 
 		now := time.Now()
 		e, err := client.Evaluation().Variant(context.Background(), &evaluation.EvaluationRequest{
@@ -83,7 +103,7 @@ func run() error {
 				switch e.Code() {
 				case codes.NotFound:
 					evaluations = append(evaluations, &Evaluation{
-						Value: fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation", flagName, difference),
+						Value: fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagName, difference, backend),
 					})
 					http.Redirect(w, r, r.Referer(), http.StatusFound)
 				default:
@@ -98,7 +118,7 @@ func run() error {
 			variantKey = "None"
 		}
 		evaluation := &Evaluation{
-			Value: fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation", flagName, variantKey, difference),
+			Value: fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagName, variantKey, difference, backend),
 		}
 
 		evaluations = append(evaluations, evaluation)
@@ -111,6 +131,7 @@ func run() error {
 		Handler: r,
 	}
 
+	slog.Info("staring http server on :8000")
 	return server.ListenAndServe()
 }
 
