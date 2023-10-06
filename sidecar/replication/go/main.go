@@ -45,6 +45,23 @@ func getClientFromAddr(addr string) (sdk.SDK, error) {
 	return sdk.New(transport), nil
 }
 
+func invokeEvaluation(ctx context.Context, evaluationClient *sdk.Evaluation, flagName, contextKey, contextValue string) (*evaluation.VariantEvaluationResponse, time.Duration, error) {
+	now := time.Now()
+	e, err := evaluationClient.Variant(ctx, &evaluation.EvaluationRequest{
+		NamespaceKey: "default",
+		FlagKey:      flagName,
+		Context: map[string]string{
+			contextKey: contextValue,
+		},
+	})
+	if err != nil {
+		return nil, 0, err
+	}
+	difference := time.Since(now)
+
+	return e, difference, nil
+}
+
 func run() error {
 	evaluations := make([]*Evaluation, 0)
 
@@ -88,16 +105,7 @@ func run() error {
 			client = masterClient
 		}
 
-		now := time.Now()
-		e, err := client.Evaluation().Variant(context.Background(), &evaluation.EvaluationRequest{
-			NamespaceKey: "default",
-			FlagKey:      flagName,
-			Context: map[string]string{
-				contextKey: contextValue,
-			},
-		})
-		difference := time.Since(now)
-
+		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagName, contextKey, contextValue)
 		if err != nil {
 			if e, ok := status.FromError(err); ok {
 				switch e.Code() {
@@ -113,7 +121,7 @@ func run() error {
 			return
 		}
 
-		variantKey := e.VariantKey
+		variantKey := variantResponse.VariantKey
 		if variantKey == "" {
 			variantKey = "None"
 		}
@@ -124,6 +132,38 @@ func run() error {
 		evaluations = append(evaluations, evaluation)
 
 		http.Redirect(w, r, r.Referer(), http.StatusFound)
+	})
+
+	r.Get("/cli/backend/{backend}/evaluation/{flagName}", func(w http.ResponseWriter, r *http.Request) {
+		flagName := chi.URLParam(r, "flagName")
+		backend := chi.URLParam(r, "backend")
+
+		if backend != "sidecar" && backend != "master" {
+			http.Error(w, "please enter either sidecar or master for backend", http.StatusNotFound)
+			return
+		}
+
+		var client = sidecarClient
+		if backend == "master" {
+			client = masterClient
+		}
+
+		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagName, "in_segment", "segment_001")
+		if err != nil {
+			if e, ok := status.FromError(err); ok {
+				switch e.Code() {
+				case codes.NotFound:
+					w.Write([]byte(fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagName, difference, backend)))
+					return
+				default:
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+				}
+			}
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		w.Write([]byte(fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagName, variantResponse.VariantKey, difference, backend)))
 	})
 
 	server := &http.Server{
