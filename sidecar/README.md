@@ -54,3 +54,21 @@ You can also access the `flipt-master` via Kubernetes port-forward and make chan
 ```bash
 $ kubectl port-forward svc/flipt-master --namespace default 8080:8080
 ```
+
+### cURL
+
+For users of the terminal you can also hit an endpoint to see the differences of evaluation without having to use the UI.
+
+1. Port forward `sample-app`
+
+```bash
+$ kubectl port-forward svc/sample-app --namespace default 8000:8000
+```
+
+2. Make request with `curl`
+
+```bash
+$ curl localhost:8000/cli/backend/{backend}/evaluation/{flagName}
+```
+
+The backend should be of either type (`sidecar` or `master`), and the `flagName` should be between `flag_001 - flag_050`.
