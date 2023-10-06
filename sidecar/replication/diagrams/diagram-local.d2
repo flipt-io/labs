@@ -36,6 +36,6 @@ cluster.sample-app.flipt-sidecar <-> cluster.PersistentVolume: Continuous sync {
   }
 }
 cluster.sample-app.evaluation-client -> cluster.sample-app.flipt-sidecar: Evaluation
-cluster.flipt-exporter -> cluster.PersistentVolume: Save to bucket
+cluster.flipt-exporter -> cluster.PersistentVolume: Save to volume
 cluster.flipt-master <- cluster.flipt-exporter: Export data
 users -> cluster.flipt-master: Make edits

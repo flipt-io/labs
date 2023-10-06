@@ -7,18 +7,30 @@
 
 <h1>Flipt Example App</h1>
 
-<form method="POST" action="/evaluation">
+<form method="POST" action="/evaluation" id="evaluationform">
   <label for="backend">Backend</label><br>
   <input type="radio" id="sidecar" name="backend" value="sidecar" checked="checked" />
   <label for="sidecar">Sidecar</label>
   <input type="radio" id="master" name="backend" value="master" />
   <label for="master">Master</label><br><br>
-  <input type="text" placeholder="Flag Name" name="flagName" id="flagName" /><br><br>
+  <label for="flagKey">Flag Key</label><br>
+  <select id="flagKey" name="flagKey">
+    <option value="flag_001">flag_001</option>
+    <option value="flag_002">flag_002</option>
+    <option value="flag_003">flag_003</option>
+    <option value="flag_004">flag_004</option>
+    <option value="flag_005">flag_005</option>
+    <option value="flag_006">flag_006</option>
+    <option value="flag_007">flag_007</option>
+    <option value="flag_008">flag_008</option>
+    <option value="flag_009">flag_009</option>
+    <option value="flag_001">flag_010</option>
+  </select><br><br>
   <label for="context">Context Key</label><br>
   <input type="text" name="contextKey" id="contextKey" value="in_segment" disabled /><br>
   <label for="context">Context Value</label><br>
   <input type="text" name="contextValue" id="contextValue" value="segment_001" disabled /><br><br>
-	<input type="submit" value="Evaluate Flag"/>
+  <input type="submit" value="Evaluate Flag"/>
 </form>
 
 <h2>Evalution Results</h2>

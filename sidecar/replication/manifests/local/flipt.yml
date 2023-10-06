@@ -51,7 +51,7 @@ spec:
         image: evaluation-client:latest
         imagePullPolicy: IfNotPresent
       - name: flipt-sidecar
-        image: flipt/flipt:v1.28.0
+        image: flipt/flipt:latest
         env:
           - name: FLIPT_STORAGE_TYPE
             value: local
@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
       - name: flipt-master
-        image: flipt/flipt:v1.28.0
+        image: flipt/flipt:latest
 ---
 apiVersion: v1
 kind: Service
@@ -132,7 +132,7 @@ spec:
         spec:
           containers:
           - name: flipt-exporter
-            image: flipt/flipt:v1.28.0
+            image: flipt/flipt:latest
             command:
             - /bin/sh
             - -c

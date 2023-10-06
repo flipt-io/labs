@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: flipt-seed
-        image: flipt/flipt:v1.28.0
+        image: flipt/flipt:latest
         command:
         - /bin/sh
         - -c

@@ -95,7 +95,7 @@ func run() error {
 	})
 
 	r.Post("/evaluation", func(w http.ResponseWriter, r *http.Request) {
-		flagName := r.FormValue("flagName")
+		flagKey := r.FormValue("flagKey")
 		contextKey := r.FormValue("contextKey")
 		contextValue := r.FormValue("contextValue")
 		backend := r.FormValue("backend")
@@ -105,13 +105,13 @@ func run() error {
 			client = masterClient
 		}
 
-		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagName, contextKey, contextValue)
+		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagKey, contextKey, contextValue)
 		if err != nil {
 			if e, ok := status.FromError(err); ok {
 				switch e.Code() {
 				case codes.NotFound:
 					evaluations = append(evaluations, &Evaluation{
-						Value: fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagName, difference, backend),
+						Value: fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagKey, difference, backend),
 					})
 					http.Redirect(w, r, r.Referer(), http.StatusFound)
 				default:
@@ -126,7 +126,7 @@ func run() error {
 			variantKey = "None"
 		}
 		evaluation := &Evaluation{
-			Value: fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagName, variantKey, difference, backend),
+			Value: fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagKey, variantKey, difference, backend),
 		}
 
 		evaluations = append(evaluations, evaluation)
@@ -134,8 +134,8 @@ func run() error {
 		http.Redirect(w, r, r.Referer(), http.StatusFound)
 	})
 
-	r.Get("/cli/backend/{backend}/evaluation/{flagName}", func(w http.ResponseWriter, r *http.Request) {
-		flagName := chi.URLParam(r, "flagName")
+	r.Get("/cli/backend/{backend}/evaluation/{flagKey}", func(w http.ResponseWriter, r *http.Request) {
+		flagKey := chi.URLParam(r, "flagKey")
 		backend := chi.URLParam(r, "backend")
 
 		if backend != "sidecar" && backend != "master" {
@@ -148,12 +148,12 @@ func run() error {
 			client = masterClient
 		}
 
-		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagName, "in_segment", "segment_001")
+		variantResponse, difference, err := invokeEvaluation(r.Context(), client.Evaluation(), flagKey, "in_segment", "segment_001")
 		if err != nil {
 			if e, ok := status.FromError(err); ok {
 				switch e.Code() {
 				case codes.NotFound:
-					w.Write([]byte(fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagName, difference, backend)))
+					w.Write([]byte(fmt.Sprintf("The flag: %s is not found on server took %s to complete evaluation from the backend: %s", flagKey, difference, backend)))
 					return
 				default:
 					http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -163,7 +163,7 @@ func run() error {
 			return
 		}
 
-		w.Write([]byte(fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagName, variantResponse.VariantKey, difference, backend)))
+		w.Write([]byte(fmt.Sprintf("The %s value from evaluation is: %s and took %s to complete evaluation from the backend: %s", flagKey, variantResponse.VariantKey, difference, backend)))
 	})
 
 	server := &http.Server{

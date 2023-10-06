@@ -1,4 +1,4 @@
-FROM flipt/flipt:v1.28.0
+FROM flipt/flipt:latest
 
 USER root
 

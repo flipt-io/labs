@@ -38,7 +38,9 @@ The above script deploys all of the components that the Object Store script does
 
 ### GUI
 
-Data is seeded into the `flipt-master` instance already via a Kubernetes job called `flipt-seed`. Now you can access the `sample-app` and start playing around with the evaluations. Here are the steps to do so:
+Data is seeded into the `flipt-master` instance already via a Kubernetes job called `flipt-seed`. You can now access the `sample-app` and start playing around with the evaluations.
+
+Here are the steps to do so:
 
 1. Access the frontend for the `sample-app` via Kubernetes port-forward
 
@@ -46,7 +48,7 @@ Data is seeded into the `flipt-master` instance already via a Kubernetes job cal
 $ kubectl port-forward svc/sample-app --namespace default 8000:8000
 ```
 
-2. Switch between `Sidecar` and `Master` and enter a flag `flag_001 - flag_050` and evaluate the time difference
+2. Switch between `Sidecar` and `Master` and choose a flag `flag_001 - flag_010` and evaluate the time difference
 
 
 You can also access the `flipt-master` via Kubernetes port-forward and make changes to the state via the UI:
@@ -68,7 +70,7 @@ $ kubectl port-forward svc/sample-app --namespace default 8000:8000
 2. Make request with `curl`
 
 ```bash
-$ curl localhost:8000/cli/backend/{backend}/evaluation/{flagName}
+$ curl localhost:8000/cli/backend/{backend}/evaluation/{flagKey}
 ```
 
-The backend should be of either type (`sidecar` or `master`), and the `flagName` should be between `flag_001 - flag_050`.
+The backend should be of either type (`sidecar` or `master`), and the `flagKey` should be between `flag_001 - flag_010`.
