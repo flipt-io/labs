@@ -12,18 +12,13 @@ We'll be adding more applications over time, so check back often!
 
 - [Chatbot](./chatbot/README.md) - A set of tutorials on how to use Flipt in different scenarios, based on the idea of releasing an AI-powered chatbot.
 - [Cup](./cup/README.md) - A tutorial demonstrating the [Cup project](https://github.com/flipt-io/cup) managing different configuration formats.
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/en/download/) (v16 or higher)
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Sidecar](./sidecar/README.md) - Demonstrates how to use Flipt as a sidecar to your application for fast evaluations in various configurations.
 
 ## Usage
 
 1. Clone this repository
 1. `cd` into a subdirectory (e.g. `cd chatbot`)
-1. Run `./scripts/start`
+1. Run `./scripts/start` or similar scripts to start the application
 
 ## Troubleshooting
 
