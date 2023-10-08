@@ -9,7 +9,8 @@ This project is housed under the `replication` directory. The purpose is for a u
 
 Lets get started!
 
-Prerequisites:
+## Prerequisites
+
 - [Docker](https://www.docker.com/)
 - [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
 - [Minikube](https://minikube.sigs.k8s.io/docs/)
@@ -21,6 +22,7 @@ Run the deploy script `scripts/start-object-store` to provision the cluster and 
 <img src="./replication/diagrams/diagram-object-store.svg" alt="Object Store Replication" width="500px" />
 
 This above script deploys the following to Kubernetes:
+
 - `minio`: Object store that has an S3 compatible API
 - `flipt-master`: Serves as the main Flipt application, this is where users will be accessing the UI to make relevant changes
 - `sample-app`: Serves as the pod with Flipt running as a sidecar, `flipt-sidecar`. There is also a container called `evaluation-client` that will make evaluation calls to the sidecar
@@ -45,16 +47,15 @@ Here are the steps to do so:
 1. Access the frontend for the `sample-app` via Kubernetes port-forward
 
 ```bash
-$ kubectl port-forward svc/sample-app --namespace default 8000:8000
+kubectl port-forward svc/sample-app --namespace default 8000:8000
 ```
 
 2. Switch between `Sidecar` and `Master` and choose a flag `flag_001 - flag_010` and evaluate the time difference
 
-
 You can also access the `flipt-master` via Kubernetes port-forward and make changes to the state via the UI:
 
 ```bash
-$ kubectl port-forward svc/flipt-master --namespace default 8080:8080
+kubectl port-forward svc/flipt-master --namespace default 8080:8080
 ```
 
 ### cURL
@@ -64,13 +65,13 @@ For users of the terminal you can also hit an endpoint to see the differences of
 1. Port forward `sample-app`
 
 ```bash
-$ kubectl port-forward svc/sample-app --namespace default 8000:8000
+kubectl port-forward svc/sample-app --namespace default 8000:8000
 ```
 
 2. Make request with `curl`
 
 ```bash
-$ curl localhost:8000/cli/backend/{backend}/evaluation/{flagKey}
+curl localhost:8000/cli/backend/{backend}/evaluation/{flagKey}
 ```
 
 The backend should be of either type (`sidecar` or `master`), and the `flagKey` should be between `flag_001 - flag_010`.

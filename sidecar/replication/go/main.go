@@ -21,7 +21,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-//go:embed index.tmpl
+//go:embed index.html.tmpl
 var indexTmplContent string
 
 var t = template.Must(template.New("").Parse(indexTmplContent))
