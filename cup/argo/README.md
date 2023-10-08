@@ -17,7 +17,6 @@ Once deployed to a local `kind` cluster, you can experiment with reading and rec
 - Go
 - [Docker](https://www.docker.com/)
 - [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
-- [Minikube](https://minikube.sigs.k8s.io/docs/)
 - [Cup CLI](https://github.com/flipt-io/cup#cli)
 - [Dagger](https://dagger.io/) (Optional)
 
