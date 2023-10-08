@@ -3,7 +3,7 @@ FROM golang:1.21-alpine
 WORKDIR /app
 
 COPY go.* .
-COPY index.tmpl .
+COPY index.html.tmpl .
 COPY main.go .
 
 RUN go build -o /evaluation-client

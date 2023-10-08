@@ -5,22 +5,22 @@ This labs section explores configuring an end-to-end CD pipeline with Argo and C
 
 ![Cup with ArgoCD Diagram](./diagram.svg)
 
-https://github.com/flipt-io/labs/assets/1253326/4dfb87ec-446c-40dc-84d1-2764bd600fd1
+<https://github.com/flipt-io/labs/assets/1253326/4dfb87ec-446c-40dc-84d1-2764bd600fd1>
 
 The project deploys a simple application via Argo, which responds with a JSON payload containing its environment variables.
 It also configures an instance of Cup and a source Git repository hosted via Gitea.
 
 Once deployed to a local `kind` cluster, you can experiment with reading and reconfiguring the deployment configuration via the `cup` CLI.
 
-### Requirements
+## Prerequisites
 
 - Go
-- Kubectl
-- Docker
+- [Docker](https://www.docker.com/)
+- [Kubectl](https://kubernetes.io/docs/reference/kubectl/)
 - [Cup CLI](https://github.com/flipt-io/cup#cli)
-- Dagger (Optional)
+- [Dagger](https://dagger.io/) (Optional)
 
-### Running
+## Running
 
 ```console
 # clone the labs repository
@@ -33,7 +33,7 @@ cd labs/cup/argo
 ./scripts/start
 ```
 
-### Experiment!
+## Experiment
 
 This process can take a while for the first time.
 
@@ -47,8 +47,8 @@ It will:
 - Port-forward the various services
   - [ArgoCD](http://localhost:8080) (Skip the TLS warning check output from previous step for username and password)
   - [Gitea](http://localhost:3000) (Username: `cup` Password: `password`)
-  - Cupd API is forwarded to http://localhost:8181
-  - Demo app API is forwarded to http://localhost:8282
+  - Cupd API is forwarded to <http://localhost:8181>
+  - Demo app API is forwarded to <http://localhost:8282>
 
 The end result is an entire CD pipeline in your local Docker instance.
 From here you can leverage the `cup` CLI to interface with `cupd`.
