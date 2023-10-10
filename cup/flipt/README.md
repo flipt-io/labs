@@ -19,7 +19,7 @@ In this labs section we leverage the Flipt Cup controller to manage Flipt flag s
 
 ## Usage
 
-1. `cd` into this directory (e.g. `cd flipt`)
+1. `cd` into this directory (e.g. `cd labs/cup/flipt`)
 1. Run `docker compose up --build`
 1. In another terminal window, run `cup defs` to connect to `cupd` and see available resources
 1. Next, run `cup get flags` to see currently served flags
