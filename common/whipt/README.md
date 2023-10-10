@@ -12,7 +12,7 @@ go run main.go [-addr="flipt.address"] [-evaluations-path="evaluations.json"]
 
 ## Evaluations file
 
-See: the example [evaluations JSON file](./evaluations.json) to get an idea of the format.
+See: the example [evaluations JSON file](./evaluations.example.json) to get an idea of the format.
 
 ```CUE
 [string]: {
