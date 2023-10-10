@@ -38,10 +38,12 @@ services:
     restart: always
 
   whipt:
-    build: ./whipt
+    build: ../../common/whipt
     environment:
       FLIPT_ADDR: "flipt:9000"
     restart: always
+    volumes:
+      - ./evaluations.json:/src/evaluations.json
 
   grafana:
     image: grafana/grafana
@@ -49,12 +51,12 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/dashboards/:/etc/grafana/provisioning/dashboards/
-      - ./grafana/datasources/:/etc/grafana/provisioning/datasources/
+      - ../../common/grafana/dashboards/:/etc/grafana/provisioning/dashboards/
+      - ../../common/grafana/datasources/:/etc/grafana/provisioning/datasources/
 
   prometheus:
     image: prom/prometheus:latest
     ports:
       - "9090:9090"
     volumes:
-      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "../../common/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
